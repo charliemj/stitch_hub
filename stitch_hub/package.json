@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./bin/www",
+    "start": "node ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,6 @@
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "path":"^0.12.7",
-
-
+    "mongoose":"4.6.4"
   }
 }
