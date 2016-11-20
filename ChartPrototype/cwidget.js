@@ -1,4 +1,4 @@
-var lifemodel = Life();
+var gridmodel = Grid();
 var xscale = 10;
 var yscale = 10;
 
@@ -8,10 +8,9 @@ function drawGrid() {
 var can = document.getElementById("Grid");
 var canM = can.getContext("2d");
 canM.clearRect(0,0,xscale*XDIM,yscale*YDIM);
-//console.log(lifemodel.model[0][0]);
 for (var i=0; i < XDIM; i++){
 	for (var j=0; j < YDIM; j++){
-		colorToUse = lifemodel.model[i][j]
+		colorToUse = gridmodel.model[i][j]
 		canM.fillStyle = colorToUse;
 		canM.fillRect(xscale*i,yscale*j, xscale, yscale);
 		}
@@ -26,9 +25,10 @@ for (var i=0; i < XDIM; i++){
 drawGrid();
 
 
+
 // resets the simulation to blank state
 function resetIt() {
-	lifemodel.resetZero();
+	gridmodel.resetZero();
 	drawGrid();
 }
 
@@ -43,7 +43,7 @@ function clickChange(event){
 	var xGrid = Math.floor(xcor/xscale);
 	var yGrid = Math.floor(ycor/yscale);
 	var colorToUse = document.getElementById("html5colorpicker").value;
-	lifemodel.setCellColor(xGrid,yGrid,colorToUse);
+	gridmodel.setCellColor(xGrid,yGrid,colorToUse);
 	drawGrid();
 
 

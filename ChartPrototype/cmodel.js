@@ -11,8 +11,8 @@ var YDIM = 100;
 //Initializes with XDIM x YDIM blank grid
 
 
-Life = function() {
-    var that = Object.create(Life.prototype);
+Grid = function() {
+    var that = Object.create(Grid.prototype);
     
     var rows = []
 	times(XDIM, function() {
@@ -28,7 +28,7 @@ Life = function() {
 }
 
 
-Life.prototype = {
+Grid.prototype = {
 
     setCellColor : function(x,y,colorHexValue) { 
     	this.model[x][y] = colorHexValue;
@@ -36,7 +36,7 @@ Life.prototype = {
 
     
     resetZero : function() {
-    	this.model = Life().model;
+    	this.model = Grid().model;
       },
 
 
