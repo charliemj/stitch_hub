@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+
+  <body>
+
+
+  
+    <input type="color" id="html5colorpicker" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:20%;">
+    <select id="typeSelect" onchange="drawGrid()">
+      <option>CrossStitch</option>
+      <option>Knit</option>
+      <option>Crochet</option>
+    </select>
+
+    
+
+
+
+    <br>
+    <canvas onclick="clickChange(event)" id="canvas" width="400" height="400" style="border:1px solid #000000;">
+    </canvas>
+    <p>
+    <button onclick="resetIt()">Reset!</button>
+    <button onclick="save()">Save</button>
+    </p>
+
+
+    <input type="text" id="chartTitle" placeholder="Title">
+    <input type="text" id="chartDesc" placeholder="Description">
+    
+    
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="chart_editing.js"></script>
+    
+
+    </script>
+
+  </body>
+</html>
