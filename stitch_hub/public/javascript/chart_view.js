@@ -17,6 +17,7 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
         canM.fillStyle = colorToUse;
         canM.fillRect(cellWidth*i,cellHeight*j, cellWidth, cellHeight);
       }
+    }
   };
 
   that.colorCell = function(row, col, color) {
@@ -40,17 +41,17 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
 
   Object.freeze(that);
   return that;
-}
+};
 
 // subclasses
 var CrossStitchChartView = function(model, canvas) {
   return ChartView(10, 10, model, canvas);
 };
 
-var KnitChartView = function() {
+var KnitChartView = function(model, canvas) {
   return ChartView(10, 20, model, canvas);
 };
 
-var CrochetChartView = function() {
+var CrochetChartView = function(model, canvas) {
   return ChartView(10, 15, model, canvas);
 };
