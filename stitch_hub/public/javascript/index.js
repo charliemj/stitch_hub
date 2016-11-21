@@ -5,7 +5,7 @@ $(document).ready(function() {
       id: 'id',
       title: 'chart title',
       description: 'best description',
-      type: 'KNIT',
+      type: 'KNIT_V',
       rowSize: 2,
       colSize: 3,
       rows:
@@ -19,7 +19,7 @@ $(document).ready(function() {
       id: 'id2',
       title: 'other chart title',
       description: 'other best description',
-      type: 'KNIT',
+      type: 'KNIT_H',
       rowSize: 3,
       colSize: 3,
       rows:

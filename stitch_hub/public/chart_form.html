@@ -7,10 +7,17 @@
 </head>
 <body>
   <h1>Fill out how you want to make the chart</h1>
-  <input type="text" id="title" placeholder="Title"><br>
-  <input type="text" id="description" placeholder="Description"><br>
-  <p>Row size: </p><input type="number" id="rowSize"><br>
-  <p>Column size: </p><input type="number" id="colSize">
+  <!-- <input type="text" id="title" placeholder="Title"><br>
+  <input type="text" id="description" placeholder="Description"><br> -->
+  <select id="typeSelect">
+      <option value='CROSS_STICH'>CrossStitch</option>
+      <option value='KNIT_V'>Knit Vertical</option>
+      <option value='CROCHET_V'>Crochet Vertical</option>
+      <option value='KNIT_H'>Knit Horizontal</option>
+      <option value='CROCHET_H'>Crochet Horizontal</option>
+    </select>
+  <p>Row size: </p><input type="number" id="rowSize" min='1' max='100'><br>
+  <p>Column size: </p><input type="number" id="colSize" min='1' max='100'>
   <button onclick='makeChart()'>Make a chart</button>
 </body>
 </html>
