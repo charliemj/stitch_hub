@@ -17,11 +17,6 @@ var ChangeType = function (scale, model, canvas){
 //This function tests the values that will be sent to the DB. Should remove this later.
 var checkVals = function(){
 
-	console.log(document.getElementById('typeSelect').value.split(',')[2]);
-
-
-
-
 	var t = document.getElementById('title').value;
 	var d = document.getElementById('description').value;
 	var rs = document.getElementById('rowSize').value;

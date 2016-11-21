@@ -56,8 +56,8 @@
     <input type="hidden" id="rows">
     <input type="hidden" id="parent">
     <input type="submit" value="SAVE thing">
-    <button onclick='checkVals()'>VALUES Test</button>
     </form>
+    <button onclick='checkVals()'>VALUES Test</button>
     
     <script type="text/javascript" src="javascript/chart_model.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -73,12 +73,13 @@
     title: 'chart title',
     description: 'best description',
     type: 'KNIT_V',
-    rowSize: 2,
+    rowSize: 3,
     colSize: 3,
     rows:
     [
-      [ '#FF0000', '#00FF00', '#0000FF' ],
-      [ '#00FF00', '#0000FF', '#FF0000' ],
+      [ '#123456', '#ABCDEF', '#00FEED' ],
+      [ '#654321', '#FEDCBA', '#00DEAD' ],
+      [ '#AABBCC', '#CCAABB', '#00BEEF' ]
     ],
     parent: 'parent id',
   };
@@ -97,8 +98,9 @@
 
     var XDIM = jsonChart.rowSize;
     var YDIM = jsonChart.colSize;
-    document.getElementById("rowSize").value = XDIM
-    document.getElementById("colSize").value = YDIM
+    document.getElementById("rowSize").value = XDIM;
+    document.getElementById("colSize").value = YDIM;
+    document.getElementById("rows").value = jsonChart.rows;
 
 
     var canvas = document.getElementById("canvas");
