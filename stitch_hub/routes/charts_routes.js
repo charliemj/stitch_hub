@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Charts = require('../models/chart_model.js');
+var Charts = require('../model/chart_model.js');
 
 //GET charts/:id
 router.get('/charts/:id',function(req, res, next){
@@ -22,25 +22,37 @@ router.get('/charts/:id',function(req, res, next){
     })
 });
 
+// Look at the link below to view solution to Cannot GET issue
+// http://stackoverflow.com/questions/38906961/node-express-cannot-get-route
+//
+// router.get('/charts', function() {}) will make
+// http://localhost:3000/charts/charts handle the GET request
+// 
+// router.get('/', function() {}) will make
+// http://localhost:3000/charts handle the GET request, which is what we want
+
 //GET charts/limit?=10 //home feed
-router.get('/charts',function(req, res, next){
-    var chartId = req.body.id;
-    Charts.find({})
-    .sort({'date':-1})
-    .limit(10)
-    .exec(function(err,charts){
-        if (err) {
-            res.send({
-                success: false,
-                message: err
-            }); //end if
-        } else{
-            res.send({
-                sucess:true,
-                message:charts
-            })
-        }//end else
-    });
+router.get('/',function(req, res, next){
+    res.sendStatus(200);
+    // console.log(__dirname);
+    // res.sendFile(__dirname + '/index.html');
+    // var chartId = req.body.id;
+    // Charts.find({})
+    // .sort({'date':-1})
+    // .limit(10)
+    // .exec(function(err,charts){
+    //     if (err) {
+    //         res.send({
+    //             success: false,
+    //             message: err
+    //         }); //end if
+    //     } else{
+    //         res.send({
+    //             sucess:true,
+    //             message:charts
+    //         })
+    //     }//end else
+    // });
 });
 
 

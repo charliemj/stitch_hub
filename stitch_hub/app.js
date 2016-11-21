@@ -40,11 +40,11 @@ app.use(express.static('public'));
 // app.use('/', routes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 // homepage
 app.get('/', function(req, res) {
@@ -53,6 +53,9 @@ app.get('/', function(req, res) {
       res.end();
     });
 });
+
+var charts = require('./routes/charts_routes.js');
+app.use('/charts', charts);
 
 // error handlers
 

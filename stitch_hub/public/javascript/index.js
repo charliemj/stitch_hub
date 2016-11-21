@@ -17,6 +17,6 @@ $(document).ready(function() {
   var canvas = document.createElement('canvas');
   $('.charts-container').append(canvas);
   var chartModel = getChartFromJson(chartJson);
-  var chartView = KnitChartView(chartModel, canvas);
+  var chartView = KnitChartViewVert(chartModel, canvas);
   chartView.draw();
 });
