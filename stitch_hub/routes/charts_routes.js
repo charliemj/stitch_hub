@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Charts = require('../model/chart_model.js');
 
 //GET charts/:id
-router.get('/charts/:id',function(req, res, next){
+router.get('/:id',function(req, res, next){
     var chartId = req.body.id;
     Charts.find({_id:chartId})
     .exec(function(err,chart){
@@ -30,6 +30,11 @@ router.get('/charts/:id',function(req, res, next){
 // 
 // router.get('/', function() {}) will make
 // http://localhost:3000/charts handle the GET request, which is what we want
+
+// The reason for this is that we specify in app.js that I've copied below
+// //var charts = require('./routes/charts_routes.js');
+// //app.use('/charts', charts);
+// this prepends all routes in charts_routes with '/charts'
 
 //GET charts/limit?=10 //home feed
 router.get('/',function(req, res, next){
@@ -57,7 +62,7 @@ router.get('/',function(req, res, next){
 
 
 //POST charts/
-router.post('/charts', function(req,res, next){
+router.post('/', function(req,res, next){
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
     // var date = 
