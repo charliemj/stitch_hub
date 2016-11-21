@@ -10,6 +10,10 @@ var ChartModel = function(rowSize, colSize) {
     rows.push(row);
   }
 
+  that.getRows = function() {
+    return rows;
+  }
+
   /**
   * Returns row size.
   */
