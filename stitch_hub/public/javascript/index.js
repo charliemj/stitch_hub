@@ -20,3 +20,7 @@ $(document).ready(function() {
   var chartView = KnitChartViewVert(chartModel, canvas);
   chartView.draw();
 });
+
+var makeChart = function() {
+  window.location = "chart_form.html";
+}
