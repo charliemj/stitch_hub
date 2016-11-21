@@ -65,61 +65,7 @@
     <script type="text/javascript" src="javascript/chart_controller.js"></script>
     <script type="text/javascript" src="javascript/json_chart_conversion.js"></script>
     <script type="text/javascript" src="javascript/ratios.js"></script>
-    <script>
-
-    chartJson =
-  {
-    id: 'id',
-    title: 'chart title',
-    description: 'best description',
-    type: 'KNIT_V',
-    rowSize: 12,
-    colSize: 12,
-    rows:
-    [
-      [ '#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED' ],
-      [ '#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD' ],
-      [ '#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF' ],
-      [ '#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED' ],
-      [ '#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD' ],
-      [ '#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF' ],
-      [ '#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED' ],
-      [ '#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD' ],
-      [ '#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF' ],
-      [ '#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED','#123456', '#ABCDEF', '#00FEED' ],
-      [ '#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD','#654321', '#FEDCBA', '#00DEAD' ],
-      [ '#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF','#AABBCC', '#CCAABB', '#00BEEF' ]
-    ],
-    parent: 'parent id',
-  };
-
-
-
-    //Change this chartJson to the loaded json object
-    var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
-
-    document.getElementById("parent").value = jsonChart.id;
-    scaledata = getRatio(jsonChart.type);
-    var xscale = scaledata[1];
-    var yscale = scaledata[2];
-    document.getElementById("typeSelect").value = xscale +','+ yscale +','+ jsonChart.type;
-    document.getElementById("type").value = jsonChart.type;
-
-    var XDIM = jsonChart.rowSize;
-    var YDIM = jsonChart.colSize;
-    document.getElementById("rowSize").value = XDIM;
-    document.getElementById("colSize").value = YDIM;
-    document.getElementById("rows").value = jsonChart.rows;
-
-
-    var canvas = document.getElementById("canvas");
-    var chartType = document.getElementById("typeSelect").name;
-    var model = getChartFromJson(jsonChart);
-    var view = ChartView(xscale,yscale,model,canvas);
-    view.draw();
-
-
-    </script>
+    <script type="text/javascript" src="javascript/chart_editing.js"></script>
 
     
   </body>
