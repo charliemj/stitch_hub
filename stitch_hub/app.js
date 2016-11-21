@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 
-//need to do this for stich_hub
+//**to test database need to specify location of database below!
 //mongoose.connect('mongodb://localhost/my_database');
 
 var db = mongoose.connection;
