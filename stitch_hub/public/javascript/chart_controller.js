@@ -1,10 +1,10 @@
-function ClickChange(view, model, color){
+var ClickChange = function (view, model, color){
 	var cell = view.getCell(event);
     view.colorCell(cell.row, cell.col, color);
     model.setColor(cell.row, cell.col, color);
 }
 
-function ChangeType(scale, model, canvas){
+var ChangeType = function (scale, model, canvas){
 	var temp = scale.split(',');
 	var xscale = temp[0];
 	var yscale = temp[1];
@@ -13,7 +13,9 @@ function ChangeType(scale, model, canvas){
 }
 
 
-function Save(){
+
+//This function tests the values that will be sent to the DB. Should remove this later.
+var checkVals = function(){
 
 	console.log(document.getElementById('typeSelect').value.split(',')[2]);
 
@@ -26,8 +28,10 @@ function Save(){
 	var cs = document.getElementById('colSize').value;
 	var ct = document.getElementById('type').value;
 	var r = document.getElementById('rows').value;
+	var p = document.getElementById('parent').value;
 
 	console.log("Title", t,d);
 	console.log("ChartType", ct);
 	console.log("Rows", r);
+	console.log("Parent", p);
 }

@@ -62,21 +62,21 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
 
 // subclasses
 var CrossStitchChartView = function(model, canvas) {
-  return ChartView(10, 10, model, canvas);
+  return ChartView(12, 12, model, canvas);
 };
 
 var KnitChartViewVert = function(model, canvas) {
-  return ChartView(10, 20, model, canvas);
+  return ChartView(12, 15, model, canvas);
 };
 
 var CrochetChartViewVert = function(model, canvas) {
-  return ChartView(10, 15, model, canvas);
+  return ChartView(12, 16, model, canvas);
 };
 
 var KnitChartViewHoriz = function(model, canvas) {
-  return ChartView(20, 10, model, canvas);
+  return ChartView(15, 12, model, canvas);
 };
 
 var CrochetChartViewHoriz = function(model, canvas) {
-  return ChartView(15, 10, model, canvas);
+  return ChartView(16, 12, model, canvas);
 };
