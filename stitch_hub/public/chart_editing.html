@@ -4,15 +4,26 @@
   </head>
 
   <body>
-  
+    
     
 
   
-    <input type="color" id="html5colorpicker" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:20%;">
-    <select id="typeSelect" onchange="drawGrid()">
-      <option>CrossStitch</option>
-      <option>Knit</option>
-      <option>Crochet</option>
+    <input type="color" id="html5colorpicker" value="#ff0000" style="width:20%;">
+
+
+    <select id="typeSelect" 
+      onchange="
+        view = ChangeType(document.getElementById('typeSelect').value, model, canvas);
+        var temporary = document.getElementById('typeSelect').value.split(',')[2];
+        document.getElementById('type').value = temporary;
+        view.draw();
+
+        ">
+      <option value='10,10,CROSS_STICH'>CrossStitch</option>
+      <option value='10,20,KNIT_V'>Knit Vertical</option>
+      <option value='10,15,CROCHET_V'>Crochet Vertical</option>
+      <option value='20,10,KNIT_H'>Knit Horizontal</option>
+      <option value='15,10,CROCHET_H'>Crochet Horizontal</option>
     </select>
 
     
@@ -20,30 +31,73 @@
 
 
     <br>
-    <canvas onclick="clickChange(event)" id="canvas" width="400" height="400" style="border:1px solid #000000;">
+    <canvas 
+      id="canvas" 
+      
+      onclick='
+      ClickChange(view,model,document.getElementById("html5colorpicker").value);
+      document.getElementById("rows").value = model.getRows();' 
+      
+      width="400"
+      height="400" 
+      style="border:1px solid #000000;">
     </canvas>
-    <p>
-    <button onclick="save()">Save</button>
-    </p>
-
-
-    <input type="text" id="chartTitle" placeholder="Title">
-    <input type="text" id="chartDesc" placeholder="Description">
-    <input type="text" id="chartTags" placeholder="Tags">
+    <br>
+  
     
     
-    <script type="text/javascript" src="grid_model.js"></script>
+
+    TODO: make this into a form later for posting to db<br>
+    <input type="text" id="title" placeholder="Title"><br>
+    <input type="text" id="description" placeholder="Description"><br>
+    <input type="hidden" id="rowSize">
+    <input type="hidden" id="colSize">
+    <input type="hidden" id="type">
+    <input type="hidden" id="rows">
+    <input type="hidden" id="parent">
+
+    <button onclick='Save()'>Save</button>
+    
+    
+    <script type="text/javascript" src="javascript/chart_model.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="draw_grid.js"></script>
+    <script type="text/javascript" src="javascript/chart_view.js"></script>
+    <script type="text/javascript" src="javascript/chart_controller.js"></script>
+    
     <script>
+
+    
+    
+
+
+    //change these things to load in mustache stuff:
+    // XDIM, YDIM
+    // make model from parent
+    // initial chart type and scale
+    //
+
+    var xscale = 10;
+    var yscale = 10;
+    document.getElementById("typeSelect").value = '10,10,CROSS_STICH';
+    document.getElementById("type").value = "CROSS_STICH";
+
     var XDIM = 25;
     var YDIM = 25;
-    var canvasGrid = GridModel();
-    drawGrid();
+    document.getElementById("rowSize").value = XDIM
+    document.getElementById("colSize").value = YDIM
+
+    
+
+    
+
+    var canvas = document.getElementById("canvas");
+    var chartType = document.getElementById("typeSelect").name;
+    var model = ChartModel(XDIM,YDIM);
+    var view = ChartView(xscale,yscale,model,canvas);
+
+
     </script>
 
     
-    <script type="text/javascript" src="click_change.js"></script>
-
   </body>
 </html>
