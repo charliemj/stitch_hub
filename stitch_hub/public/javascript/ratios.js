@@ -3,8 +3,8 @@ var getRatio = function(type){
         'CROSS_STICH': [12,12],
         'KNIT_V': [12,15],
         'KNIT_H': [15,12],
-        'CROCHET_H': [12,16],
-        'CROCHET_V': [16,12],
+        'CROCHET_V': [12,16],
+        'CROCHET_H': [16,12],
 
           }
 
