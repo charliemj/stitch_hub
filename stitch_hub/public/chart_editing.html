@@ -35,9 +35,7 @@
       <br>
       <div id="chart">
         <canvas 
-          id="canvas" 
-          
-          onclick='ClickChange(view,model,document.getElementById("html5colorpicker").value);' 
+          id="canvas"
           width="400"
           height="400" 
           style="border:1px solid #000000;">
@@ -47,7 +45,7 @@
 
       <input type="text" name="title" id="title" maxlength="16"  placeholder="Title"><br>
       <input type="text" name="description" id="description" maxlength="100"  placeholder="Description"><br>
-      <button onclick='PostChart()'>POST</button>
+      <button id='post-chart-button'>POST</button>
       <button onclick='checkVals()'>VALUES Test</button>    
     </div> <!-- end of wholeThing -->
 
