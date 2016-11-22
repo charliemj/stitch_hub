@@ -25,7 +25,7 @@ var chartSchema = mongoose.Schema({
     rowSize: {type:Number},
     colSize: {type:Number},
     rows:[[{type:String, validate: validators.isHexColor()}]], //if things break look at this
-    parent: {type:ObjectId,ref:"Chart"}
+    parent: {type:ObjectId, ref:"Chart"}
 });
 
 
