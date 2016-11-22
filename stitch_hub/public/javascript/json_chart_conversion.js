@@ -5,7 +5,11 @@ var getChartFromJson = function(chartJson) {
   var chart = ChartModel(rowSize, colSize);
   for (var i = 0; i < rowSize; i++) {
     for (var j = 0; j < colSize; j++) {
-      chart.setColor(i, j, chartJson.rows[i][j]);
+
+    	var index = i*rowSize + j;
+    	var colors = chartJson.rows[0].split(",");
+
+      chart.setColor(i, j, colors[index]);
     }
   }
 

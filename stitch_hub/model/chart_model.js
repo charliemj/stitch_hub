@@ -18,14 +18,14 @@ var validators = require('mongoose-validators');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var chartSchema = mongoose.Schema({
-    title: {type:String},
-    description: {type:String},
-    date: { type: Date, default: Date.now,validate: validators.isDate() },
-    type: {type:String, validate: validators.matches('KNIT_V', 'CROSS_STICH','CROCHET_V','KNIT_H','CROCHET_H')},
-    rowSize: {type:Number},
-    colSize: {type:Number},
-    rows:[[{type:String, validate: validators.isHexColor()}]], //if things break look at this
-    parent: {type:ObjectId,ref:"Chart"}
+    title: String,
+    description: String,
+    //date: { type: Date, default: Date.now,validate: validators.isDate() },
+    type: String,
+    rowSize: Number,
+    colSize: Number,
+    rows:  [String],//[[{type:String, validate: validators.isHexColor()}]], //if things break look at this
+    parent: String
 });
 
 
