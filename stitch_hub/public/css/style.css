@@ -20,3 +20,11 @@ input[type="color"] {
   /*top:50%;*/
 
 }
+
+.charts-container div{
+  padding:0;
+  margin-left: auto ;
+  margin-right: auto ;
+  /*width:800px;*/
+
+}
