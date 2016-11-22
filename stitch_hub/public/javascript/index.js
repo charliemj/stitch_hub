@@ -26,6 +26,7 @@ var chartTemplate = function(chartJson) {
 
   var title = document.createElement('p');
   $(title).text(chartJson.title);
+  $(title).css("font-weight","Bold");
   div.append(title);
 
   // canvas for rendering the chart
