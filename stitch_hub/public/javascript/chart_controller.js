@@ -12,6 +12,31 @@ var ChangeType = function (scale, model, canvas){
 	return ChartView(xscale, yscale, model, canvas)
 }
 
+var PostChart = function(){
+
+$(document).ready(function() {
+  $.ajax({
+    url: '/charts',
+    method: 'POST',
+    data: {
+    	title: document.getElementById("title").value,
+    	description: document.getElementById("description").value,
+    	rowSize: XDIM,
+    	colSize: YDIM,
+    	type: TypeOfChart,
+    	rows: model.getRows(),
+    	parent: jsonChart.id
+    },
+    success: function(charts) {
+      console.log("successfully posted chart");
+    },
+    error: function(error) {
+      console.log('Error posting charts');
+      console.log(error);
+    }
+  });
+});
+};
 
 
 //This function tests the values that will be sent to the DB. Should remove this later.
@@ -19,11 +44,11 @@ var checkVals = function(){
 
 	var t = document.getElementById('title').value;
 	var d = document.getElementById('description').value;
-	var rs = document.getElementById('rowSize').value;
-	var cs = document.getElementById('colSize').value;
-	var ct = document.getElementById('type').value;
-	var r = document.getElementById('rows').value;
-	var p = document.getElementById('parent').value;
+	var rs = XDIM;
+	var cs = YDIM;
+	var ct = TypeOfChart;
+	var r = model.getRows();
+	var p = jsonChart.id;
 
 	console.log("Title", t,d);
 	console.log("ChartType", ct);
