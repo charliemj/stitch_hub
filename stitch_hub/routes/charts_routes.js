@@ -79,6 +79,7 @@ router.post('/', function(req,res, next){
         function(err,chart){
             if (err) {
                 console.log("there was an error");
+                console.log(err);
                 res.send({
                     success: false,
                     message: err
