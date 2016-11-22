@@ -24,13 +24,19 @@ var chartTemplate = function(chartJson) {
   var div = document.createElement('div');
   div.setAttribute('data-id', chartJson.id);
 
+  var title = document.createElement('p');
+  $(title).text(chartJson.title);
+  div.append(title);
+
   // canvas for rendering the chart
   var canvas = document.createElement('canvas');
+  canvas.setAttribute('style', "border:1px solid #000000;");
   div.append(canvas);
 
   // render the chart
   var chartModel = getChartFromJson(chartJson);
   var chartView = CrossStitchChartView(chartModel, canvas);
+
   chartView.draw();
 
   div.append(document.createElement('br')); // add seperator between this and 
@@ -43,6 +49,7 @@ var chartTemplate = function(chartJson) {
     window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
     window.location = "chart_editing.html";
   }
+  div.append(document.createElement('hr')); // add seperator between charts.
 
   return div;
 }
