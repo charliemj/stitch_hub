@@ -3,15 +3,13 @@ $(document).ready(function() {
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
 
   // store information about the type of chart into the type selector
-  scaledata = getRatio(jsonChart.type);
-  var xscale = scaledata[1];
-  var yscale = scaledata[2];
-  var TypeOfChart = jsonChart.type;
-  document.getElementById("typeSelect").value = scaledata[1] +','+ scaledata[2] +','+ jsonChart.type;
+  scaleData = getRatio(jsonChart.type);
+  var xscale = scaleData[1];
+  var yscale = scaleData[2];
+  document.getElementById("typeSelect").value = jsonChart.type;
 
   // color the canvas based on the given chart
   var canvas = document.getElementById("canvas");
-  var chartType = jsonChart.type;
   var model = getChartFromJson(jsonChart);
   var view = ChartView(xscale,yscale,model,canvas);
   view.draw();
@@ -35,6 +33,15 @@ $(document).ready(function() {
     view.draw();
   });
 
+  // add event listener for type select
+  $('#typeSelect').change(function() {
+    scaleData = getRatio(document.getElementById('typeSelect').value);
+    xscale = scaleData[1];
+    yscale = scaleData[2];
+    view = ChangeSize(xscale, yscale, model, canvas);
+    view.draw();
+  })
+
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
     var stringifiedRows = JSON.stringify(model.getRows());
@@ -46,7 +53,7 @@ $(document).ready(function() {
         description: document.getElementById("description").value,
         rowSize: model.getRowSize(),
         colSize: model.getColSize(),
-        type: TypeOfChart,
+        type: document.getElementById("typeSelect").value,
         rows: stringifiedRows,
         parent: jsonChart.id
       },
@@ -60,13 +67,4 @@ $(document).ready(function() {
       },
     });
   });
-
 });
-
-
-var changeType = function() {
-  view = ChangeType(document.getElementById('typeSelect').value, model, canvas);
-  var temporary = document.getElementById('typeSelect').value.split(',')[2];
-  TypeOfChart = temporary;
-  view.draw();
-}

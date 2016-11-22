@@ -4,11 +4,7 @@ var ClickChange = function (view, model, color){
     model.setColor(cell.row, cell.col, color);
 }
 
-var ChangeType = function (scale, model, canvas){
-	var temp = scale.split(',');
-	xscale = temp[0];
-	yscale = temp[1];
-
+var ChangeSize = function (xscale, yscale, model, canvas){
 	return ChartView(xscale, yscale, model, canvas)
 }
 
