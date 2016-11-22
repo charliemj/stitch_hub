@@ -21,6 +21,20 @@ $(document).ready(function() {
     ClickChange(view,model,document.getElementById("html5colorpicker").value);
   });
 
+  // add event listener for zooming buttons
+  $('#decrease').on('click', function() {
+    view = ChartView(xscale/2, yscale/2, model, canvas);
+    view.draw();
+  });
+  $('#nonecrease').on('click', function() {
+    view = ChartView(xscale, yscale, model, canvas);
+    view.draw();
+  });
+  $('#increase').on('click', function() {
+    view = ChartView(2*xscale, 2*yscale, model, canvas);
+    view.draw();
+  });
+
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
     var stringifiedRows = JSON.stringify(model.getRows());
