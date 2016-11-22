@@ -12,38 +12,6 @@ var ChangeType = function (scale, model, canvas){
 	return ChartView(xscale, yscale, model, canvas)
 }
 
-var PostChart = function(){
-
-$(document).ready(function() {
-
-  var stringifiedRows = JSON.stringify(model.getRows());
-  $.ajax({
-    url: '/charts',
-    method: 'POST',
-    data: {
-    	title: document.getElementById("title").value,
-    	description: document.getElementById("description").value,
-    	rowSize: XDIM,
-    	colSize: YDIM,
-    	type: TypeOfChart,
-    	rows: stringifiedRows,
-    	parent: jsonChart.id
-    },
-    success: function() {
-      console.log("successfully posted chart");
-      window.location.replace("/");
-    },
-    error: function(error) {
-      console.log('Error posting charts');
-      console.log(error);
-    },
-
-
-  });
-});
-};
-
-
 //This function tests the values that will be sent to the DB. Should remove this later.
 var checkVals = function(){
 
