@@ -16,7 +16,8 @@ document.getElementById("rows").value = jsonChart.rows;
 
 
 var canvas = document.getElementById("canvas");
-var chartType = document.getElementById("typeSelect").name;
+var chartType = jsonChart.type;
 var model = getChartFromJson(jsonChart);
+document.getElementById("rows").value = model.getRows();
 var view = ChartView(xscale,yscale,model,canvas);
 view.draw();
