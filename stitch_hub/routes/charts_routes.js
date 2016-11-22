@@ -71,7 +71,7 @@ router.post('/', function(req,res, next){
     var parent = req.body.parent;
 
 
-    console.log(title, description, type, rowSize, colSize, rows, parent);
+    //console.log(title, description, type, rowSize, colSize, rows, parent);
 
 
     Charts.create({title:title,description:description,
