@@ -67,7 +67,7 @@ router.post('/', function(req,res, next){
     var type = req.body.type;
     var rowSize = req.body.rowSize;
     var colSize = req.body.colSize;
-    var rows = req.body.rows;
+    var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
 
 

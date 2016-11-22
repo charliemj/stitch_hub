@@ -15,6 +15,8 @@ var ChangeType = function (scale, model, canvas){
 var PostChart = function(){
 
 $(document).ready(function() {
+
+  var stringifiedRows = JSON.stringify(model.getRows());
   $.ajax({
     url: '/charts',
     method: 'POST',
@@ -24,7 +26,7 @@ $(document).ready(function() {
     	rowSize: XDIM,
     	colSize: YDIM,
     	type: TypeOfChart,
-    	rows: model.getRows(),
+    	rows: stringifiedRows,
     	parent: jsonChart.id
     },
     success: function(charts) {
