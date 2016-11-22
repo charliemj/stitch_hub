@@ -29,13 +29,16 @@ $(document).ready(function() {
     	rows: stringifiedRows,
     	parent: jsonChart.id
     },
-    success: function(charts) {
+    success: function() {
       console.log("successfully posted chart");
+      window.location.replace("/");
     },
     error: function(error) {
       console.log('Error posting charts');
       console.log(error);
-    }
+    },
+
+
   });
 });
 };

@@ -17,15 +17,18 @@ var validators = require('mongoose-validators');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
+var validTypes = ["CROSS_STITCH", "KNIT_V", "KNIT_H", "CROCHET_V", "CROCHET_H"];
+
 var chartSchema = mongoose.Schema({
-    title: {type:String, validate: validators.isLength(0,16)},
-    description: {type:String, validate: validators.isLength(0,100)},
-    date: { type: Date, default: Date.now,validate: validators.isDate() },
-    type: {type:String, validate: validators.isIn(['KNIT_V', 'CROSS_STITCH','CROCHET_V','KNIT_H','CROCHET_H'])},
+    title: {type:String, validate: [validators.isLength(0,16)]},
+    description: {type:String, validate: [validators.isLength(0,100)]},
+    date: { type: Date, default: Date.now,validate: [validators.isDate()] },
+    type: {type:String, enum: validTypes},
     rowSize: {type:Number},
     colSize: {type:Number},
     rows:[[{type:String, validate: validators.isHexColor()}]], //if things break look at this
     parent: {type:ObjectId, ref:"Chart"}
+
 });
 
 
