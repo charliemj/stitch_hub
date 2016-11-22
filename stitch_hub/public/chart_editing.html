@@ -48,13 +48,13 @@
     
 
     <form action="/charts" method="post">
-    <input type="text" id="title" maxlength="16" required="true" placeholder="Title"><br>
-    <input type="text" id="description" maxlength="100" required="true" placeholder="Description"><br>
-    <input type="hidden" id="rowSize">
-    <input type="hidden" id="colSize">
-    <input type="hidden" id="type">
-    <input type="hidden" id="rows">
-    <input type="hidden" id="parent">
+    <input type="text" name="title" id="title" maxlength="16" required="true" placeholder="Title"><br>
+    <input type="text" name="description" id="description" maxlength="100" required="true" placeholder="Description"><br>
+    <input type="hidden" name="rowSize" id="rowSize">
+    <input type="hidden" name="colSize" id="colSize">
+    <input type="hidden" name="type" id="type">
+    <input type="hidden" name="rows" id="rows">
+    <input type="hidden" name="parent" id="parent">
     <input type="submit" value="SAVE thing">
     </form>
     <button onclick='checkVals()'>VALUES Test</button>

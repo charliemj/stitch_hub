@@ -30,7 +30,7 @@ var chartTemplate = function(chartJson) {
 
   // render the chart
   var chartModel = getChartFromJson(chartJson);
-  var chartView = KnitChartViewVert(chartModel, canvas);
+  var chartView = CrossStitchChartView(chartModel, canvas);
   chartView.draw();
 
   div.append(document.createElement('br')); // add seperator between this and 
