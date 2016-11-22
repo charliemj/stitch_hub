@@ -1,0 +1,22 @@
+
+#wholeThing{
+    margin-left: auto ;
+    margin-right: auto ;
+    width:800px;
+}
+
+#canvas{
+    padding: 0;
+    margin: auto;
+    display: block;
+    
+}
+
+input[type="color"] {
+  /*position:absolute;*/
+  display: block;
+  margin-left:25%;
+  width: 50%;
+  /*top:50%;*/
+
+}

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="css/style.css" rel="stylesheet">
   </head>
 
   <body>
     
+    <div id="wholeThing">
+    <div id="colorpicker">
+      <input type="color" id="html5colorpicker" value="#ff0000" style="width:50px; height:50px">
+    </div> <!-- end of colorpicker div -->
     
-
-  
-    <input type="color" id="html5colorpicker" value="#ff0000" style="width:50px; height:50px">
-    Zoom:
-    <button id="decrease" onclick="view = ChartView(xscale/2, yscale/2, model, canvas); view.draw();">.</button>
-    <button id="nonecrease" onclick="view = ChartView(xscale, yscale, model, canvas); view.draw();">o</button>
-    <button id="increase" onclick="view = ChartView(2*xscale, 2*yscale, model, canvas); view.draw();">O</button>
+    <div id="zoom">
+      Zoom:
+      <button id="decrease" onclick="view = ChartView(xscale/2, yscale/2, model, canvas); view.draw();">.</button>
+      <button id="nonecrease" onclick="view = ChartView(xscale, yscale, model, canvas); view.draw();">o</button>
+      <button id="increase" onclick="view = ChartView(2*xscale, 2*yscale, model, canvas); view.draw();">O</button>
+    </div> <!-- end of zoom div -->
     
     
 
@@ -36,14 +40,16 @@
 
 
     <br>
-    <canvas 
-      id="canvas" 
-      
-      onclick='ClickChange(view,model,document.getElementById("html5colorpicker").value);'
-      width="400"
-      height="400" 
-      style="border:1px solid #000000;">
-    </canvas>
+    <div id="chart">
+      <canvas 
+        id="canvas" 
+        
+        onclick='ClickChange(view,model,document.getElementById("html5colorpicker").value);' 
+        width="400"
+        height="400" 
+        style="border:1px solid #000000;">
+      </canvas>
+    </div> <!-- end chart div -->
     <br>
   
     
@@ -57,6 +63,8 @@
 
 
     
+    </div> <!-- end of wholeThing -->
+
     <script type="text/javascript" src="javascript/chart_model.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="javascript/chart_view.js"></script>
