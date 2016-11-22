@@ -2,6 +2,13 @@
 <html>
   <head>
     <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="javascript/chart_model.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="javascript/chart_view.js"></script>
+    <script type="text/javascript" src="javascript/chart_controller.js"></script>
+    <script type="text/javascript" src="javascript/json_chart_conversion.js"></script>
+    <script type="text/javascript" src="javascript/ratios.js"></script>
+    <script type="text/javascript" src="javascript/chart_editing.js"></script>
   </head>
   <body>
     <div id="wholeThing">
@@ -16,9 +23,6 @@
         <button id="increase" onclick="view = ChartView(2*xscale, 2*yscale, model, canvas); view.draw();">O</button>
       </div> <!-- end of zoom div -->
       
-      
-
-
       <select id="typeSelect" 
         onchange="changeType()">
         <option value='12,12,CROSS_STITCH'>CrossStitch</option>
@@ -28,35 +32,17 @@
         <option value='16,12,CROCHET_H'>Crochet Horizontal</option>
       </select>
 
-      
-
-
-
       <br>
+
       <div id="chart">
-        <canvas 
-          id="canvas"
-          width="400"
-          height="400" 
-          style="border:1px solid #000000;">
-        </canvas>
+        <canvas id="canvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
       </div> <!-- end chart div -->
+      
       <br>
 
       <input type="text" name="title" id="title" maxlength="16"  placeholder="Title"><br>
       <input type="text" name="description" id="description" maxlength="100"  placeholder="Description"><br>
-      <button id='post-chart-button'>POST</button>
-      <button onclick='checkVals()'>VALUES Test</button>    
+      <button id='post-chart-button'>POST</button> 
     </div> <!-- end of wholeThing -->
-
-    <script type="text/javascript" src="javascript/chart_model.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="javascript/chart_view.js"></script>
-    <script type="text/javascript" src="javascript/chart_controller.js"></script>
-    <script type="text/javascript" src="javascript/json_chart_conversion.js"></script>
-    <script type="text/javascript" src="javascript/ratios.js"></script>
-    <script type="text/javascript" src="javascript/chart_editing.js"></script>
-
-    
   </body>
 </html>
