@@ -1,38 +1,16 @@
 $(document).ready(function() {
-  charts =
-  [
-    {
-      id: 'id',
-      title: 'chart title',
-      description: 'best description',
-      type: 'KNIT_V',
-      rowSize: 2,
-      colSize: 3,
-      rows:
-      [
-        [ '#FF0000', '#00FF00', '#0000FF' ],
-        [ '#00FF00', '#0000FF', '#FF0000' ],
-      ],
-      parent: 'parent id',
+  $.ajax({
+    url: '/charts',
+    method: 'GET',
+    success: function(charts) {
+      charts.forEach(function(chartJson) {
+        addChart(chartJson);
+      });
     },
-    {
-      id: 'id2',
-      title: 'other chart title',
-      description: 'other best description',
-      type: 'KNIT_H',
-      rowSize: 3,
-      colSize: 3,
-      rows:
-      [
-        [ '#FF0000', '#00FF00', '#0000FF' ],
-        [ '#00FF00', '#0000FF', '#FF0000' ],
-        [ '#00FF00', '#0000FF', '#FF0000' ],
-      ],
-      parent: 'parent id 2',
+    error: function(error) {
+      console.log('Error fetching charts');
+      console.log(error);
     }
-  ];
-  charts.forEach(function(chartJson) {
-    addChart(chartJson);
   });
 });
 

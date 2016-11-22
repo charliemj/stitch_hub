@@ -38,27 +38,23 @@ router.get('/:id',function(req, res, next){
 // this prepends all routes in charts_routes with '/charts'
 
 //GET charts/limit?=10 //home feed
-router.get('/',function(req, res, next){
-    res.sendStatus(200);
+router.get('/',function(req, res/*, next*/){
+    //res.sendStatus(200);
     // console.log(__dirname);
-    // res.sendFile(__dirname + '/index.html');
-    // var chartId = req.body.id;
-    // Charts.find({})
-    // .sort({'date':-1})
-    // .limit(10)
-    // .exec(function(err,charts){
-    //     if (err) {
-    //         res.send({
-    //             success: false,
-    //             message: err
-    //         }); //end if
-    //     } else{
-    //         res.send({
-    //             sucess:true,
-    //             message:charts
-    //         })
-    //     }//end else
-    // });
+    var chartId = req.body.id;
+    Charts.find({})
+    .sort({'date':-1})
+    .limit(10)
+    .exec(function(err,charts){
+        if (err) {
+            res.send({
+                success: false,
+                message: err
+            }); //end if
+        } else{
+            res.send(charts)
+        }//end else
+    });
 });
 
 
