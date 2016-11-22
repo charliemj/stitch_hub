@@ -78,11 +78,13 @@ router.post('/', function(req,res, next){
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
         function(err,chart){
             if (err) {
+                console.log("there was an error");
                 res.send({
                     success: false,
                     message: err
                 }); //end if
             } else{
+                console.log("there was no error");
                 res.redirect("/"); //eventually want to redirect to newly created chart page
             }
         }
