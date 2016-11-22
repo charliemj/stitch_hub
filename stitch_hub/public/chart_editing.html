@@ -6,14 +6,17 @@
 
   <body>
     
-    
     <div id="wholeThing">
-  
-    <input type="color" id="html5colorpicker" value="#ff0000" style="width:50px; height:50px">
-    Zoom:
-    <button id="decrease" onclick="view = ChartView(xscale/2, yscale/2, model, canvas); view.draw();">.</button>
-    <button id="nonecrease" onclick="view = ChartView(xscale, yscale, model, canvas); view.draw();">o</button>
-    <button id="increase" onclick="view = ChartView(2*xscale, 2*yscale, model, canvas); view.draw();">O</button>
+    <div id="colorpicker">
+      <input type="color" id="html5colorpicker" value="#ff0000" style="width:50px; height:50px">
+    </div> <!-- end of colorpicker div -->
+    
+    <div id="zoom">
+      Zoom:
+      <button id="decrease" onclick="view = ChartView(xscale/2, yscale/2, model, canvas); view.draw();">.</button>
+      <button id="nonecrease" onclick="view = ChartView(xscale, yscale, model, canvas); view.draw();">o</button>
+      <button id="increase" onclick="view = ChartView(2*xscale, 2*yscale, model, canvas); view.draw();">O</button>
+    </div> <!-- end of zoom div -->
     
     
 
@@ -39,17 +42,17 @@
 
     <br>
     <div id="chart">
-    <canvas 
-      id="canvas" 
-      
-      onclick='
-      ClickChange(view,model,document.getElementById("html5colorpicker").value);
-      document.getElementById("rows").value = model.getRows();' 
-      width="400"
-      height="400" 
-      style="border:1px solid #000000;">
-    </canvas>
-  </div> <!-- end chart div -->
+      <canvas 
+        id="canvas" 
+        
+        onclick='
+        ClickChange(view,model,document.getElementById("html5colorpicker").value);
+        document.getElementById("rows").value = model.getRows();' 
+        width="400"
+        height="400" 
+        style="border:1px solid #000000;">
+      </canvas>
+    </div> <!-- end chart div -->
     <br>
   
     
