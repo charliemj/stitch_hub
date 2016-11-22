@@ -5,13 +5,13 @@ var makeChart = function() {
   var rowSize = parseInt($('#rowSize').val());
   var colSize = parseInt($('#colSize').val());
   var rows = [];
-  var row = '#FFFFFF';
   for (var i = 0; i < rowSize; i++) {
+    var row = [];
     for (var j = 0; j < colSize; j++) {
-      row += ',#FFFFFF';
+      row.push('#FFFFFF');
     }
+    rows.push(row);
   }
-  rows.push(row);
   var chartJson = 
   {
     title: title,

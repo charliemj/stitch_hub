@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 //**to test database need to specify location of database below!
-mongoose.connect('mongodb://localhost/my_database7');
+mongoose.connect('mongodb://localhost/my_database');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
