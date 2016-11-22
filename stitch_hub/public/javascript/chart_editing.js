@@ -16,3 +16,11 @@ var chartType = jsonChart.type;
 var model = getChartFromJson(jsonChart);
 var view = ChartView(xscale,yscale,model,canvas);
 view.draw();
+
+
+var changeType = function() {
+  view = ChangeType(document.getElementById('typeSelect').value, model, canvas);
+  var temporary = document.getElementById('typeSelect').value.split(',')[2];
+  TypeOfChart = temporary;
+  view.draw();
+}
