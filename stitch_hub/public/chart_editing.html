@@ -9,6 +9,12 @@
 
   
     <input type="color" id="html5colorpicker" value="#ff0000" style="width:50px; height:50px">
+    Zoom:
+    <button id="decrease" onclick="view = ChartView(xscale/2, yscale/2, model, canvas); view.draw();">.</button>
+    <button id="nonecrease" onclick="view = ChartView(xscale, yscale, model, canvas); view.draw();">o</button>
+    <button id="increase" onclick="view = ChartView(2*xscale, 2*yscale, model, canvas); view.draw();">O</button>
+    
+    
 
 
     <select id="typeSelect" 

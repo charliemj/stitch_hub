@@ -5,7 +5,7 @@ document.getElementById("type").value = jsonChart.type;
 scaledata = getRatio(jsonChart.type);
 var xscale = scaledata[1];
 var yscale = scaledata[2];
-document.getElementById("typeSelect").value = xscale +','+ yscale +','+ jsonChart.type;
+document.getElementById("typeSelect").value = scaledata[1] +','+ scaledata[2] +','+ jsonChart.type;
 
 
 var XDIM = jsonChart.rowSize;

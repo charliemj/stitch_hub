@@ -6,8 +6,8 @@ var ClickChange = function (view, model, color){
 
 var ChangeType = function (scale, model, canvas){
 	var temp = scale.split(',');
-	var xscale = temp[0];
-	var yscale = temp[1];
+	xscale = temp[0];
+	yscale = temp[1];
 
 	return ChartView(xscale, yscale, model, canvas)
 }
