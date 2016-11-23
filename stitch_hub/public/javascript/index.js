@@ -8,24 +8,27 @@ $(document).ready(function() {
     url: '/charts',
     method: 'GET',
     success: function(charts) {
-      // fill in the template with the charts
+      // fill in the template with the charts and make sure each canvas stores the ID of the chart
+      // so that the canvas can reference the chart JSON information
       var template = $('#charts-template').html();
       var html = Mustache.render(template, { charts: getRelevantChartsInfo(charts) });
       $('.charts-container').append(html);
 
-      // draw each chart
+      // draw each chart and add a link to its page
       $('.chart-canvas').each(function(i, canvas) {
-        var jcanvas = $(canvas);
-        var id = jcanvas.attr('data-id');
-        var chartJson = findChartWithId(charts, id);
-        jcanvas.on('click', function() {
+        // add link to chart page
+        $(canvas).on('click', function() {
           window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
           window.location = "chart_page.html"
         });
+
+        var id = $(canvas).attr('data-id');
+        var chartJson = findChartWithId(charts, id);
         var chartModel = getChartFromJson(chartJson);
         var standardSize = getStandardSize(chartJson.type);
         var chartView = ChartView(standardSize.cellWidth, standardSize.cellHeight, chartModel, canvas);
-        chartView.draw();
+        // draw chart
+        renderChartToFeed(canvas, chartView);
 
         $(canvas).on('mouseenter', function() {
           handleMouseEnterGrid(chartView);
@@ -44,6 +47,18 @@ $(document).ready(function() {
           window.location = "chart_editing.html";
         });
       });
+
+      // upon window resize, rescale the chart sizes
+      $ (window).resize(function() {
+        $('.chart-canvas').each(function(i, canvas) {
+          var id = $(canvas).attr('data-id');
+          var chartJson = findChartWithId(charts, id);
+          var chartModel = getChartFromJson(chartJson);
+          var standardSize = getStandardSize(chartJson.type);
+          var chartView = ChartView(standardSize.cellWidth, standardSize.cellHeight, chartModel, canvas);
+          renderChartToFeed(canvas, chartView);
+        });
+      });
     },
     error: function(error) {
       console.log('Error fetching charts');
@@ -51,6 +66,23 @@ $(document).ready(function() {
     }
   });
 });
+
+/**
+* Draws charts onto the feed so that they are scaled to fit inside its container.
+* 
+* @param canvas canvas to draw on
+* @param chartView the view representing how the chart is displayed
+*/
+var renderChartToFeed = function(canvas, chartView) {
+  // make sure that each chart fits into at most 80% of container
+  var containerWidth = $(canvas).parent().width();
+  if (containerWidth * 0.8 < canvas.width) {
+    var factor = containerWidth * 0.8 / canvas.width;
+    chartView.scale(factor, factor);
+  } else {
+    chartView.draw();
+  }
+}
 
 /**
 * Converts a list of charts (as returned as a response from GET /charts) to a

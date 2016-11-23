@@ -62,6 +62,23 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
   }
 
   /**
+  * Scales the size of the chart.
+  * 
+  * @param factorX how much to multiplicatively scale the width dimension by
+  * @param factorY how much to multiplicatively scale the height dimension by
+  */
+  that.scale = function(factorX, factorY) {
+    // clear existing drawing and resize canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width *= factorX;
+    canvas.height *= factorY;
+
+    // set property that scales everything we draw
+    ctx.scale(factorX, factorY);
+    that.draw();
+  }
+
+  /**
   * Given a mouse event, gets cell at the location corresponding
   * to the mouse event.
   * 
