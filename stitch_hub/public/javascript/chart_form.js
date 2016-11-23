@@ -1,6 +1,11 @@
+/**
+* Handles the form input for when users want to create a new chart.
+* 
+* The row size, column size, rows, and type information is stored into
+* windws.sessionStorage for the item 'chart'. 
+* Furthermore, will redirect to the chart editing page.
+*/
 var makeChart = function() {
-  var title = $('#title').val();
-  var description = $('#description').val();
   var type = $('#typeSelect').val();
   var rowSize = parseInt($('#rowSize').val());
   var colSize = parseInt($('#colSize').val());
@@ -14,8 +19,6 @@ var makeChart = function() {
   }
   var chartJson = 
   {
-    title: title,
-    description: description,
     rowSize: rowSize,
     colSize: colSize,
     rows: rows,

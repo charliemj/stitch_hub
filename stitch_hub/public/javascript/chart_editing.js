@@ -1,3 +1,6 @@
+/**
+* Handle the logic for chart editing page
+*/
 $(document).ready(function() {
   // fetch the chart JSON
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
