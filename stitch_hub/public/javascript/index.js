@@ -13,12 +13,14 @@ $(document).ready(function() {
         var jcanvas = $(canvas);
         var id = jcanvas.attr('data-id');
         var chartJson = findChartWithId(charts, id);
-        console.log(chartJson);
+        jcanvas.on('click', function() {
+          window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
+          window.location = "chart_page.html"
+        });
         var chartModel = getChartFromJson(chartJson);
         var chartView = CrossStitchChartView(chartModel, canvas);
         chartView.draw();
       });
-
       // add remix button for each chart
       $('.remix-button').each(function(i, button) {
         var jbutton = $(button);
