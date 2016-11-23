@@ -7,8 +7,8 @@
     float: left;
     text-align: left;
 }
-.col-1-6 {
-    width: 16.666%;
+.col-1-5 {
+    width: 20%;
 }
 .grid:after {
     content: "";
