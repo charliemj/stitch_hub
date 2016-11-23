@@ -3,6 +3,15 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Charts = require('../model/chart_model.js');
 
+/**
+* Handles the GET request for a chart with a specific id.
+*
+* When successful, the response is JSON. Most importantly, the value of the
+* 'message' key is a chart following the same format as the schema in mongoose.
+* When an error occurs, the response is a JSON with keys 'success' and
+* 'message'. The 'success' key has a value of false and 'message' key will
+* have the error as the value.
+*/
 router.get('/:id',function(req, res, next){
     var chartId = req.body.id;
     Charts.find({_id:chartId})
@@ -21,21 +30,15 @@ router.get('/:id',function(req, res, next){
     })
 });
 
-// Look at the link below to view solution to Cannot GET issue
-// http://stackoverflow.com/questions/38906961/node-express-cannot-get-route
-//
-// router.get('/charts', function() {}) will make
-// http://localhost:3000/charts/charts handle the GET request
-// 
-// router.get('/', function() {}) will make
-// http://localhost:3000/charts handle the GET request, which is what we want
-
-// The reason for this is that we specify in app.js that I've copied below
-// //var charts = require('./routes/charts_routes.js');
-// //app.use('/charts', charts);
-// this prepends all routes in charts_routes with '/charts'
-
-//GET charts/limit?=10 //home feed
+/**
+* Handles the GET request for fetching all the charts.
+*
+* When successful, the response sent back is a JSON which is a list of
+* charts with the same format as in our Chart schema.
+* When an error occurs, the response is a JSON with keys 'success' and
+* 'message'. The 'success' key has a value of false and 'message' key will
+* have the error as the value.
+*/
 router.get('/',function(req, res/*, next*/){
     Charts.find({})
     .sort({'date':-1})
@@ -52,7 +55,13 @@ router.get('/',function(req, res/*, next*/){
 });
 
 
-//POST charts/
+/** 
+* Handles the POST request for storing a chart.
+*
+* After successfully storing, nothing is returned. If an error occurs, the
+* response is a JSON with keys 'success' and 'message'. The 'success' key
+* has a value of false and 'message' key have the error as the value
+*/
 router.post('/', function(req,res, next){
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
@@ -67,21 +76,15 @@ router.post('/', function(req,res, next){
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
         function(err,chart){
             if (err) {
-                console.log("there was an error");
-                console.log(err);
                 res.send({
                     success: false,
                     message: err
                 }); //end if
             } else{
-                console.log("there was no error");
-                res.redirect("/"); //eventually want to redirect to newly created chart page
+                // nop (redirect on client instead since it is ajax call)
             }
         }
     );
 });
 
-
-
-
-module.exports = router; //goes at bottom of file .
+module.exports = router;
