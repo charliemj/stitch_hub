@@ -1,10 +1,10 @@
 var getRatio = function(type){
       var ratios = {
-        'CROSS_STITCH': [12,12],
-        'KNIT_V': [12,15],
-        'KNIT_H': [15,12],
-        'CROCHET_V': [12,16],
-        'CROCHET_H': [16,12],
+        'CROSS_STITCH': [4,4],
+        'KNIT_V': [4,5],
+        'KNIT_H': [5,4],
+        'CROCHET_V': [3,4],
+        'CROCHET_H': [4,3],
 
           }
 
