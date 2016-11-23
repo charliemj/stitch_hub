@@ -27,6 +27,7 @@ $(document).ready(function() {
         var id = jbutton.attr('data-id');
         var chartJson = findChartWithId(charts, id);
         jbutton.on('click', function() {
+          console.log("chart json remix: " + id);
           window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
           window.location = "chart_editing.html";
         });

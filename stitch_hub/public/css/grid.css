@@ -1,0 +1,34 @@
+/* Code for CSS for grids adapted from: https://css-tricks.com/dont-overthink-it-grids/ */
+
+.grid {
+
+}
+[class*='col-'] {
+    float: left;
+    text-align: left;
+}
+.col-1-6 {
+    width: 16.666%;
+}
+.grid:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+[class*='col-'] {
+    padding-right: 20px;
+}
+[class*='col-']:last-of-type {
+    padding-right: 0;
+}
+.grid-pad {
+    padding: 20px 0 20px 20px;
+}
+.grid-pad > [class*='col-']:last-of-type {
+    padding-right: 20px;
+}

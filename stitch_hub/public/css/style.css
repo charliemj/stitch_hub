@@ -1,3 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Homemade+Apple');
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+
+body {
+    background-color: lavender;
+    font-family: 'Dosis', sans-serif;
+}
+
+button {
+    border: none;
+    color: white;
+    padding: 7px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-family: 'Dosis',sans-serif;
+}
+
+h1, h2 {
+    color: darkslategrey;
+}
+
+.make-chart-button {
+    background-color: cornflowerblue; /* Green */
+}
+
+.remix-button {
+    background-color: olivedrab; /* Green */
+}
 
 #wholeThing{
     margin-left: auto ;
@@ -26,5 +56,5 @@ input[type="color"] {
   margin-left: auto ;
   margin-right: auto ;
   /*width:800px;*/
-
 }
+

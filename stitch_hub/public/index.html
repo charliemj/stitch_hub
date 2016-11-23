@@ -9,26 +9,28 @@
   <script src="javascript/json_chart_conversion.js" type="text/javascript"></script>
   <script src="javascript/index.js" type="text/javascript"></script>
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/grid.css" rel="stylesheet">
 </head>
 <body>
   <h1>Welcome to StitchHub</h1>
-  <button onclick="makeChart()">Make a new chart</button>
+  <button class="make-chart-button" onclick="makeChart()">Make a new chart</button>
   <hr>
   <h2>Recent Charts</h2>
   <hr>
   <script id="charts-template" type="text/x-mustache">
     {{#charts}}
-      <div>
+      <div class="col-1-6">
         <p><h3>{{title}}</h3></p>
         <canvas class='chart-canvas' data-id='{{_id}}'/>
         <br>
         <button class='remix-button' data-id='{{_id}}'>Remix this chart!</button>
-        <hr>
       </div>
     {{/charts}}
   </script>
   <div class="charts-container">
+    <div class="grid grid-pad">
     <!-- charts template goes in here after being populated -->
+    </div>
   </div>
 </body>
 </html>
