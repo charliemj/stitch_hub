@@ -46,8 +46,6 @@ var getRelevantChartsInfo = function(charts) {
     chartsInfo.push({
       _id: chart._id,
       title: chart.title,
-      description: chart.description,
-      date: new Date(Date.parse(chart.date)).toString(),
     });
   });
   return chartsInfo;
