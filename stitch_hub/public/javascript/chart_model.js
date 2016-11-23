@@ -1,7 +1,7 @@
 var ChartModel = function(rowSize, colSize) {
   var that = Object.create(ChartModel.prototype);
 
-  var rows = []
+  var rows = [];
   for (var i = 0; i < rowSize; i++){
     var row = [];
     for (var j = 0; j < colSize; j++){
@@ -12,7 +12,7 @@ var ChartModel = function(rowSize, colSize) {
 
   that.getRows = function() {
     return rows;
-  }
+  };
 
   /**
   * Returns row size.

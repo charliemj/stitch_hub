@@ -3,9 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Charts = require('../model/chart_model.js');
 
-//GET charts/:id
 router.get('/:id',function(req, res, next){
-    // res.sendStatus(200);
     var chartId = req.body.id;
     Charts.find({_id:chartId})
     .exec(function(err,chart){
@@ -19,7 +17,7 @@ router.get('/:id',function(req, res, next){
                 sucess:true,
                 message:chart
             })
-        }//end else
+        } //end else
     })
 });
 
@@ -39,9 +37,6 @@ router.get('/:id',function(req, res, next){
 
 //GET charts/limit?=10 //home feed
 router.get('/',function(req, res/*, next*/){
-    //res.sendStatus(200);
-    // console.log(__dirname);
-    var chartId = req.body.id;
     Charts.find({})
     .sort({'date':-1})
     .exec(function(err,charts){
@@ -52,25 +47,20 @@ router.get('/',function(req, res/*, next*/){
             }); //end if
         } else{
             res.send(charts)
-        }//end else
+        } //end else
     });
 });
 
 
 //POST charts/
 router.post('/', function(req,res, next){
-    // res.sendStatus(200);
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
-    // var date = 
     var type = req.body.type;
     var rowSize = req.body.rowSize;
     var colSize = req.body.colSize;
     var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
-
-
-    //console.log(title, description, type, rowSize, colSize, rows, parent);
 
 
     Charts.create({title:title,description:description,

@@ -23,4 +23,4 @@ var makeChart = function() {
   };
   window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
   window.location = "chart_editing.html";
-}
+};

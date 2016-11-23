@@ -44,7 +44,7 @@ $(document).ready(function() {
     yscale = scaleData[2];
     view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
-  })
+  });
 
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
@@ -68,7 +68,7 @@ $(document).ready(function() {
       error: function(error) {
         console.log('Error posting charts');
         console.log(error);
-      },
+      }
     });
   });
 });

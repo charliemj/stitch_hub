@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-//things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
-//can validate one or multiple things
+// things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
+// can validate one or multiple things
 // to validate multiple fields, put in a list
 
 // single validator like this:
@@ -26,7 +26,7 @@ var chartSchema = mongoose.Schema({
     type: {type:String, enum: validTypes},
     rowSize: {type:Number},
     colSize: {type:Number},
-    rows:[[{type:String, validate: validators.isHexColor()}]], //if things break look at this
+    rows:[[{type:String, validate: validators.isHexColor()}]],
     parent: {type:ObjectId, ref:"Chart"}
 
 });
