@@ -5,7 +5,7 @@ $(document).ready(function() {
     success: function(charts) {
       // fill in the template with the charts
       var template = $('#charts-template').html();
-      var html = Mustache.render(template, { charts: charts });
+      var html = Mustache.render(template, { charts: getRelevantChartsInfo(charts) });
       $('.charts-container').append(html);
 
       // draw each chart
@@ -39,6 +39,19 @@ $(document).ready(function() {
     }
   });
 });
+
+var getRelevantChartsInfo = function(charts) {
+  var chartsInfo = [];
+  charts.forEach(function(chart) {
+    chartsInfo.push({
+      _id: chart._id,
+      title: chart.title,
+      description: chart.description,
+      date: new Date(Date.parse(chart.date)).toString(),
+    });
+  });
+  return chartsInfo;
+}
 
 var findChartWithId = function(charts, id) {
   for (var i = 0; i < charts.length; i++) {

@@ -20,9 +20,10 @@
   <script id="charts-template" type="text/x-mustache">
     {{#charts}}
       <div class="col-1-5">
-        <p><h3>{{title}}</h3></p>
+        <h3>{{title}}</h3>
+        <p>Posted on {{date}}</p>
         <canvas class='chart-canvas' data-id='{{_id}}'/>
-        <br>
+        <p>Description: {{description}}</p>
         <button class='remix-button' data-id='{{_id}}'>Remix this chart!</button>
       </div>
     {{/charts}}
