@@ -48,7 +48,7 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
 
   // clear and initialize grid color
   canM.clearRect(0, 0, canvas.width, canvas.height);
-  canM.fillStyle = '#000000';
+  canM.fillStyle = '#808080';
   canM.fillRect(0, 0, canvas.width, canvas.height);
   for (var i=0; i < colSize; i++) {
     for (var j=0; j < rowSize; j++) {
