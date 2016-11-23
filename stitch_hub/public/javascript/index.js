@@ -51,7 +51,7 @@ var getRelevantChartsInfo = function(charts) {
     });
   });
   return chartsInfo;
-}
+};
 
 var findChartWithId = function(charts, id) {
   for (var i = 0; i < charts.length; i++) {
