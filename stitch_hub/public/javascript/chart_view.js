@@ -32,9 +32,9 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
 
   that.getCell = function(mouseEvt) {
     var rect = canvas.getBoundingClientRect();
-    var mouseX = Math.floor(evt.clientX - rect.left);
-    var mouseY = Math.floor(evt.clientY - rect.top);
-    if ((mouseX % (gap + cellWidth)) < gapSize) {
+    var mouseX = Math.floor(mouseEvt.clientX - rect.left);
+    var mouseY = Math.floor(mouseEvt.clientY - rect.top);
+    if ((mouseX % (gapSize + cellWidth)) < gapSize) {
       return null;
     } else if ((mouseY % (gapSize + cellHeight)) < gapSize) {
       return null;
