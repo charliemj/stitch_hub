@@ -1,3 +1,8 @@
+/**
+* Handles the logic for the charts news feed. This includes handling the templating
+* so that charts will be loaded onto the page. It also provides logic to the remix
+* button of each chart.
+*/
 $(document).ready(function() {
   $.ajax({
     url: '/charts',
@@ -40,6 +45,10 @@ $(document).ready(function() {
   });
 });
 
+/**
+* Converts a list of charts (as returned as a response from GET /charts) to a
+* different list of JSON objects whose information will be used by our template.
+*/
 var getRelevantChartsInfo = function(charts) {
   var chartsInfo = [];
   charts.forEach(function(chart) {
@@ -51,6 +60,10 @@ var getRelevantChartsInfo = function(charts) {
   return chartsInfo;
 };
 
+/**
+* Given a list of charts (as returned as a response from GET /charts), finds
+* the charts with a given value for _id.
+*/
 var findChartWithId = function(charts, id) {
   for (var i = 0; i < charts.length; i++) {
     var chartJson = charts[i];
@@ -61,6 +74,9 @@ var findChartWithId = function(charts, id) {
   throw "Should not get here"; // should not get here
 };
 
+/**
+* Redirects to the form page for when a user wants to create a new chart.
+*/
 var makeChart = function() {
   window.location = "chart_form.html";
 };
