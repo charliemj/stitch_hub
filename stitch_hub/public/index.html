@@ -12,16 +12,18 @@
 </head>
 <body>
   <h1>Welcome to StitchHub</h1>
-  <hr>
   <button onclick="makeChart()">Make a new chart</button>
+  <hr>
+  <h2>Recent Charts</h2>
   <hr>
   <script id="charts-template" type="text/x-mustache">
     {{#charts}}
       <div>
-        <p>{{title}}</p>
+        <p><h3>{{title}}</h3></p>
         <canvas class='chart-canvas' data-id='{{_id}}'/>
         <br>
         <button class='remix-button' data-id='{{_id}}'>Remix this chart!</button>
+        <hr>
       </div>
     {{/charts}}
   </script>
