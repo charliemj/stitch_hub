@@ -44,7 +44,6 @@ router.get('/',function(req, res/*, next*/){
     var chartId = req.body.id;
     Charts.find({})
     .sort({'date':-1})
-    .limit(10)
     .exec(function(err,charts){
         if (err) {
             res.send({
