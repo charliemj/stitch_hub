@@ -23,8 +23,8 @@ $(document).ready(function() {
           window.location = "chart_page.html"
         });
         var chartModel = getChartFromJson(chartJson);
-        //TODO scale chartView for feed
-        var chartView = CrossStitchChartView(chartModel, canvas);
+        var standardSize = getStandardSize(chartJson.type);
+        var chartView = ChartView(standardSize.cellWidth, standardSize.cellHeight, chartModel, canvas);
         chartView.draw();
       });
       // add remix button for each chart

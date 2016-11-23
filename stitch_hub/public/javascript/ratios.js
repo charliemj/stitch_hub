@@ -1,19 +1,17 @@
 /**
-* Given a type, returns an array representing the desired aspect-ratio
-* of the cells in such a type of chart.
+* Given a type, returns a JSON object representing the standard
+* size of each cell for a chart of that type.
+* The JSON object has two keys: 'cellWidth' and 'cellHeight'.
+* The values they have are as the name of the key suggests.
 */
-var getRatio = function(type){
-  var ratios = {
-    'CROSS_STITCH': [4,4],
-    'KNIT_V': [4,5],
-    'KNIT_H': [5,4],
-    'CROCHET_V': [3,4],
-    'CROCHET_H': [4,3]
+var getStandardSize = function(type){
+  var standardSizes = {
+    'CROSS_STITCH': { cellWidth: 12, cellHeight: 12 },
+    'KNIT_V': { cellWidth: 12, cellHeight: 15 },
+    'KNIT_H': { cellWidth: 15, cellHeight: 12 },
+    'CROCHET_V': { cellWidth: 12, cellHeight: 16 },
+    'CROCHET_H': { cellWidth: 16, cellHeight: 12 },
   };
 
-  var size = ratios[type];
-  var xscale = size[0];
-  var yscale = size[1];
-
-  return [type,xscale,yscale];
+  return standardSizes[type];
 };

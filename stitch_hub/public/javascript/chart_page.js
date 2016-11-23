@@ -8,10 +8,8 @@ $(document).ready(function() {
   // color the canvas based on the given chart
   var canvas = document.getElementById("canvas");
   var model = getChartFromJson(jsonChart);
-  scaleData = getRatio(jsonChart.type);
-  var xscale = scaleData[1]*2;
-  var yscale = scaleData[2]*2;
-  var view = ChartView(xscale,yscale,model,canvas);
+  var standardSize = getStandardSize(jsonChart.type);
+  var view = ChartView(standardSize.cellWidth, standardSize.cellHeight, model, canvas);
   view.draw();
 
   $('<h1>'+jsonChart.title+'</h1>').appendTo('#chart-info');
