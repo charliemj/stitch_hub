@@ -52,6 +52,16 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
   };
 
   /**
+  * Changes the opacity of the chart display.
+  *
+  * @param opacity a value from 0 to 1, where 0 is completely transparent
+  *         and 1 is completely opaque
+  */
+  that.changeOpacity = function(opacity) {
+    $(canvas).css({opacity: opacity});
+  }
+
+  /**
   * Given a mouse event, gets cell at the location corresponding
   * to the mouse event.
   * 

@@ -26,6 +26,13 @@ $(document).ready(function() {
         var standardSize = getStandardSize(chartJson.type);
         var chartView = ChartView(standardSize.cellWidth, standardSize.cellHeight, chartModel, canvas);
         chartView.draw();
+
+        $(canvas).on('mouseenter', function() {
+          handleMouseEnterGrid(chartView);
+        });
+        $(canvas).on('mouseleave', function() {
+          handleMouseLeaveGrid(chartView);
+        });
       });
       // add remix button for each chart
       $('.remix-button').each(function(i, button) {

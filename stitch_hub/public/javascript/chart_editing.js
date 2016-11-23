@@ -20,7 +20,7 @@ $(document).ready(function() {
 
   // add event listener for coloring the canvas based on clicks
   $(canvas).on('click', function() {
-    clickCell(view,model,document.getElementById("html5colorpicker").value);
+    handleCellClick(view,model,document.getElementById("html5colorpicker").value);
   });
 
   // add event listener for zooming buttons
