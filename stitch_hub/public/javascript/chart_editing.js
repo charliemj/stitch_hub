@@ -4,15 +4,15 @@ $(document).ready(function() {
 
   // store information about the type of chart into the type selector
   scaleData = getRatio(jsonChart.type);
-  var xscale = scaleData[1]*2;
-  var yscale = scaleData[2]*2;
-  var zoomset = 2;
+  var xscale = scaleData[1];
+  var yscale = scaleData[2];
+  var zoomset = 8;
   document.getElementById("typeSelect").value = jsonChart.type;
 
   // color the canvas based on the given chart
   var canvas = document.getElementById("canvas");
   var model = getChartFromJson(jsonChart);
-  var view = ChartView(xscale,yscale,model,canvas);
+  var view = ChartView(xscale * zoomset, yscale * zoomset, model, canvas);
   view.draw();
 
   // add event listener for coloring the canvas based on clicks
@@ -22,18 +22,18 @@ $(document).ready(function() {
 
   // add event listener for zooming buttons
   $('#decrease').on('click', function() {
-  	zoomset = 2;
-    view = ChartView(xscale*2, yscale*2, model, canvas);
+  	zoomset = 4;
+    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
   });
   $('#nonecrease').on('click', function() {
-  	zoomset = 4;
-    view = ChartView(xscale*4, yscale*4, model, canvas);
+  	zoomset = 8;
+    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
   });
   $('#increase').on('click', function() {
-  	zoomset = 6;
-    view = ChartView(xscale*6, yscale*6, model, canvas);
+  	zoomset = 12;
+    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
   });
 
