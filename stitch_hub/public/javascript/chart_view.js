@@ -1,3 +1,11 @@
+/**
+* View implementation for chart. Provides methods for drawing a chart.
+* 
+* @param cellWidth the number of pixels in the width of each cell
+* @param cellHeight the number of pixels in the height of each cell
+* @param model the chart model representing the data of the chart
+* @param canvas the DOM element which we render on
+*/
 var ChartView = function(cellWidth, cellHeight, model, canvas) {
   var that = Object.create(ChartView.prototype);
 
@@ -10,6 +18,9 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
   // define canvas context
   var ctx = canvas.getContext("2d");
 
+  /**
+  * Draws the chart based on the information in the model.
+  */
   that.draw = function() {
     for (var i=0; i < colSize; i++) {
       for (var j=0; j < rowSize; j++) {
@@ -19,6 +30,13 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
     }
   };
 
+  /**
+  * Colors in a single cell at a given location.
+  * 
+  * @param row the row of location to color at
+  * @param col the column of location to color at
+  * @param color the color to use
+  */
   that.colorCell = function(row, col, color) {
     ctx.fillStyle = color;
     var x = col * (gapSize + cellWidth) + gapSize;
@@ -26,10 +44,22 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
     ctx.fillRect(x, y, cellWidth, cellHeight);
   };
 
+  /*
+  * Returns the canvas we are drawing on.
+  */
   that.getCanvas = function() {
     return canvas;
   };
 
+  /**
+  * Given a mouse event, gets cell at the location corresponding
+  * to the mouse event.
+  * 
+  * @param mouseEvt mouse event
+  * @return a JSON object containing 'row' and 'col' as keys.
+  *           Their values are row and col in which the mouse
+  *           location is pointing at.
+  */
   that.getCell = function(mouseEvt) {
     var rect = canvas.getBoundingClientRect();
     var mouseX = Math.floor(mouseEvt.clientX - rect.left);
