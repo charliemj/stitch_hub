@@ -81,7 +81,7 @@ router.post('/', function(req,res, next){
                     message: err
                 }); //end if
             } else{
-                // nop (redirect on client instead since it is ajax call)
+                res.send(200); // send a response
             }
         }
     );
