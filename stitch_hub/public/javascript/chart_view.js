@@ -7,8 +7,8 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
   canvas.width = cellWidth * colSize + (colSize + 1) * gapSize;
   canvas.height = cellHeight * rowSize + (rowSize + 1) * gapSize;
 
-  // Initialize by clearing the canvas first
-  var canM = canvas.getContext("2d");
+  // define canvas context
+  var ctx = canvas.getContext("2d");
 
   that.draw = function() {
     for (var i=0; i < colSize; i++) {
@@ -20,10 +20,10 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
   };
 
   that.colorCell = function(row, col, color) {
-    canM.fillStyle = color;
+    ctx.fillStyle = color;
     var x = col * (gapSize + cellWidth) + gapSize;
     var y = row * (gapSize + cellHeight) + gapSize;
-    canM.fillRect(x, y, cellWidth, cellHeight);
+    ctx.fillRect(x, y, cellWidth, cellHeight);
   };
 
   that.getCanvas = function() {
@@ -47,9 +47,9 @@ var ChartView = function(cellWidth, cellHeight, model, canvas) {
   };
 
   // clear and initialize grid color
-  canM.clearRect(0, 0, canvas.width, canvas.height);
-  canM.fillStyle = '#808080';
-  canM.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#808080';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   for (var i=0; i < colSize; i++) {
     for (var j=0; j < rowSize; j++) {
       that.colorCell(j, i, '#FFFFFF');

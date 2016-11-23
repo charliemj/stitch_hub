@@ -45,8 +45,7 @@ var findChartWithId = function(charts, id) {
     }
   }
   throw "Should not get here"; // should not get here
-}
-
+};
 
 var makeChart = function() {
   window.location = "chart_form.html";

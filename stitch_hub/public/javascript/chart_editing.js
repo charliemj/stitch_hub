@@ -17,7 +17,7 @@ $(document).ready(function() {
 
   // add event listener for coloring the canvas based on clicks
   $(canvas).on('click', function() {
-    ClickChange(view,model,document.getElementById("html5colorpicker").value);
+    clickCell(view,model,document.getElementById("html5colorpicker").value);
   });
 
   // add event listener for zooming buttons
@@ -42,7 +42,7 @@ $(document).ready(function() {
     scaleData = getRatio(document.getElementById('typeSelect').value);
     xscale = scaleData[1];
     yscale = scaleData[2];
-    view = ChangeSize(xscale*zoomset, yscale*zoomset, model, canvas);
+    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
   })
 
