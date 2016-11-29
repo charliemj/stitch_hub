@@ -23,7 +23,7 @@ var userSchema = mongoose.Schema({
   lname: String,
   following: [{type: ObjectId, ref:"User"}],
   dob: {type: Date, validate: [validators.isDate()]},
-  password: String, //TODO danger! need to implement Passport
+  password: String, 
   email: {type: String, validate: validators.isEmail()},
   likes: [{type: ObjectId, ref:"Chart"}],
   saved: [{type: ObjectId, ref:"Chart"}]
