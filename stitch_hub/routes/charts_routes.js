@@ -71,7 +71,7 @@ router.post('/', function(req,res, next){
     var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
 
-
+    if (req.session.user){
     Charts.create({title:title,description:description,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
         function(err,chart){
@@ -83,8 +83,13 @@ router.post('/', function(req,res, next){
             } else{
                 res.send(200); // send a response
             }
-        }
-    );
+        });
+    }//end if
+
+    else{ //not logged in
+        res.redirect('/login'); 
+    }
 });
+
 
 module.exports = router;
