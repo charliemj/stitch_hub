@@ -4,12 +4,13 @@
 * button of each chart.
 */
 $(document).ready(function() {
+  // LOAD TEMPLATES
   $.ajax({
     url: '/charts',
     method: 'GET',
     success: function(charts) {
-      // fill in the template with the charts and make sure each canvas stores the ID of the chart
-      // so that the canvas can reference the chart JSON information
+      // loads the chart feed into #charts-container div and sets all controllers
+      // for the chart feed
       loadChartFeedTemplate(charts);
     },
     error: function(error) {
@@ -17,11 +18,9 @@ $(document).ready(function() {
       console.log(error);
     }
   });
-});
 
-/**
-* Redirects to the form page for when a user wants to create a new chart.
-*/
-var makeChart = function() {
-  window.location = "chart_form.html";
-};
+  // NON-TEMPLATE CONTROLLERS
+  $('#make-chart-button').on('click', function() {
+    window.location = "chart_form.html";
+  });
+});

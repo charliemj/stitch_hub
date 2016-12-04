@@ -1,7 +1,7 @@
 var loadChartFeedTemplate = function(charts) {
   $.get('mustache-templates/chart_feed.template.html', function (template) {
     var html = Mustache.render($(template).html(), { charts: getRelevantChartsInfo(charts) });
-    $('.charts-container').append(html);
+    $('#charts-container').append(html);
 
     // draw each chart and add a link to its page
     $('.chart-canvas').each(function(i, canvas) {
