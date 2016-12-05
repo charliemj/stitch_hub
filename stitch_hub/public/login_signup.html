@@ -3,44 +3,70 @@
 <head>
   <title>StitchHub</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
+  <script src="javascript/login_signup.js" type="text/javascript"></script>
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/modal.css" rel="stylesheet">
   
 </head>
+
 <body>
   <h1>Welcome to StitchHub!</h1>
   <hr>
-  <h2>Login</h2>
-  <div id="login">
-    <b>Username</b><br>
-    <input type="text" placeholder="Enter Username" name="loguname" required><br>
+  <h2>Login or Signup</h2>
 
-    <b>Password</b><br>
-    <input type="password" placeholder="Enter Password" name="logpsw" required><br>
+<button onclick="document.getElementById('loginbox').style.display='block'" style="width:auto;">Login</button>
 
+<div id="loginbox" class="modal">
+  
+  <div class="modal-content animate">
+    
+    <div class="container">
+      <label><b>Username</b></label><br>
+      <input type="text" placeholder="Enter Username" name="uname"><br>
 
-    <button type="submit" name="login-button">Login</button>
+      <label><b>Password</b></label><br>
+      <input type="password" placeholder="Enter Password" name="psw"><br>
+        
+      <button id="LogButton">Login</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('loginbox').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+
   </div>
+</div>
+<br>
+<br>
+<button onclick="document.getElementById('signupbox').style.display='block'" style="width:auto;">Signup</button>
 
+<div id="signupbox" class="modal">
+  
+  <div class="modal-content animate">
+    
+    <div class="container">
+      <label><b>Username</b></label><br>
+      <input type="text" placeholder="Enter Username" name="SU_uname" required><br>
 
+      <label><b>Password</b></label><br>
+      <input type="password" placeholder="Enter Password" name="SU_psw" required><br>
 
-  <hr>
+      <label><b>Birthday</b></label><br>
+      <input type="date" name="bday" required><br>
 
-  <h2>Signup</h2>
-  <div id="signup">
-    <b>Username</b><br>
-    <input type="text" placeholder="Enter Username" name="suname" required><br>
+      <label><b>Email</b></label><br>
+      <input type="email" name="email" required><br>
+        
+      <button id="RegButton">Register</button>
+    </div>
 
-    <b>Email</b><br>
-    <input type="text" placeholder="Enter email" name="semail" required><br>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('signupbox').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
 
-    <b>Password</b><br>
-    <input type="password" placeholder="Enter Password" name="spsw1" required><br>
-
-    <b>Confirm Password</b><br>
-    <input type="password" placeholder="Enter Password" name="spsw2" required><br>
-
-    <button type="submit" name="signup-button">Signup</button>
   </div>
+</div>
+
   
   
 </body>
