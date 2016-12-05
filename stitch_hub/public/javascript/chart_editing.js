@@ -52,6 +52,10 @@ $(document).ready(function() {
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
     var stringifiedRows = JSON.stringify(model.getRows());
+    var stringtags = document.getElementById("tags");
+    var taglist = stringtags.split(",");
+
+
     $.ajax({
       url: '/charts',
       method: 'POST',
@@ -62,7 +66,12 @@ $(document).ready(function() {
         colSize: model.getColSize(),
         type: document.getElementById("typeSelect").value,
         rows: stringifiedRows,
-        parent: jsonChart.id
+        parent: jsonChart.id,
+        nsfw: document.getElementById("NSFW").checked,
+        tags: taglist,
+        comments: [],
+        author: req.user.username
+
       },
       success: function() {
         console.log("successfully posted chart");
