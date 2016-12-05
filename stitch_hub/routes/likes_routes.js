@@ -7,6 +7,7 @@ var Users = require('../model/user_model.js');
 
 
 router.post('/', function(req, res){
+
     if (!req.session.username) {
         res.send(400);
         return;
@@ -27,6 +28,7 @@ router.post('/', function(req, res){
           }
         }
       );
+
 
     } else { //no user
       res.send({loggedIn: false});

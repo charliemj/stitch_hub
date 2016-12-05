@@ -39,10 +39,23 @@ h1, h2, h3 {
 
 .remix-button {
     background-color: olivedrab; /* Green */
+    bottom:0;
+    margin-left:2px;
+    
+    position:absolute; 
+    bottom:0;
+    margin-bottom: 5px;
 }
 
 .like-button {
   background-color: #000080;
+  position:absolute;
+  right:2px;
+  bottom:0;
+  /*margin-left:10%;
+  margin-top:10px;*/
+  margin-bottom: 5px;
+  margin-right:5px;
 }
 
 #wholeThing{
@@ -70,11 +83,6 @@ input[type="color"] {
 
 .chart-canvas{
   margin-left:10%;
-}
-
-.remix-button{
-  margin-left:10%;
-  margin-top:10px;
 }
 
 .charts-container div{

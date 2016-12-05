@@ -94,4 +94,11 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     );
 });
 
+
+// "Deleting" a chart by putting blank info in for it's info
+
+
+
+
+
 module.exports = router;
