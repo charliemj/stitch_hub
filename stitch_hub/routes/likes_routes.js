@@ -18,7 +18,7 @@ router.post('/', function(req, res){
 
             Like.create({
               user: req.session.userId,
-              chart: chart_id //help how do i get the chart id?
+              chart: req.body.chartID
             }, function(err, like){
                 if (err) {
                   res.send({
