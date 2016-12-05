@@ -19,14 +19,10 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var userSchema = mongoose.Schema({
   username: String,
-  fname: String,
-  lname: String,
-  following: [{type: ObjectId, ref:"User"}],
+  password: String,
   dob: {type: Date, validate: [validators.isDate()]},
-  password: String, 
   email: {type: String, validate: validators.isEmail()},
-  likes: [{type: ObjectId, ref:"Chart"}],
-  saved: [{type: ObjectId, ref:"Chart"}]
+  following: [{type: ObjectId, ref:"User"}],
 });
 
 

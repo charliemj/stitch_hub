@@ -2,13 +2,18 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
+var Users = require('../model/user_model.js');
 
-router.get('/', function(req, res) {
-  res.render('index', { message: req.flash('message') });
+router.post('/', function (req, res) {
+  Users.findOne({ username: req.body.username, password: req.body.password }, function (err, user) {
+    if (user) {
+      req.session.username = req.body.username;
+      req.session.userId = user._id;
+      res.send({loggedIn: true});
+    } else {
+      res.send({loggedIn: false});
+    }
+  });
 });
 
-router.post('/login', passport.authenticate('login', {
-  successRedirect: '/home',
-  failureRedirect: '/',
-  failureFlash : true
-}));
+module.exports = router;

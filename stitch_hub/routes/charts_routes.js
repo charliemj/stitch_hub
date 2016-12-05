@@ -65,6 +65,11 @@ router.get('/',function(req, res/*, next*/){
 */
 router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     function(req,res, next){
+    if (!req.session.username) {
+        res.send(400);
+        return;
+    }
+    var author = req.session.userId;
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
     var type = req.body.type;
@@ -74,7 +79,7 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var parent = req.body.parent;
 
 
-    Charts.create({title:title,description:description,
+    Charts.create({author:author,title:title,description:description,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
         function(err,chart){
             if (err) {

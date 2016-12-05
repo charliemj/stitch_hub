@@ -21,8 +21,8 @@ var loadLoginSignupWidget = function() {
 
 
     $('#LogButton').on('click', function() {
-      var username = document.getElementById("SU_uname").value;
-      var password = document.getElementById("SU_psw").value;
+      var username = document.getElementById("uname").value;
+      var password = document.getElementById("psw").value;
 
 
       $.ajax({
@@ -34,8 +34,12 @@ var loadLoginSignupWidget = function() {
 
 
         },
-        success: function() {
-          console.log("successfully logged in");
+        success: function(data) {
+          if (data.loggedIn) {
+            alert("successfully logged in");
+          } else {
+            alert("failed to log in");
+          }
         },
         error: function(error) {
           console.log('Error logging in');
@@ -52,22 +56,22 @@ var loadLoginSignupWidget = function() {
       var username = document.getElementById("SU_uname").value;
       var password = document.getElementById("SU_psw").value;
       var email = document.getElementById("email").value;
-      var bday = document.getElementById("bday").value;
+      var dob = document.getElementById("dob").value;
 
 
       $.ajax({
-        url: '/signup',
+        url: '/users',
         method: 'POST',
         data: {
           username: username,
           password: password,
           email: email,
-          bday: bday
+          dob: dob
 
 
         },
         success: function() {
-          console.log("successfully registered");
+          alert("successfully registered");
         },
         error: function(error) {
           console.log('Error registering');
