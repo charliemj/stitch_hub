@@ -43,7 +43,7 @@ $(document).ready(function() {
   $('#post-chart-button').on('click', function() {
     var stringifiedRows = JSON.stringify(model.getRows());
     var stringtags = document.getElementById("tags");
-    var taglist = stringtags.split(",");
+    //var taglist = stringtags.split(",");
 
 
     $.ajax({
@@ -58,9 +58,9 @@ $(document).ready(function() {
         rows: stringifiedRows,
         parent: jsonChart.id,
         nsfw: document.getElementById("NSFW").checked,
-        tags: taglist,
+        //tags: taglist,
         comments: [],
-        author: req.user.username
+        //author: req.user.username
 
       },
       success: function() {

@@ -63,7 +63,7 @@ router.get('/',function(req, res/*, next*/){
 * response is a JSON with keys 'success' and 'message'. The 'success' key
 * has a value of false and 'message' key have the error as the value
 */
-router.post('/', passport.authenticate('local',{failureRedirect: '/login'}),
+router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     function(req,res, next){
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
