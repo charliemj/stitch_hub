@@ -5,6 +5,8 @@
 */
 $(document).ready(function() {
   // LOAD TEMPLATES
+  loadLoginSignupWidget();
+
   $.ajax({
     url: '/charts',
     method: 'GET',

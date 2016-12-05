@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Charts = require('../model/chart_model.js');
+var passport = require('passport');
 
 /**
 * Handles the GET request for a chart with a specific id.
@@ -62,7 +63,13 @@ router.get('/',function(req, res/*, next*/){
 * response is a JSON with keys 'success' and 'message'. The 'success' key
 * has a value of false and 'message' key have the error as the value
 */
-router.post('/', function(req,res, next){
+router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
+    function(req,res, next){
+    if (!req.session.username) {
+        res.send(400);
+        return;
+    }
+    var author = req.session.userId;
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
     var type = req.body.type;
@@ -72,7 +79,7 @@ router.post('/', function(req,res, next){
     var parent = req.body.parent;
 
 
-    Charts.create({title:title,description:description,
+    Charts.create({author:author,title:title,description:description,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
         function(err,chart){
             if (err) {

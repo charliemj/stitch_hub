@@ -1,0 +1,54 @@
+<div id="login-signup-template">
+  <button onclick="document.getElementById('loginbox').style.display='block'" style="width:auto;">Login</button>
+
+  <div id="loginbox" class="modal">
+    
+    <div class="modal-content animate">
+      
+      <div class="container">
+        <label><b>Username</b></label><br>
+        <input type="text" placeholder="Enter Username" id="uname"><br>
+
+        <label><b>Password</b></label><br>
+        <input type="password" placeholder="Enter Password" id="psw"><br>
+          
+        <button id="LogButton">Login</button>
+      </div>
+
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('loginbox').style.display='none'" class="cancelbtn">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+  <br>
+  <br>
+  <button onclick="document.getElementById('signupbox').style.display='block'" style="width:auto;">Signup</button>
+
+  <div id="signupbox" class="modal">
+    
+    <div class="modal-content animate">
+      
+      <div class="container">
+        <label><b>Username</b></label><br>
+        <input type="text" placeholder="Enter Username" id="SU_uname" required><br>
+
+        <label><b>Password</b></label><br>
+        <input type="password" placeholder="Enter Password" id="SU_psw" required><br>
+
+        <label><b>Birthday</b></label><br>
+        <input type="date" id="dob" required><br>
+
+        <label><b>Email</b></label><br>
+        <input type="email" id="email" required><br>
+          
+        <button id="RegButton">Register</button>
+      </div>
+
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('signupbox').style.display='none'" class="cancelbtn">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>

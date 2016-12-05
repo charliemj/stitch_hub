@@ -4,6 +4,11 @@ var fs = require('fs');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+
+// TODO: use passport instead of these
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 // connect with mongoose
 var mongoose = require('mongoose');
@@ -20,7 +25,20 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('public'));
+app.use(express.static('public')); //TODO what does this do?
+
+// TODO: use passport instead of cookieParser
+app.use(cookieParser());
+app.use(session({
+  secret: 'supersecret',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {secure: false},
+}));
+
+//app.use(express.session({ secret: 'keyboard cat' })); //TODO replace above line with this?
+app.use(passport.initialize());
+app.use(passport.session());
 
 // homepage route
 app.get('/', function(req, res) {
@@ -34,10 +52,18 @@ app.get('/', function(req, res) {
 var charts = require('./routes/charts_routes.js');
 app.use('/charts', charts);
 
+// routes for users
+var users = require('./routes/users_routes.js');
+app.use('/users', users);
+
+// routes for login/logout
+var login = require('./routes/login_routes.js');
+app.use('/login', login);
+
 // 404 Route
 app.use(function(req, res){
   res.status(404).end('404 Error: Page not found');
-})
+});
 
 var port = 3000;
 app.listen(port, function() {
