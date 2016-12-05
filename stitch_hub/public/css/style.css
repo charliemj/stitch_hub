@@ -39,6 +39,11 @@ h1, h2, h3 {
 
 .remix-button {
     background-color: olivedrab; /* Green */
+    bottom:0;
+   
+    position:absolute; 
+    bottom:0;
+    margin-bottom: 5px;
 }
 
 #wholeThing{

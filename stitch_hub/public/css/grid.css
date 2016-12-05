@@ -14,7 +14,10 @@
     background-color:gray;
     margin: 5px;
     height: 400px;
+    position:relative;
 }
+
+
 
 
 .grid:after {
