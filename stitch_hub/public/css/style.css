@@ -3,6 +3,7 @@
 
 body {
     background-color: lavender;
+    /*background-color: yellow;*/
     font-family: 'Dosis', sans-serif;
 }
 
@@ -17,6 +18,16 @@ button {
     font-size: 14px;
     font-family: 'Dosis',sans-serif;
 }
+
+#login-signup-container button {
+
+  color:orange;
+  float:right;
+  margin-right:20px;
+
+
+}
+
 
 h1, h2, h3 {
     color: darkslategrey;
@@ -56,10 +67,24 @@ input[type="color"] {
 
 }
 
+
+.chart-canvas{
+  margin-left:10%;
+}
+
+.remix-button{
+  margin-left:10%;
+  margin-top:10px;
+}
+
 .charts-container div{
   padding:0;
   margin-left: auto ;
   margin-right: auto ;
   /*width:800px;*/
+}
+
+.col-1-5 h3{
+  margin: 10px;
 }
 
