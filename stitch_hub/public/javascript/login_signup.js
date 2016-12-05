@@ -3,7 +3,7 @@
 */
 $(document).ready(function() {
   
-  
+////Does stuff for modal boxes
 
 // Get the login modal
 var loginmodal = document.getElementById('loginbox');
@@ -21,6 +21,11 @@ window.onclick = function(event) {
     }
 }
 
+//End Modal Box Stuff
+
+
+
+////Handle login/signup
 
 $('#LogButton').on('click', function() {
     var username = document.getElementById("SU_uname").value;

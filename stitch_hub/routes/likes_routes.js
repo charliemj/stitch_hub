@@ -7,6 +7,7 @@ var Users = require('../model/user_model.js');
 
 
 router.post('/', function(req, res){
+<<<<<<< HEAD
     var chart = ;
     
     Users.findOne(username: req.body.username, function(err,user){
@@ -30,6 +31,28 @@ router.post('/', function(req, res){
                 }
               }
             );
+=======
+    if (!req.session.username) {
+        res.send(400);
+        return;
+    }
+
+
+      Like.create({
+        user: req.session.userId,
+        chart: req.body.chartID
+      }, function(err, like){
+          if (err) {
+            res.send({
+              success: false,
+              message: err
+            }); //end if
+          } else{
+            res.send(200); // send a response
+          }
+        }
+      );
+>>>>>>> master
 
     } else { //no user
       res.send({loggedIn: false});

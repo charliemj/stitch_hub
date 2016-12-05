@@ -60,7 +60,6 @@ $(document).ready(function() {
         nsfw: document.getElementById("NSFW").checked,
         //tags: taglist,
         comments: [],
-        //author: req.user.username
 
       },
       success: function() {
