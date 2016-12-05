@@ -11,14 +11,14 @@ router.post('/', function(req, res){
     
     Users.findOne(username: req.body.username, function(err,user){
         if (user) {
-            req.session.username = req.body.username;
+            // req.session.username = req.body.username; //don't need
             req.session.userId = user._id;
             res.send({loggedIn: true});
 
 
             Like.create({
               user: req.session.userId,
-              chart: chart_id //help how do i get the chart id?
+              chart: req.body.chartID
             }, function(err, like){
                 if (err) {
                   res.send({
