@@ -24,22 +24,12 @@ $(document).ready(function() {
   });
 
   // add event listener for zooming buttons
-  $('#decrease').on('click', function() {
-  	zoomset = 0.5;
+  $('#zoomer').change( function() {
+  	zoomset = document.getElementById("zoomer").value;
     view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
   });
-  $('#nonecrease').on('click', function() {
-  	zoomset = 1;
-    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
-    view.draw();
-  });
-  $('#increase').on('click', function() {
-  	zoomset = 2;
-    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
-    view.draw();
-  });
-
+  
   // add event listener for type select
   $('#typeSelect').change(function() {
     standardSize = getStandardSize(document.getElementById('typeSelect').value);
