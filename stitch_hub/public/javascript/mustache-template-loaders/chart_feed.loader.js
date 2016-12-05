@@ -5,12 +5,6 @@ var loadChartFeedTemplate = function(charts) {
 
     // draw each chart and add a link to its page
     $('.chart-canvas').each(function(i, canvas) {
-      // add link to chart page
-      $(canvas).on('click', function() {
-        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
-        window.location = "chart_page.html"
-      });
-
       var id = $(canvas).attr('data-id');
       var chartJson = findChartWithId(charts, id);
       var chartModel = getChartFromJson(chartJson);
@@ -18,6 +12,12 @@ var loadChartFeedTemplate = function(charts) {
       var chartView = ChartView(standardSize.cellWidth, standardSize.cellHeight, chartModel, canvas);
       // draw chart
       renderChartToFeed(canvas, chartView);
+
+      // add link to chart page
+      $(canvas).on('click', function() {
+        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
+        window.location = "chart_page.html"
+      });
 
       $(canvas).on('mouseenter', function() {
         handleMouseEnterGrid(chartView);

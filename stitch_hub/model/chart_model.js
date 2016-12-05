@@ -32,8 +32,8 @@ var chartSchema = mongoose.Schema({
     nsfw: Boolean,
     tags: [String],
     comments: [String], //TODO: this is probably not how we want to represent this-- any suggestions?
-    author: {type: ObjectId, ref:"User"}
-
+    author: {type: ObjectId, ref:"User"},
+    authorUsername: {type:String},
 });
 
 
