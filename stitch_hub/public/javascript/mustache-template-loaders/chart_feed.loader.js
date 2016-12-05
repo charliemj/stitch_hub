@@ -37,6 +37,17 @@ var loadChartFeedTemplate = function(charts) {
       });
     });
 
+    //add like button for each chart
+    $('.like-button').each(function(i, button) {
+      var jbutton = $(button);
+      var id = jbutton.attr('data-id');
+      var chartJson = findChartWithId(charts, id);
+      jbutton.on('click', function() {
+        //TODO: DO LIKE
+        alert("Likes not implemented yet!");
+      });
+    });
+
     // upon window resize, rescale the chart sizes
     $ (window).resize(function() {
       $('.chart-canvas').each(function(i, canvas) {

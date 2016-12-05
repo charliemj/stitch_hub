@@ -30,6 +30,10 @@ h1, h2, h3 {
     background-color: olivedrab; /* Green */
 }
 
+.like-button {
+  background-color: #000080;
+}
+
 #wholeThing{
     margin-left: auto ;
     margin-right: auto ;

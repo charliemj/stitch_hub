@@ -14,5 +14,10 @@ var loadChartTemplate = function(jsonChart) {
       window.sessionStorage.setItem('chart', JSON.stringify(jsonChart));
       window.location = "chart_editing.html";
     });
+
+    $('#like-button').on('click', function() {
+      //TODO: DO LIKE
+      alert("Likes not implemented yet!");
+    });
   });
 }
