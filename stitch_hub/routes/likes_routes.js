@@ -45,19 +45,41 @@ router.post('/', function(req, res){
             
         }; //end else
     });
+});
 
 
-    
+router.get('/', function(req, res) {
+  var chartId = req.query.chartId;
+  var userId = req.session.userId;
+  Like.findOne({ chart: chartId, user: userId })
+  .exec(function(err, like) {
+    if (err) {
+       console.log(err);
+       res.send({
+           success: false,
+           message: err
 
+       }); //end if
+    } else {
+      res.send(like);
+    }
+  });
+});
 
+router.delete('/', function(req, res) {
+  var chartId = req.body.chartId;
+  var userId = req.session.userId;
+  Like.remove({ chart: chartId, user: userId }, function (err) {
+    if (err) {
+       res.send({
+           success: false,
+           message: err
 
-
-
-
-
-
-
- 
+       }); //end if
+    } else {
+      res.send(200);
+    }
+  });
 });
 
 

@@ -39,16 +39,28 @@ var loadChartFeedTemplate = function(charts) {
 
     //add like button for each chart
     $('.like-button').each(function(i, button) {
+      // get whether or not the user has currently liked this
+
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
-      jbutton.on('click', function() {
-                          
-          likeChart(id);
-
-
-        }); //end like-button handler
-
+      getCurrentUserLike(id, function(err, like) {
+        // set the initial state of the button
+        var liked = like ? true : false;
+        jbutton.text(liked ? 'Unlike' : 'Like');
+        // set the onclick listener of the button
+        jbutton.on('click', function() {
+          if (liked) {
+            jbutton.text('Like');
+            unlikeChart(id);
+            liked = false;
+          } else {
+            jbutton.text('Unlike');
+            likeChart(id);
+            liked = true;
+          }
+        });
+      });
     });
 
 

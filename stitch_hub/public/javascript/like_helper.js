@@ -22,6 +22,22 @@ var getNumberOfLikes = function (chartID){
       return result;
 }
 
+var getCurrentUserLike = function(chartId, callback) {
+  $.ajax({
+    url: '/like',
+    data: {
+      chartId: chartId,
+    },
+    method: 'GET',
+    success: function(data) {
+      callback(null, data);
+    },
+    error: function(err) {
+      callback(err, null);
+    },
+  });
+};
+
 
 var likeChart = function (chartID){
 
@@ -43,6 +59,27 @@ $.ajax({
       });//end ajax
 
 }
+
+var unlikeChart = function (chartId){
+
+$.ajax({
+        url: '/like',
+        data: {
+          chartId: chartId,
+        },
+        method: 'DELETE',
+        success: function() {
+          console.log("successfully deleted it");
+        },
+        error: function(error) {
+          console.log('Error liking it');
+          console.log(error);
+        }
+
+      });//end ajax
+
+}
+
 var getLikedCharts = function(userID){
 
   //TODO
