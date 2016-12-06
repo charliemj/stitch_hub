@@ -33,7 +33,6 @@ var chartSchema = mongoose.Schema({
     tags: [String],
     comments: [{type:ObjectId, ref:"Comment"}],
     author: {type: ObjectId, ref:"User"}
-
 });
 
 
