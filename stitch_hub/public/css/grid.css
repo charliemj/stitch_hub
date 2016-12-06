@@ -13,12 +13,15 @@
     width: 15%;
     background-color:gray;
     margin: 5px;
-    height: 400px;
+    height: 250px;
     position:relative;
 }
 
 
-
+.col-1-5 h3{
+  margin: 10px;
+  color: white;
+}
 
 .grid:after {
     content: "";
