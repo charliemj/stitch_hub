@@ -1,4 +1,3 @@
-var session_userId ;
 var loadLoginSignupWidget = function() {
   $.get('mustache-templates/login_signup.template.html', function(template) {
     var html = $(template).html();
@@ -18,7 +17,7 @@ var loadLoginSignupWidget = function() {
       } else if (event.target == signupmodal) {
           signupmodal.style.display = "none";
       }
-    }
+    };
 
 
     $('#LogButton').on('click', function() {
@@ -31,16 +30,11 @@ var loadLoginSignupWidget = function() {
         method: 'POST',
         data: {
           username: username,
-          password: password,
-
-
+          password: password
         },
         success: function(data) {
           if (data.loggedIn) {
-            // console.log(data.userId,"Hi!");
-            // window.sessionStorage.setItem('sessionUserId', data.userId);
-            window.sessionStorage.setItem('sessionUsername', username);
-            console.log(username,"bye!");
+            console.log(username,"hi!", data.userId);
             alert("successfully logged in");
           } else {
             alert("failed to log in");

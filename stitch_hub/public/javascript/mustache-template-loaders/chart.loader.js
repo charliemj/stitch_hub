@@ -24,7 +24,7 @@ var loadChartTemplate = function(jsonChart) {
     var chart_id = jsonChart._id;
     var author = jsonChart.author;
     //var user = window.sessionStorage.getItem('sessionUserId');
-    var user = window.sessionStorage.getItem('sessionUsername');
+    var user; //TODO get current user!
     
     // var user = user.id;
     console.log(user,author); //user is null for some reason.... so button never displayed
@@ -38,4 +38,4 @@ var loadChartTemplate = function(jsonChart) {
     }//end if
 
   });
-}
+};
