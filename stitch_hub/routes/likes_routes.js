@@ -12,26 +12,49 @@ router.post('/', function(req, res){
         return;
     }
 
+    
 
-      Like.create(
-      {
-        user: req.session.userId,
-        chart: req.body.chartID
-      }, 
+    Like.count({chart:req.body.chartID, user:req.session.userId}, function(err, history){
+      if (err) {
+             console.log(err);
+             res.send({
+                 success: false,
+                 message: err
 
-      
-      function(err, like){
-          if (err) {
-            res.send(
+             }); //end if
+         } else{
+            console.log("this is history");
+            console.log(history);
+            if (history===0){
+                Like.create(
+                      {user: req.session.userId, chart: req.body.chartID}, 
+                      function(err, like){
+                          if (err) {
+                            console.log("error creating like");
+                            console.log(err);
+                            res.send(
+                              {success: false,
+                              message: err}
+                              ); //end if
+                          } else{
+                            res.sendStatus(200); // send a response
+                          }
+                        });
+                };
+            
+        }; //end else
+    });
 
-              {success: false,
-              message: err}
 
-              ); //end if
-          } else{
-            res.sendStatus(200); // send a response
-          }
-        });
+    
+
+
+
+
+
+
+
+
  
 });
 

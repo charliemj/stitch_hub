@@ -1,4 +1,6 @@
 var getNumberOfLikes = function (chartID){
+
+
   var result;
   $.ajax({
         url: '/like/likes/',
@@ -8,8 +10,6 @@ var getNumberOfLikes = function (chartID){
           chartID: chartID          
         },
         success: function(number) {
-          console.log("likehelper");
-          console.log(chartID);
           console.log("successfully counted likes");
           result = number.message;
         },
@@ -23,6 +23,26 @@ var getNumberOfLikes = function (chartID){
 }
 
 
+var likeChart = function (chartID){
+
+$.ajax({
+        url: '/like',
+        method: 'POST',
+        data: {
+          chartID: chartID,
+          
+        },
+        success: function() {
+          console.log("successfully liked it");
+        },
+        error: function(error) {
+          console.log('Error liking it');
+          console.log(error);
+        }
+
+      });//end ajax
+
+}
 var getLikedCharts = function(userID){
 
   //TODO

@@ -21,22 +21,11 @@ var number = getNumberOfLikes(jsonChart._id);
     });
 
     $('#like-button').on('click', function() {
-      $.ajax({
-        url: '/like',
-        method: 'POST',
-        data: {
-          chartID: jsonChart._id,
-          
-        },
-        success: function() {
-          console.log("successfully liked it");
-        },
-        error: function(error) {
-          console.log('Error liking it');
-          console.log(error);
-        }
 
-      });//end ajax
+
+      likeChart(jsonChart._id);
+
+
     });
   });
 }

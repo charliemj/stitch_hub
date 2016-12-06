@@ -44,21 +44,7 @@ var loadChartFeedTemplate = function(charts) {
       var chartJson = findChartWithId(charts, id);
       jbutton.on('click', function() {
                           
-          $.ajax({
-            url: '/like',
-            method: 'POST',
-            data: {
-              chartID: id,             
-            },
-            success: function() {
-              console.log("successfully liked it");
-            },
-            error: function(error) {
-              console.log('Error liking it');
-              console.log(error);
-            }
-
-          });//end ajax
+          likeChart(id);
 
 
         }); //end like-button handler
