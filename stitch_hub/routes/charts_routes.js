@@ -80,7 +80,7 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
 
 
     Charts.create({author:author,title:title,description:description,
-        type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
+        type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent,is_deleted: false}, 
         function(err,chart){
             if (err) {
                 res.send({
@@ -95,9 +95,31 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
 });
 
 
-// "Deleting" a chart by putting blank info in for it's info
-router.put('',function(req,res,next){
+// "Deleting" a chart 
+/** 
+* Handles the PUT request for "deleting" a chart. We don't want to delete the chart outright
+* Since we need to have the parents available for the remixing lineage, but we will
+* no longer display a deleted chart
+* After successfully deleting, nothing is returned. If an error occurs, the
+* response is a JSON with keys 'success' and 'message'. The 'success' key
+* has a value of false and 'message' will tell the user that they can't delete a chart
+* that isn'theirs
+*/
+router.put('/',function(req,res,next){
     //check if user is the user who posted the chart
+    var chart_to_del = Charts.find({_id:req.body.chartID,author:req.session.userId})
+    if (chart_to_del.length === 1){
+        //delete the chart
+        Chart.update(chart_to_del,{is_deleted: true});
+    }//end if
+    else{
+        //trying to delete chart they didn't make
+        res.send({
+                    success: false,
+                    message: "Don't have permission to delete this!"
+                });
+    }//end else
+    
 });
 
 
