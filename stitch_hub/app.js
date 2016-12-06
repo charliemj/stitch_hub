@@ -64,6 +64,10 @@ app.use('/login', login);
 var like = require('./routes/likes_routes.js');
 app.use('/like', like);
 
+// routes for comments
+var comment = require('./routes/comment_routes.js');
+app.use('/comment', comment);
+
 // 404 Route
 app.use(function(req, res){
   res.status(404).end('404 Error: Page not found');
