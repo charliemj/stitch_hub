@@ -4,6 +4,7 @@
 */
 $(document).ready(function() {
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
+  var chartID = jsonChart._id;
 
 
 
@@ -17,21 +18,23 @@ $(document).ready(function() {
   // load template into #chart-container
   loadChartTemplate(jsonChart);
 
-  var comments = jsonChart.comments;
+  var comments = getComments(chartID);
 
-  var comments = ["test comment", "test comment 2", "test comment 3"];
+  //var comments = ["test comment", "test comment 2", "test comment 3"];
 
   for (var i = 0; i<comments.length; i++){
-  	console.log(comments[i]);
-  	$('#comments-container').append(comments[i]);
+    $('#comments-container').append("<b>" +comments[i].user + ": </b><br>");
+  	$('#comments-container').append(comments[i].text);
   	$('#comments-container').append("<hr>");
 
   }
 
 
   $('#saveComment-button').on('click', function() {
-    //TODO: make put request to server to add comment.
-    	alert("Comment Adding Not Implemented Yet");
+    var text = document.getElementById('newComment').value;
+    doComment(chartID, text);
+
+
 
   });
 

@@ -31,6 +31,21 @@ router.get('/:id',function(req, res, next){
     })
 });
 
+router.get('/user/:userId', function(req, res) {
+    var userId = req.params.userId;
+    Charts.find({author: userId})
+    .exec(function(err, charts) {
+        if (err) {
+             res.send({
+                 success: false,
+                 message: err
+             }); //end if
+        } else{
+            res.send(charts);
+        } //end else
+    });
+});
+
 /**
 * Handles the GET request for fetching all the charts.
 *
@@ -70,6 +85,7 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
         return;
     }
     var author = req.session.userId;
+    var authorUsername = req.session.username;
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
     var type = req.body.type;
@@ -77,10 +93,16 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var colSize = req.body.colSize;
     var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
+    console.log("Username: " + authorUsername);
 
+<<<<<<< HEAD
 
     Charts.create({author:author,title:title,description:description,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent,is_deleted: false}, 
+=======
+    Charts.create({authorUsername:authorUsername,author:author,title:title,description:description,
+        type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
+>>>>>>> bc9c9714d76516a7e6fd253115d129ff57f7249b
         function(err,chart){
             if (err) {
                 res.send({

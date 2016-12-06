@@ -5,12 +5,6 @@ var loadChartFeedTemplate = function(charts) {
 
     // draw each chart and add a link to its page
     $('.chart-canvas').each(function(i, canvas) {
-      // add link to chart page
-      $(canvas).on('click', function() {
-        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
-        window.location = "chart_page.html"
-      });
-
       var id = $(canvas).attr('data-id');
       var chartJson = findChartWithId(charts, id);
       var chartModel = getChartFromJson(chartJson);
@@ -18,6 +12,12 @@ var loadChartFeedTemplate = function(charts) {
       var chartView = ChartView(standardSize.cellWidth, standardSize.cellHeight, chartModel, canvas);
       // draw chart
       renderChartToFeed(canvas, chartView);
+
+      // add link to chart page
+      $(canvas).on('click', function() {
+        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
+        window.location = "chart_page.html"
+      });
 
       $(canvas).on('mouseenter', function() {
         handleMouseEnterGrid(chartView);
@@ -43,10 +43,15 @@ var loadChartFeedTemplate = function(charts) {
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
       jbutton.on('click', function() {
-        //TODO: DO LIKE
-        alert("Likes not implemented yet!");
-      });
+                          
+          likeChart(id);
+
+
+        }); //end like-button handler
+
     });
+
+
 
     // upon window resize, rescale the chart sizes
     $ (window).resize(function() {
@@ -89,6 +94,7 @@ var getRelevantChartsInfo = function(charts) {
     chartsInfo.push({
       _id: chart._id,
       title: chart.title,
+      author: chart.author
     });
   });
   return chartsInfo;

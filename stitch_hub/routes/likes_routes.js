@@ -13,27 +13,76 @@ router.post('/', function(req, res){
         return;
     }
 
+    
 
-      Like.create({
-        user: req.session.userId,
-        chart: req.body.chartID
-      }, function(err, like){
-          if (err) {
-            res.send({
-              success: false,
-              message: err
-            }); //end if
-          } else{
-            res.send(200); // send a response
-          }
-        }
-      );
+    Like.count({chart:req.body.chartID, user:req.session.userId}, function(err, history){
+      if (err) {
+             console.log(err);
+             res.send({
+                 success: false,
+                 message: err
+
+             }); //end if
+         } else{
+            console.log("this is history");
+            console.log(history);
+            if (history===0){
+                Like.create(
+                      {user: req.session.userId, chart: req.body.chartID}, 
+                      function(err, like){
+                          if (err) {
+                            console.log("error creating like");
+                            console.log(err);
+                            res.send(
+                              {success: false,
+                              message: err}
+                              ); //end if
+                          } else{
+                            res.sendStatus(200); // send a response
+                          }
+                        });
+                };
+            
+        }; //end else
+    });
 
 
-    } else { //no user
-      res.send({loggedIn: false});
-    }});
+    
+
+
+
+
+
+
+
+
+
  
 });
+
+
+router.get('/likes',function(req, res, next){
+    var chartID = req.query.chartID;
+    console.log("chart " + req.query.chartID);
+    Like
+    .count({chart:chartID}, function(err,number){
+         if (err) {
+             console.log(err);
+             res.send({
+                 success: false,
+                 message: err
+
+             }); //end if
+         } else{
+            console.log("there were "+ number);
+            res.send({
+              success: true,
+              message: number
+
+          });
+        } //end else
+    })
+});
+
 
 module.exports = router;
