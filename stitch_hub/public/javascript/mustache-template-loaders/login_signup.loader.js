@@ -34,18 +34,7 @@ var loadLoginSignupWidget = function() {
         },
         success: function(data) {
           if (data.loggedIn) {
-<<<<<<< Updated upstream
-            console.log(username,"hi!", data.userId);
-=======
-<<<<<<< HEAD
-            // console.log(data.userId,"Hi!");
-            // window.sessionStorage.setItem('sessionUserId', data.userId);
-            window.sessionStorage.setItem('sessionUsername', username);
-            console.log(username,"bye!");
-=======
-            windows.sessionStorage.setItem('userId', data.userId);
->>>>>>> bc9c9714d76516a7e6fd253115d129ff57f7249b
->>>>>>> Stashed changes
+
             alert("successfully logged in");
           } else {
             alert("failed to log in");
