@@ -23,8 +23,12 @@ var loadChartTemplate = function(jsonChart) {
     //console.log(jsonChart._id);
     var chart_id = jsonChart._id;
     var author = jsonChart.author;
-    var user = window.sessionStorage.getItem('sessionUserId');
-    console.log(user,author);
+    //var user = window.sessionStorage.getItem('sessionUserId');
+    var user = window.sessionStorage.getItem('sessionUsername');
+    
+    // var user = user.id;
+    console.log(user,author); //user is null for some reason.... so button never displayed
+    
     if (user == author){
       $('#delete-button').removeClass("hidden").addClass("shown").on('click', 
         function() {
