@@ -1,17 +1,22 @@
 $(document).ready(function () {
-  var userId = window.sessionStorage.getItem('userId');
+  var userProfileId = window.sessionStorage.getItem('userProfileId');
 
-  // do we even need userId? Why not just user the username?
-  // fetch information from the server regarding the user
+  // load the user header template
+  loadUserProfileHeaderTemplate(userProfileId);
+
+  // load chart feed template
   $.ajax({
-    url: '/users/' + userId, // what do i need to do to get the specific user?
+    url: '/charts/user/' + userProfileId,
     method: 'GET',
-    success: function(data) {
-      // load user template
+    success: function(charts) {
+      // loads the chart feed into #charts-container div and sets all controllers
+      // for the chart feed
+      loadChartFeedTemplate(charts);
     },
-    error: function(err) {
-
-    },
+    error: function(error) {
+      console.log('Error fetching charts');
+      console.log(error);
+    }
   });
 
 });

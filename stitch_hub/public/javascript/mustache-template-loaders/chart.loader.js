@@ -12,7 +12,7 @@ var loadChartTemplate = function(jsonChart) {
 
     // add a link to the user when clicked in the username
     $('#user-profile-link').on('click', function() {
-      window.sessionStorage.setItem('userId', jsonChart.userId);
+      window.sessionStorage.setItem('userProfileId', jsonChart.author);
       window.location = "user_profile.html";
     });
 

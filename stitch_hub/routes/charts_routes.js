@@ -31,6 +31,21 @@ router.get('/:id',function(req, res, next){
     })
 });
 
+router.get('/user/:userId', function(req, res) {
+    var userId = req.params.userId;
+    Charts.find({author: userId})
+    .exec(function(err, charts) {
+        if (err) {
+             res.send({
+                 success: false,
+                 message: err
+             }); //end if
+        } else{
+            res.send(charts);
+        } //end else
+    });
+});
+
 /**
 * Handles the GET request for fetching all the charts.
 *
