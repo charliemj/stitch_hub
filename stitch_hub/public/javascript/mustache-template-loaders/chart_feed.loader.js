@@ -43,10 +43,29 @@ var loadChartFeedTemplate = function(charts) {
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
       jbutton.on('click', function() {
-        //TODO: DO LIKE
-        alert("Likes not implemented yet!");
-      });
+                          
+          $.ajax({
+            url: '/like',
+            method: 'POST',
+            data: {
+              chartID: id,             
+            },
+            success: function() {
+              console.log("successfully liked it");
+            },
+            error: function(error) {
+              console.log('Error liking it');
+              console.log(error);
+            }
+
+          });//end ajax
+
+
+        }); //end like-button handler
+
     });
+
+
 
     // upon window resize, rescale the chart sizes
     $ (window).resize(function() {

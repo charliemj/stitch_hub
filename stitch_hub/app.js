@@ -60,6 +60,10 @@ app.use('/users', users);
 var login = require('./routes/login_routes.js');
 app.use('/login', login);
 
+// routes for likes
+var like = require('./routes/likes_routes.js');
+app.use('/like', like);
+
 // 404 Route
 app.use(function(req, res){
   res.status(404).end('404 Error: Page not found');

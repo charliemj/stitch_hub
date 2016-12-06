@@ -1,6 +1,11 @@
 var loadChartTemplate = function(jsonChart) {
+
+
+var number = getNumberOfLikes(jsonChart._id);
+
+
   $.get('mustache-templates/chart.template.html', function (template) {
-    var html = Mustache.render($(template).html(), { title: jsonChart.title, description: jsonChart.description });
+    var html = Mustache.render($(template).html(), { title: jsonChart.title, description: jsonChart.description, number: number, });
     $('#chart-container').append(html);
 
     // color the canvas based on the given chart
@@ -16,8 +21,22 @@ var loadChartTemplate = function(jsonChart) {
     });
 
     $('#like-button').on('click', function() {
-      //TODO: DO LIKE
-      alert("Likes not implemented yet!");
+      $.ajax({
+        url: '/like',
+        method: 'POST',
+        data: {
+          chartID: jsonChart._id,
+          
+        },
+        success: function() {
+          console.log("successfully liked it");
+        },
+        error: function(error) {
+          console.log('Error liking it');
+          console.log(error);
+        }
+
+      });//end ajax
     });
   });
 }

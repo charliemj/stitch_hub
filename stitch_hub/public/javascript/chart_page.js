@@ -22,7 +22,6 @@ $(document).ready(function() {
   var comments = ["test comment", "test comment 2", "test comment 3"];
 
   for (var i = 0; i<comments.length; i++){
-  	console.log(comments[i]);
   	$('#comments-container').append(comments[i]);
   	$('#comments-container').append("<hr>");
 
