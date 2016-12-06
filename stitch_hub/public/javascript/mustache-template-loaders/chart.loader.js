@@ -37,10 +37,10 @@ var number = getNumberOfLikes(jsonChart._id);
     var chart_id = jsonChart._id;
     var author = jsonChart.author;
     //var user = window.sessionStorage.getItem('sessionUserId');
-    var user; //TODO get current user!
+    var user = window.sessionStorage.getItem('sessionUserId'); //TODO get current user!
     
     // var user = user.id;
-    console.log(user,author); //user is null for some reason.... so button never displayed
+    console.log("user",user,"author",author); //user is null for some reason.... so button never displayed
     
     if (user == author){
       $('#delete-button').removeClass("hidden").addClass("shown").on('click', 

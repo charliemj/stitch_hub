@@ -34,7 +34,7 @@ var loadLoginSignupWidget = function() {
         },
         success: function(data) {
           if (data.loggedIn) {
-
+            window.sessionStorage.setItem('sessionUserId', data.userId);
             alert("successfully logged in");
           } else {
             alert("failed to log in");
