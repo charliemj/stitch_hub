@@ -37,8 +37,8 @@ router.post('/', function(req, res){
 
 
 router.get('/likes',function(req, res, next){
-    var chartID = req.body.chartID;
-    console.log("chart " + req.body.chartID);
+    var chartID = req.query.chartID;
+    console.log("chart " + req.query.chartID);
     Like
     .count({chart:chartID}, function(err,number){
          if (err) {
