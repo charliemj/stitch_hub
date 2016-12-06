@@ -94,6 +94,7 @@ var getRelevantChartsInfo = function(charts) {
     chartsInfo.push({
       _id: chart._id,
       title: chart.title,
+      author: chart.author
     });
   });
   return chartsInfo;
