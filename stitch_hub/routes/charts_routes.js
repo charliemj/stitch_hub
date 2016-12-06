@@ -96,7 +96,9 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
 
 
 // "Deleting" a chart by putting blank info in for it's info
-
+router.put('',function(req,res,next){
+    //check if user is the user who posted the chart
+});
 
 
 
