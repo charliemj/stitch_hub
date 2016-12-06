@@ -19,5 +19,19 @@ var loadChartTemplate = function(jsonChart) {
       //TODO: DO LIKE
       alert("Likes not implemented yet!");
     });
+
+    //console.log(jsonChart._id);
+    var chart_id = jsonChart._id;
+    var author = jsonChart.author;
+    var user = window.sessionStorage.getItem('sessionUserId');
+    console.log(user,author);
+    if (user == author){
+      $('#delete-button').removeClass("hidden").addClass("shown").on('click', 
+        function() {
+      //TODO: DO DELETE
+      alert("Deletes not implemented yet!");
+    });
+    }//end if
+
   });
 }

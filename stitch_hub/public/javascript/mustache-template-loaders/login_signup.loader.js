@@ -1,3 +1,4 @@
+var session_userId ;
 var loadLoginSignupWidget = function() {
   $.get('mustache-templates/login_signup.template.html', function(template) {
     var html = $(template).html();
@@ -36,6 +37,7 @@ var loadLoginSignupWidget = function() {
         },
         success: function(data) {
           if (data.loggedIn) {
+            session_userId = data.userId;
             alert("successfully logged in");
           } else {
             alert("failed to log in");
