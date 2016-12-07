@@ -2,24 +2,26 @@
 <html>
   <head>
     <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="javascript/chart_model.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="javascript/chart-util/chart_model.js"></script>
-    <script type="text/javascript" src="javascript/chart-util/chart_view.js"></script>
-    <script type="text/javascript" src="javascript/chart-util/chart_controller.js"></script>
-    <script type="text/javascript" src="javascript/chart-util/json_chart_conversion.js"></script>
-    <script type="text/javascript" src="javascript/chart-util/ratios.js"></script>
+    <script type="text/javascript" src="javascript/chart_view.js"></script>
+    <script type="text/javascript" src="javascript/chart_controller.js"></script>
+    <script type="text/javascript" src="javascript/json_chart_conversion.js"></script>
+    <script type="text/javascript" src="javascript/ratios.js"></script>
     <script type="text/javascript" src="javascript/chart_editing.js"></script>
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
     <div id="wholeThing">
       <div id="colorpicker">
-        <input type="color" id="html5colorpicker" value="#ff0000">
+        <input type="color" id="html5colorpicker" value="#ff0000" style="width:50px; height:50px">
       </div> <!-- end of colorpicker div -->
       
       <div id="zoom">
         Zoom:
-        <input type="range" min="1" max="5" id="zoomer">
+        <button id="decrease">.</button>
+        <button id="nonecrease">o</button>
+        <button id="increase">O</button>
       </div> <!-- end of zoom div -->
       
       <select id="typeSelect">
@@ -38,9 +40,6 @@
       
       <br>
 
-      Title: <br> <input type="text" name="title" id="title" maxlength="16"  placeholder="Title" style="width:300px"><br>
-      Description: <br><textarea name="description" id="description" maxlength="100"  placeholder="Description" style="width:300px; height:50px"></textarea> <br>
-
       <div id='tags-editor'>
         <div id='tags-container'>
           <input type="text" class="tag" placeholder="tag">
@@ -49,9 +48,8 @@
         <button id='delete-tag-button'>Delete a tag</button>
       </div>
 
-      <br>
-
-      <input type="checkbox" name="NSFW" id="NSFW"> Check this box if the chart contains 18+ content.<br>
+      <input type="text" name="title" id="title" maxlength="16"  placeholder="Title"><br>
+      <input type="text" name="description" id="description" maxlength="100"  placeholder="Description"><br>
       <button id='post-chart-button'>POST</button> 
     </div> <!-- end of wholeThing -->
   </body>

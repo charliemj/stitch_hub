@@ -159,8 +159,9 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var colSize = req.body.colSize;
     var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
+    var tags = JSON.parse(req.body.tags);
 
-    Charts.create({author:author,title:title,description:description,
+    Charts.create({author:author,title:title,description:description,tags:tags,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent,is_deleted: false}, 
         function(err,chart){
             if (err) {

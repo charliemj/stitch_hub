@@ -24,12 +24,22 @@ $(document).ready(function() {
   });
 
   // add event listener for zooming buttons
-  $('#zoomer').change( function() {
-  	zoomset = document.getElementById("zoomer").value;
+  $('#decrease').on('click', function() {
+  	zoomset = 0.5;
     view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
   });
-  
+  $('#nonecrease').on('click', function() {
+  	zoomset = 1;
+    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
+    view.draw();
+  });
+  $('#increase').on('click', function() {
+  	zoomset = 2;
+    view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
+    view.draw();
+  });
+
   // add event listener for type select
   $('#typeSelect').change(function() {
     standardSize = getStandardSize(document.getElementById('typeSelect').value);
@@ -55,7 +65,6 @@ $(document).ready(function() {
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
     var stringifiedRows = JSON.stringify(model.getRows());
-    var stringtags = document.getElementById("tags");
     var tags = $('.tag').toArray().map(function (tag) {
       return $(tag).val(); // map javascript object to text
     }).filter(function (tag) {
@@ -68,7 +77,6 @@ $(document).ready(function() {
       return;
     }
 
-
     $.ajax({
       url: '/charts',
       method: 'POST',
@@ -79,11 +87,8 @@ $(document).ready(function() {
         colSize: model.getColSize(),
         type: document.getElementById("typeSelect").value,
         rows: stringifiedRows,
-        parent: jsonChart._id,
-        nsfw: document.getElementById("NSFW").checked,
+        parent: jsonChart.id,
         tags: JSON.stringify(tags),
-        comments: [],
-
       },
       success: function() {
         console.log("successfully posted chart");
