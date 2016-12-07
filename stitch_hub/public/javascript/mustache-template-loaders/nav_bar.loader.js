@@ -1,7 +1,7 @@
 var loadNavBarTemplate = function() {
   $.get('mustache-templates/nav_bar.template.html', function (template) {
     var username = window.sessionStorage.getItem('sessionUsername');
-    var html = Mustache.render($(template).html(), {loggedIn: (username != null), username: username });
+    var html = Mustache.render($(template).html(), {loggedIn: (username != 'null'), username: username });
     $('#nav-bar-template-container').append(html);
     var userProfileLink = $('#user-profile-link');
     if (userProfileLink) {

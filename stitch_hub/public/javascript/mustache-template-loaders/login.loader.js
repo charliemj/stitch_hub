@@ -34,6 +34,7 @@ var loadLoginTemplate = function() {
           } else {
             alert("failed to log in");
           }
+          window.location.reload();
         },
         error: function(error) {
           console.log('Error logging in');
@@ -41,8 +42,6 @@ var loadLoginTemplate = function() {
         }
       
       });//end ajax
-
-      window.location.reload();
     }); //end login-button handler
   })
 }
