@@ -5,7 +5,8 @@
 */
 $(document).ready(function() {
   // LOAD TEMPLATES
-  loadLoginSignupWidget();
+  loadLoginTemplate();
+  loadSignupTemplate();
 
   loadNavBarTemplate();
 
