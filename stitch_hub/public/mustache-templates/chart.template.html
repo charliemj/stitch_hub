@@ -9,7 +9,7 @@
   {{^is_deleted}}
   <div id="renderIfNotDeleted">
     <h2>{{title}}</h2>
-    by <b>{{author}}</b>
+    by <h3><a id="user-profile-link" href="user_profile.html">{{author}}</a></h3>
     <h3>Description:</h3>
     <p id="chart-description" contenteditable="true">{{description}}</p>
     <button id="edit-description-button" style="display: none;">Save description</button><br>
