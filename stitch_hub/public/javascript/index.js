@@ -17,7 +17,7 @@ $(document).ready(function() {
     success: function(charts) {
       // loads the chart feed into #charts-container div and sets all controllers
       // for the chart feed
-      loadChartFeedTemplate(charts);
+        loadChartFeedTemplate(charts);
     },
     error: function(error) {
       console.log('Error fetching charts');
@@ -68,7 +68,30 @@ $(document).ready(function() {
       data: data,
       method: 'GET',
       success: function(charts) {
+        console.log("sort-select " + document.getElementById('sort-select').value);
+      if (document.getElementById('sort-select').value == "likes"){
+        var sortedLikes = charts.sort(
+          function(obj1,obj2){
+            return getNumberOfLikes(obj2._id) - getNumberOfLikes(obj1._id);
+          });
+        loadChartFeedTemplate(sortedLikes);
+
+
+      }else if(document.getElementById('sort-select').value == "hot"){
+        var sortedHot = charts.sort(
+          function(obj1, obj2){
+            //redefine f later to be some hotness algorithm
+            var f = function(obj){
+              return getNumberOfLikes(obj._id);
+            }
+            return f(obj2) - f(obj1);
+          })
+        loadChartFeedTemplate(sortedHot);
+
+      }else{
+        //presorted by date
         loadChartFeedTemplate(charts);
+      }
       },
       error: function(error) {
         console.log('Error fetching charts');
