@@ -170,6 +170,44 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     );
 });
 
+router.put('/:id/description', function (req, res) {
+    // check if the user is the user who posted the chart
+    console.log(req.params.id);
+    Charts.findOneAndUpdate(
+        {_id:req.params.id}, // NOTE LOWERCASE d 
+        {description: req.body.description}, 
+        function(err,chart){
+            if (err){
+                res.send({
+                    success: false,
+                    message: err
+                }); //end if
+            } else {
+                var updated = (chart != null);
+                res.send({ updated: updated });
+            }
+        }
+    );
+});
+
+router.put('/:id/tags', function (req, res) {
+    // chart if the user is the user who posted the chart
+    Charts.findOneAndUpdate(
+        {_id:req.body.chartId}, // NOTE LOWERCASE d
+        {tags: JSON.parse(req.body.tags)}, 
+        function(err,chart){
+            if (err){
+                res.send({
+                    success: false,
+                    message: err
+                }); //end if
+            } else {
+                var updated = (chart != null);
+                res.send({ updated: updated });
+            }
+        }
+    );
+});
 
 // "Deleting" a chart 
 /** 
