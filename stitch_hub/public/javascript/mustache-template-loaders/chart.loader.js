@@ -44,11 +44,11 @@ var number = getNumberOfLikes(jsonChart._id);
     });
 
     $('#like-button').on('click', function() {
-
-
       likeChart(jsonChart._id);
+    });
 
-
+    $('#parent-button').on("click", function () {
+      goToParent();
     });
   });
-}
+};

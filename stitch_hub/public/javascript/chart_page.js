@@ -5,16 +5,7 @@
 $(document).ready(function() {
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
   var chartID = jsonChart._id;
-
-
-
-
-
-
-
-
-
-
+  
   // load template into #chart-container
   loadChartTemplate(jsonChart);
 
@@ -33,9 +24,6 @@ $(document).ready(function() {
   $('#saveComment-button').on('click', function() {
     var text = document.getElementById('newComment').value;
     doComment(chartID, text);
-
-
-
   });
 
   

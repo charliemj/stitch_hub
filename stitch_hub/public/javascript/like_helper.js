@@ -1,6 +1,5 @@
 var getNumberOfLikes = function (chartID){
-
-
+  
   var result;
   $.ajax({
         url: '/like/likes/',

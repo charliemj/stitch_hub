@@ -56,10 +56,10 @@ $(document).ready(function() {
         colSize: model.getColSize(),
         type: document.getElementById("typeSelect").value,
         rows: stringifiedRows,
-        parent: jsonChart.id,
+        parent: jsonChart._id,
         nsfw: document.getElementById("NSFW").checked,
         //tags: taglist,
-        comments: [],
+        comments: []
 
       },
       success: function() {

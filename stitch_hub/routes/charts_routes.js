@@ -13,18 +13,22 @@ var passport = require('passport');
 * 'message'. The 'success' key has a value of false and 'message' key will
 * have the error as the value.
 */
-router.get('/:id',function(req, res, next){
-    var chartId = req.body.id;
+router.get('/:chartId',function(req, res, next){
+    var chartId = req.query.chartId;
+    //var chartId = req.params.chartId;
+    //var chartId = req.body.chartId;
+    console.log("looking for chart id: " + chartId);
     Charts.find({_id:chartId})
     .exec(function(err,chart){
+        console.log("routing err, chart: " + err + chart);
          if (err) {
-             res.send({
+             res.json({
                  success: false,
                  message: err
              }); //end if
          } else{
-            res.send({
-                sucess:true,
+            res.json({
+                success:true,
                 message:chart
             })
         } //end else
@@ -80,7 +84,7 @@ router.get('/',function(req, res/*, next*/){
     if (filterTypeOn.length > 0) {
         searchForFilter.type = { $in: filterTypeOn }
     }
-    var sizeFilter = {}
+    var sizeFilter = {};
     if (filterSizeOn.length > 0) {
         var SMALL_SIZE = 400;
         var MEDIUM_SIZE = 1600;
