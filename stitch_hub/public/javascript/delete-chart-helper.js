@@ -3,12 +3,15 @@ var newChart;
 $.ajax({
         url: '/charts/',
         method: 'PUT',
+        async: false,
         data: {
           chartID: chartID,
           
         },
         success: function(result) {
           newChart = result.message;
+
+
           console.log("successfully deleted it");
         },
         error: function(error) {
