@@ -7,6 +7,8 @@ $(document).ready(function() {
   // LOAD TEMPLATES
   loadLoginSignupWidget();
 
+  loadNavBarTemplate();
+
   $.ajax({
     url: '/charts',
     method: 'GET',

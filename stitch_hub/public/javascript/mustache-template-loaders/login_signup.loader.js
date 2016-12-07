@@ -36,6 +36,7 @@ var loadLoginSignupWidget = function() {
         },
         success: function(data) {
           if (data.loggedIn) {
+            window.sessionStorage.setItem('sessionUsername', username);
             window.sessionStorage.setItem('userId', data.userId);
             alert("successfully logged in");
           } else {
