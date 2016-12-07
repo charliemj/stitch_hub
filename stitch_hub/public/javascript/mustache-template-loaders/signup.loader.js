@@ -32,8 +32,12 @@ var loadSignupTemplate = function() {
 
 
         },
-        success: function() {
-          alert("successfully registered");
+        success: function(data) {
+          if (data.registered) {
+            alert("successfully registered");
+          } else {
+            alert("failed to register");
+          }
         },
         error: function(error) {
           console.log('Error registering');
