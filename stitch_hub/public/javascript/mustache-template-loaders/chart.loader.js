@@ -2,6 +2,7 @@ var loadChartTemplate = function(jsonChart) {
 
 var number = getNumberOfLikes(jsonChart._id);
 jsonChart.number = number;
+jsonChart.authorname = getUsernameFromID(jsonChart.author);
 jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
 
 

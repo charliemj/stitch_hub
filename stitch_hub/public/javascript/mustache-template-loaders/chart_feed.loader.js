@@ -110,7 +110,8 @@ var getRelevantChartsInfo = function(charts) {
       _id: chart._id,
       title: chart.title,
       author: chart.author,
-      likeCount: getNumberOfLikes(chart._id)
+      likeCount: getNumberOfLikes(chart._id),
+      authorname: getUsernameFromID(chart.author)
     });
   });
   return chartsInfo;
