@@ -87,12 +87,28 @@ h2{
 .like-button {
   background-color: #000080;
   position:absolute;
-  right:2px;
+  right:0;
   bottom:0;
   /*margin-left:10%;
   margin-top:10px;*/
   margin-bottom: 5px;
   margin-right:5px;
+}
+
+.like-box{
+  background-color: #000080;
+  width:40px;
+  height:31px;
+  color: white;
+  position:absolute;
+  right:2px;
+  bottom:0;
+  /*margin-left:10%;
+  margin-top:10px;*/
+  margin-bottom: 5px;
+  margin-right:60px;
+  text-align: center;
+  border:none;
 }
 
 #wholeThing{

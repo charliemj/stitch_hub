@@ -48,6 +48,7 @@ $.ajax({
         },
         success: function() {
           console.log("successfully liked it");
+          window.location.reload();
         },
         error: function(error) {
           console.log('Error liking it');
@@ -67,10 +68,11 @@ var unlikeChart = function (chartId){
         },
         method: 'DELETE',
         success: function() {
-          console.log("successfully deleted it");
+          console.log("successfully unliked it");
+          window.location.reload();
         },
         error: function(error) {
-          console.log('Error liking it');
+          console.log('Error unliking it');
           console.log(error);
         }
 

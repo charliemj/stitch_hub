@@ -109,7 +109,8 @@ var getRelevantChartsInfo = function(charts) {
     chartsInfo.push({
       _id: chart._id,
       title: chart.title,
-      author: chart.author
+      author: chart.author,
+      likeCount: getNumberOfLikes(chart._id)
     });
   });
   return chartsInfo;
