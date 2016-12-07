@@ -33,13 +33,13 @@ var number = getNumberOfLikes(jsonChart._id);
 
     });
 
-    //console.log(jsonChart._id);
+    // NEED TO DO: complete this part which should make it so we only display a delete button
+    // to user if their ID matches the ID of chart creator
+    
     var chart_id = jsonChart._id;
     var author = jsonChart.author;
-    //var user = window.sessionStorage.getItem('sessionUserId');
     var user = window.sessionStorage.getItem('sessionUserId'); //TODO get current user!
     
-    // var user = user.id;
     console.log("user",user,"author",author); //user is null for some reason.... so button never displayed
     
     if (user == author){

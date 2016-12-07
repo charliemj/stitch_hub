@@ -95,14 +95,11 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var parent = req.body.parent;
     console.log("Username: " + authorUsername);
 
-<<<<<<< HEAD
+
 
     Charts.create({author:author,title:title,description:description,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent,is_deleted: false}, 
-=======
-    Charts.create({authorUsername:authorUsername,author:author,title:title,description:description,
-        type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
->>>>>>> bc9c9714d76516a7e6fd253115d129ff57f7249b
+
         function(err,chart){
             if (err) {
                 res.send({
