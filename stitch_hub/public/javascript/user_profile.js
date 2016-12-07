@@ -1,8 +1,18 @@
 $(document).ready(function () {
   var userProfileId = window.sessionStorage.getItem('userProfileId');
 
-  // load the user header template
-  loadUserProfileHeaderTemplate(userProfileId);
+  $.ajax({
+    url: '/users/' + userProfileId,
+    method: 'GET',
+    success: function (data) {
+      // load the user header template
+      loadUserProfileHeaderTemplate(data.user);
+      loadFollowingTemplate(data.user);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
 
   // load chart feed template
   $.ajax({

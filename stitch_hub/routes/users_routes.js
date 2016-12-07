@@ -20,6 +20,28 @@ router.get('/:id', function(req, res) {
   });
 });
 
+router.put('/follow', function(req, res) {
+  var id = req.body.id;
+  console.log("I am: " + req.session.userId);
+  Users.findOneAndUpdate(
+    { _id: req.session.userId},
+    { $addToSet: { following: id } }
+  ).exec(function (err, user) {
+    if (err) {
+      res.send({
+        success: false,
+        message: err
+      }); //end if
+    } else{
+      if (user) {
+        res.send({updated: true});
+      } else {
+        res.send({updated: false});
+      }
+    }
+  });
+});
+
 router.post('/', function(req, res){
     var username = req.body.username;
     var password = req.body.password;
