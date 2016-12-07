@@ -126,11 +126,24 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
 */
 router.put('/',function(req,res,next){
     //check if user is the user who posted the chart
-    var chart_to_del = Charts.find({_id:req.body.chartID,author:req.session.userId})
-    if (chart_to_del.length === 1){
-        //delete the chart
-        Chart.update(chart_to_del,{is_deleted: true});
-    }//end if
+    Charts.findOneAndUpdate({_id:req.body.chartID,author:req.session.userId}, 
+        {is_deleted: true}, 
+        function(err,chart){
+            if (err){
+                res.send({
+                    success: false,
+                    message: err
+                }); //end if
+            }
+            else if (chart===null){
+                res.send(400);
+            }
+            else{
+            //delete the chart
+                res.send(200);
+            }//end if
+        });
+    
     else{
         //trying to delete chart they didn't make
         res.send({
