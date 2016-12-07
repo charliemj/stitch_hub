@@ -40,7 +40,17 @@
 
       Title: <br> <input type="text" name="title" id="title" maxlength="16"  placeholder="Title" style="width:300px"><br>
       Description: <br><textarea name="description" id="description" maxlength="100"  placeholder="Description" style="width:300px; height:50px"></textarea> <br>
-      Tags: <br> <input type="text" name="tags" id="tags" placeholder="Separate tags by commas." style="width:300px"><br>
+
+      <div id='tags-editor'>
+        <div id='tags-container'>
+          <input type="text" class="tag" placeholder="tag">
+        </div>
+        <button id='add-tag-button'>Add a tag</button>
+        <button id='delete-tag-button'>Delete a tag</button>
+      </div>
+
+      <br>
+
       <input type="checkbox" name="NSFW" id="NSFW"> Check this box if the chart contains 18+ content.<br>
       <button id='post-chart-button'>POST</button> 
     </div> <!-- end of wholeThing -->

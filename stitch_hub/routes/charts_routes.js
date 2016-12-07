@@ -101,10 +101,11 @@ router.get('/',function(req, res/*, next*/){
             }
         })
     }
+    var matchQuery = { $and: [ searchForFilter, { is_deleted: false } ] };
 
     // perform query
     Charts.aggregate([ 
-        { $match: searchForFilter },
+        { $match: matchQuery },
         //instead of projecting, we could also just store the size in the chart when handling post
         { $project:
             {
@@ -159,8 +160,9 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var colSize = req.body.colSize;
     var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
+    var tags = JSON.parse(req.body.tags);
 
-    Charts.create({author:author,title:title,description:description,
+    Charts.create({author:author,title:title,description:description,tags:tags,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent,is_deleted: false}, 
         function(err,chart){
             if (err) {
@@ -198,8 +200,8 @@ router.put('/:id/description', function (req, res) {
 router.put('/:id/tags', function (req, res) {
     // chart if the user is the user who posted the chart
     Charts.findOneAndUpdate(
-        {_id:req.body.chartId}, // NOTE LOWERCASE d
-        {tags: JSON.parse(req.body.tags)}, 
+        {_id:req.params.id}, // NOTE LOWERCASE d
+        {tags: req.body.tags}, 
         function(err,chart){
             if (err){
                 res.send({

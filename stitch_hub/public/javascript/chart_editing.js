@@ -39,11 +39,34 @@ $(document).ready(function() {
     view.draw();
   });
 
+  // add event listener for tag addition and deletion buttons
+  $('#add-tag-button').on('click', function() {
+    var allTagsWritten = areAllTagsWritten();
+    $('#tags-container').append('<input type="text" class="tag" placeholder="tag">');
+  });
+  $('#delete-tag-button').on('click', function() {
+    if ($('.tag').length > 1) {
+      $('#tags-container .tag').last().remove();
+    } else {
+      alert('Must have at least one tag');
+    }
+  });
+
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
     var stringifiedRows = JSON.stringify(model.getRows());
     var stringtags = document.getElementById("tags");
-    //var taglist = stringtags.split(",");
+    var tags = $('.tag').toArray().map(function (tag) {
+      return $(tag).val(); // map javascript object to text
+    }).filter(function (tag) {
+      return tag != ''; // keep only if non-empty
+    }).filter(function(item, pos, self) {
+      return self.indexOf(item) == pos; // remove duplicates
+    });
+    if (tags.length == 0) {
+      alert('Must have at least one tag');
+      return;
+    }
 
 
     $.ajax({
@@ -58,8 +81,8 @@ $(document).ready(function() {
         rows: stringifiedRows,
         parent: jsonChart._id,
         nsfw: document.getElementById("NSFW").checked,
-        //tags: taglist,
-        comments: []
+        tags: JSON.stringify(tags),
+        comments: [],
 
       },
       success: function() {
@@ -73,3 +96,11 @@ $(document).ready(function() {
     });
   });
 });
+
+var areAllTagsWritten = function() {
+  var allTagsWritten = true;
+  $('.tag').each(function (i, tag) {
+    allTagsWritten = allTagsWritten && ($(tag).val() != '');
+  });
+  return allTagsWritten;
+}
