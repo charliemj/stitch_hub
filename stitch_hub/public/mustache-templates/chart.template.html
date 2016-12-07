@@ -6,8 +6,10 @@
   <!-- chart was not deleted, so this is good to display -->
   {{^is_deleted}}
     <h1>{{title}}</h1>
-    by <h2>{{author}}</h2>
-    <p>{{description}}</p>
+    by <h2 >{{author}}</h2>
+    <h3>Description:</h3>
+    <p id="chart-description" contenteditable="true">{{description}}</p>
+    <button id="edit-description-button" style="display: none;">Save description</button><br>
     This chart has {{number}} likes!
     <div id="chart">
       <canvas id="canvas"></canvas>
