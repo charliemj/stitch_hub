@@ -13,11 +13,16 @@ body {
 }
 
 #banner{
-  height:200px;
+  height:400px;
   background-image: url("../img/banner.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center; 
+}
+
+#banner a{
+  size:15px;
+  color:white;
 }
 
 button {
@@ -30,6 +35,11 @@ button {
     display: inline-block;
     font-size: 14px;
     font-family: 'Dosis',sans-serif;
+}
+
+
+#logout-button,#LogButton, .cancelbtn,#signup-button{
+  
 }
 
 #login-signup-container button {
