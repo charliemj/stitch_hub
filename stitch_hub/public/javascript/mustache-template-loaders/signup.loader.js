@@ -23,6 +23,7 @@ var loadSignupTemplate = function() {
       $.ajax({
         url: '/users',
         method: 'POST',
+        async: false,
         data: {
           username: username,
           password: password,
@@ -46,6 +47,7 @@ var loadSignupTemplate = function() {
       $.ajax({
         url: '/login',
         method: 'POST',
+        async: false,
         data: {
           username: username,
           password: password
