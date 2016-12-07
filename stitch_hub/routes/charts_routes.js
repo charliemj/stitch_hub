@@ -13,15 +13,16 @@ var passport = require('passport');
 * 'message'. The 'success' key has a value of false and 'message' key will
 * have the error as the value.
 */
-router.get('/:chartId',function(req, res, next){
+router.get('/parent',function(req, res, next){
     var chartId = req.query.chartId;
     //var chartId = req.params.chartId;
     //var chartId = req.body.chartId;
     console.log("looking for chart id: " + chartId);
-    Charts.find({_id:chartId})
+    Charts.findOne({_id:chartId})
     .exec(function(err,chart){
-        console.log("routing err, chart: " + err + chart);
+        
          if (err) {
+            console.log("routing err, chart: " + err + chart);
              res.json({
                  success: false,
                  message: err
