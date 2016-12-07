@@ -29,7 +29,7 @@ var loadLogoutTemplate = function() {
         }
 
       });//end ajax
-
+      window.location.reload();
 
     }); //end login-button handler
   })

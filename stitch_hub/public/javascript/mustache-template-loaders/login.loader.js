@@ -39,10 +39,10 @@ var loadLoginTemplate = function() {
           console.log('Error logging in');
           console.log(error);
         }
-
+      
       });//end ajax
 
-
+      window.location.reload();
     }); //end login-button handler
   })
 }

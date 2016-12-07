@@ -33,6 +33,7 @@ $(document).ready(function() {
   $('#saveComment-button').on('click', function() {
     var text = document.getElementById('newComment').value;
     doComment(chartID, text);
+    window.location.reload();
 
 
 

@@ -41,6 +41,7 @@ jsonChart.number = number;
           likeChart(jsonChart._id);
           liked = true;
         }
+        window.location.reload();
       });
     });
 
