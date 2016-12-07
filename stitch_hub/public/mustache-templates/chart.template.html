@@ -6,7 +6,7 @@
   <!-- chart was not deleted, so this is good to display -->
   {{^is_deleted}}
     <h1>{{title}}</h1>
-    by <h2 >{{author}}</h2>
+    by <h2><a id="user-profile-link" href="user_profile.html">{{author}}</a></h2>
     <h2>Description</h2>
     <p id="chart-description" contenteditable="true">{{description}}</p>
     <button id="edit-description-button" style="display: none;">Save description</button><br>
