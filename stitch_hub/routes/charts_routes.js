@@ -199,8 +199,8 @@ router.put('/:id/description', function (req, res) {
 router.put('/:id/tags', function (req, res) {
     // chart if the user is the user who posted the chart
     Charts.findOneAndUpdate(
-        {_id:req.body.chartId}, // NOTE LOWERCASE d
-        {tags: JSON.parse(req.body.tags)}, 
+        {_id:req.params.id}, // NOTE LOWERCASE d
+        {tags: req.body.tags}, 
         function(err,chart){
             if (err){
                 res.send({

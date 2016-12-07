@@ -2,6 +2,7 @@ var loadChartTemplate = function(jsonChart) {
 
 var number = getNumberOfLikes(jsonChart._id);
 jsonChart.number = number;
+jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
 
   $.get('mustache-templates/chart.template.html', function (template) {
     console.log(jsonChart);
@@ -61,6 +62,61 @@ jsonChart.number = number;
         },
         error: function(err) {
           console.log('Error in editing chart description');
+          console.log(err);
+        },
+      });
+    });
+
+    // make the chart description editable
+    // Find all editable content.
+    // http://stackoverflow.com/questions/6256342/trigger-an-event-when-contenteditable-is-changed
+    $('#chart-tags')
+        // When you click on item, record into data("initialText") content of this item.
+        .focus(function() {
+            $(this).data("initialText", $(this).html());
+        })
+        // When you leave an item...
+        .blur(function() {
+            // ...if content is different...
+            if ($(this).data("initialText") !== $(this).html()) {
+                // ... do something.
+                $('#edit-tags-button').show();
+                //console.log('New data when content change.');
+                //console.log($(this).html());
+            }
+        });
+    // save when clicking on the edit description button
+    $('#edit-tags-button').on('click', function() {
+      var newTags = $('#chart-tags').html().split(' ')
+      .filter(function (tag) {
+        return tag != ''; // keep only if non-empty
+      }).filter(function(item, pos, self) {
+        return self.indexOf(item) == pos; // remove duplicates
+      });
+      if (newTags.length == 0) {
+        alert('Must have at least one tag');
+        return;
+      }
+
+      $.ajax({
+        url: '/charts/' + jsonChart._id + '/tags',
+        data: {
+          tags: newTags,
+        },
+        method: 'PUT',
+        success: function(data) {
+          if (data.updated) {
+            // need to change what is stored locally as well to handle refreshes
+            jsonChart.tags = newTags;
+            window.sessionStorage.setItem('chart', JSON.stringify(jsonChart));
+            alert('Successfully saved chart tags!');
+            $('#edit-tags-button').hide();
+          } else {
+            alert('Failed to save chart tags!');
+          }
+        },
+        error: function(err) {
+          console.log('Error in editing chart tag');
           console.log(err);
         },
       });
