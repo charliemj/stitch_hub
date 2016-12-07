@@ -1,10 +1,11 @@
 var loadChartTemplate = function(jsonChart) {
 
-
 var number = getNumberOfLikes(jsonChart._id);
+jsonChart.number = number;
 
   $.get('mustache-templates/chart.template.html', function (template) {
-    var html = Mustache.render($(template).html(), { title: jsonChart.title, description: jsonChart.description, author:jsonChart.author, number: number, });
+    console.log(jsonChart);
+    var html = Mustache.render($(template).html(), jsonChart);
     $('#chart-container').append(html);
 
     // color the canvas based on the given chart
@@ -50,5 +51,22 @@ var number = getNumberOfLikes(jsonChart._id);
 
 
     });
+
+    // NEED TO DO: complete this part which should make it so we only display a delete button
+    // to user if their ID matches the ID of chart creator
+    
+    var chart_id = jsonChart._id;
+    var author = jsonChart.author;
+    var user = window.sessionStorage.getItem('sessionUserId'); //TODO get current user!
+    
+    console.log("user",user,"author",author); //user is null for some reason.... so button never displayed
+    
+    if (user == author){
+      $('#delete-button').removeClass("hidden").addClass("shown").on('click', 
+        function() {
+          deleteChart(jsonChart._id);
+      });
+    }//end if
+
   });
-}
+};

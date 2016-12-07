@@ -28,7 +28,7 @@ var chartSchema = mongoose.Schema({
     colSize: {type:Number},
     rows:[[{type:String, validate: validators.isHexColor()}]],
     parent: {type:ObjectId, ref:"Chart"},
-
+    is_deleted: Boolean,
     nsfw: Boolean,
     tags: [String],
     comments: [{type:ObjectId, ref:"Comment"}],

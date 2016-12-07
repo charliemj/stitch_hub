@@ -13,8 +13,6 @@ router.post('/', function(req, res){
         return;
     }
 
-    
-
     Like.count({chart:req.body.chartID, user:req.session.userId}, function(err, history){
       if (err) {
              console.log(err);
@@ -105,6 +103,5 @@ router.get('/likes',function(req, res, next){
         } //end else
     })
 });
-
 
 module.exports = router;

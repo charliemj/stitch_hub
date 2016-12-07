@@ -17,7 +17,7 @@ var loadLoginSignupWidget = function() {
       } else if (event.target == signupmodal) {
           signupmodal.style.display = "none";
       }
-    }
+    };
 
 
     $('#LogButton').on('click', function() {
@@ -30,14 +30,12 @@ var loadLoginSignupWidget = function() {
         method: 'POST',
         data: {
           username: username,
-          password: password,
-
-
+          password: password
         },
         success: function(data) {
           if (data.loggedIn) {
             window.sessionStorage.setItem('sessionUsername', username);
-            window.sessionStorage.setItem('userId', data.userId);
+            window.sessionStorage.setItem('sessionUserId', data.userId);
             alert("successfully logged in");
           } else {
             alert("failed to log in");

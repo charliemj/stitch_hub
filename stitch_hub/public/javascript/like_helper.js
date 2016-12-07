@@ -38,7 +38,6 @@ var getCurrentUserLike = function(chartId, callback) {
   });
 };
 
-
 var likeChart = function (chartID){
 
 $.ajax({
