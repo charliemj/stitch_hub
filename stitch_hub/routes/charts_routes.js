@@ -38,7 +38,7 @@ router.get('/parent',function(req, res, next){
 
 router.get('/user/:userId', function(req, res) {
     var userId = req.params.userId;
-    Charts.find({author: userId})
+    Charts.find({author: userId, is_deleted:false})
     .exec(function(err, charts) {
         if (err) {
              res.send({
