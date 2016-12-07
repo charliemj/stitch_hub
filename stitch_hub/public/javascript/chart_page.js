@@ -5,7 +5,7 @@
 $(document).ready(function() {
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
   var chartID = jsonChart._id;
-  
+    
   // load template into #chart-container
   loadChartTemplate(jsonChart);
 

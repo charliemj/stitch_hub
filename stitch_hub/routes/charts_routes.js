@@ -229,7 +229,8 @@ router.put('/',function(req,res,next) {
     console.log(req.body.chartID, req.session.userId);
     Charts.findOneAndUpdate(
         {_id:req.body.chartID,author:req.session.userId}, 
-        {is_deleted: true}, 
+        {is_deleted: true},
+        {new: true},
         function(err,chart){
             if (err){
                 res.send({
@@ -241,7 +242,10 @@ router.put('/',function(req,res,next) {
                     res.send(400);
                 } else{
                     //delete the chart
-                    res.send(200);
+                    res.send({
+                        success: true,
+                        message: chart
+                        });
                 }//end if
             }
         }

@@ -1,5 +1,5 @@
 var deleteChart = function (chartID){
-
+var newChart;
 $.ajax({
         url: '/charts/',
         method: 'PUT',
@@ -7,7 +7,8 @@ $.ajax({
           chartID: chartID,
           
         },
-        success: function() {
+        success: function(result) {
+          newChart = result.message;
           console.log("successfully deleted it");
         },
         error: function(error) {
@@ -16,5 +17,7 @@ $.ajax({
         }
 
       });//end ajax
+      window.sessionStorage.setItem('chart', JSON.stringify(newChart));
+      window.location.reload();
 
 }
