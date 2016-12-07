@@ -101,10 +101,11 @@ router.get('/',function(req, res/*, next*/){
             }
         })
     }
+    var matchQuery = { $and: [ searchForFilter, { is_deleted: false } ] };
 
     // perform query
     Charts.aggregate([ 
-        { $match: searchForFilter },
+        { $match: matchQuery },
         //instead of projecting, we could also just store the size in the chart when handling post
         { $project:
             {
