@@ -3,6 +3,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
 var Users = require('../model/user_model.js');
+var session = require('express-session');
+
+
 
 router.post('/', function (req, res) {
   Users.findOne({ username: req.body.username, password: req.body.password }, function (err, user) {

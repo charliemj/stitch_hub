@@ -109,6 +109,7 @@ router.get('/',function(req, res/*, next*/){
         { $project:
             {
                 _id: "$_id",
+                author: "$author",
                 date: "$date",
                 title: "$title",
                 description: "$description",
@@ -119,6 +120,7 @@ router.get('/',function(req, res/*, next*/){
                 rows: "$rows",
                 parent: "$parent",
                 tags: "$tags",
+                is_deleted: "$is_deleted",
             }
         },
         { $match: sizeFilter },
@@ -150,7 +152,6 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
         return;
     }
     var author = req.session.userId;
-    var authorUsername = req.session.username;
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;
     var type = req.body.type;
@@ -158,10 +159,9 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var colSize = req.body.colSize;
     var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
-    console.log("Username: " + authorUsername);
 
-    Charts.create({authorUsername:authorUsername,author:author,title:title,description:description,
-        type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent}, 
+    Charts.create({author:author,title:title,description:description,
+        type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent,is_deleted: false}, 
         function(err,chart){
             if (err) {
                 res.send({
@@ -175,9 +175,78 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     );
 });
 
+router.put('/:id/description', function (req, res) {
+    // check if the user is the user who posted the chart
+    console.log(req.params.id);
+    Charts.findOneAndUpdate(
+        {_id:req.params.id}, // NOTE LOWERCASE d 
+        {description: req.body.description}, 
+        function(err,chart){
+            if (err){
+                res.send({
+                    success: false,
+                    message: err
+                }); //end if
+            } else {
+                var updated = (chart != null);
+                res.send({ updated: updated });
+            }
+        }
+    );
+});
 
-// "Deleting" a chart by putting blank info in for it's info
+router.put('/:id/tags', function (req, res) {
+    // chart if the user is the user who posted the chart
+    Charts.findOneAndUpdate(
+        {_id:req.body.chartId}, // NOTE LOWERCASE d
+        {tags: JSON.parse(req.body.tags)}, 
+        function(err,chart){
+            if (err){
+                res.send({
+                    success: false,
+                    message: err
+                }); //end if
+            } else {
+                var updated = (chart != null);
+                res.send({ updated: updated });
+            }
+        }
+    );
+});
 
+// "Deleting" a chart 
+/** 
+* Handles the PUT request for "deleting" a chart. We don't want to delete the chart outright
+* Since we need to have the parents available for the remixing lineage, but we will
+* no longer display a deleted chart
+* After successfully deleting, nothing is returned. If an error occurs, the
+* response is a JSON with keys 'success' and 'message'. The 'success' key
+* has a value of false and 'message' will tell the user that they can't delete a chart
+* that isn'theirs
+*/
+router.put('/',function(req,res,next) {
+    //check if user is the user who posted the chart
+    console.log(req.body.chartID, req.session.userId);
+    Charts.findOneAndUpdate(
+        {_id:req.body.chartID,author:req.session.userId}, 
+        {is_deleted: true}, 
+        function(err,chart){
+            if (err){
+                res.send({
+                    success: false,
+                    message: err
+                }); //end if
+            } else {
+                if (chart===null){
+                    res.send(400);
+                } else{
+                    //delete the chart
+                    res.send(200);
+                }//end if
+            }
+        }
+    );
+});
 
 
 

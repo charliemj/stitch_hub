@@ -1,12 +1,22 @@
 <div id="chart-template">
-  <h1>{{title}}</h1>
-  by <h2>{{author}}</h2>
-  <p>{{description}}</p>
-  This chart has {{number}} likes!
-  <div id="chart">
-    <canvas id="canvas"></canvas>
-  </div>
-  <button id="remix-button" style="background-color:olivedrab;">Remix!</button><br><br>
-  <button id="like-button" style="background-color:#000080;"></button><br><br>
-  <button id="parent-button" style="background-color:rebeccapurple;">Parent</button><br><br>
+  <!-- do not display any chart information if the chart is deleted -->
+  {{#is_deleted}}
+    <h1>This chart was deleted bro</h1>
+  {{/is_deleted}}
+  <!-- chart was not deleted, so this is good to display -->
+  {{^is_deleted}}
+    <h1>{{title}}</h1>
+    by <h2 >{{author}}</h2>
+    <h3>Description:</h3>
+    <p id="chart-description" contenteditable="true">{{description}}</p>
+    <button id="edit-description-button" style="display: none;">Save description</button><br>
+    This chart has {{number}} likes!
+    <div id="chart">
+      <canvas id="canvas"></canvas>
+    </div>
+    <button id="remix-button" style="background-color:olivedrab;">Remix!</button><br><br>
+    <button id="like-button" style="background-color:#000080;">Like!</button><br><br>
+    <button id="delete-button" class="hidden" style="background-color:red;">Delete!</button><br><br>
+  {{/is_deleted}}
+
 </div>

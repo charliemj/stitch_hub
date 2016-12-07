@@ -122,3 +122,12 @@ input[type="color"] {
 
 
 
+
+/*for hiding the delete button
+*/.hidden{
+    visibility: hidden;
+}
+.shown{
+    visibility: visible;
+}
+

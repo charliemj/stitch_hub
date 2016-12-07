@@ -59,6 +59,8 @@ app.use('/users', users);
 // routes for login/logout
 var login = require('./routes/login_routes.js');
 app.use('/login', login);
+var logout = require('./routes/logout_routes.js');
+app.use('/logout', logout);
 
 // routes for likes
 var like = require('./routes/likes_routes.js');

@@ -6,7 +6,7 @@ var loadNavBarTemplate = function() {
     var userProfileLink = $('#user-profile-link');
     if (userProfileLink) {
       userProfileLink.on('click', function() {
-        window.sessionStorage.setItem('userProfileId', window.sessionStorage.getItem('userId'));
+        window.sessionStorage.setItem('userProfileId', window.sessionStorage.getItem('sessionUserId'));
         window.location = 'user_profile.html';
       });
     }
