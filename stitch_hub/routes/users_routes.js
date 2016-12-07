@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Users = require('../model/user_model.js');
+var Charts = require('../model/chart_model.js');
 
 router.get('/:id', function(req, res) {
   var id = req.params.id;
@@ -38,6 +39,34 @@ router.put('/follow', function(req, res) {
       } else {
         res.send({updated: false});
       }
+    }
+  });
+});
+
+router.get('/following/charts', function(req, res) {
+  if (req.session.userId == null) {
+    res.send(400);
+    return;
+  }
+  Users.findOne({ _id: req.session.userId }, function (err, user) {
+    if (err) {
+      console.log('There was an eror!' + err);
+      res.send({
+        success: false,
+        message: err,
+      });
+    } else {
+      console.log('Get following in ' + user);
+      Charts.find({ author: { $in: user.following } }, function (err, charts) {
+        if (err) {
+          res.send({
+            success: false,
+            message: err,
+          });
+        } else {
+          res.send(charts);
+        }
+      });
     }
   });
 });

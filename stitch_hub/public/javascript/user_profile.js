@@ -29,4 +29,18 @@ $(document).ready(function () {
     }
   });
 
+  $('#following-charts-button').on('click', function () {
+    $.ajax({
+      url: '/users/following/charts',
+      method: 'GET',
+      success: function(charts) {
+        loadChartFeedTemplate(charts);
+      },
+      error: function(err) {
+        console.log('Error fetching charts of those you follow');
+        console.log(err);
+      }
+    });
+  })
+
 });
