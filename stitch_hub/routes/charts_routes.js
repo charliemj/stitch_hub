@@ -124,9 +124,10 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
 * has a value of false and 'message' will tell the user that they can't delete a chart
 * that isn'theirs
 */
-router.put('/',function(req,res,next){
+router.put('/',function(req,res,next) {
     //check if user is the user who posted the chart
-    Charts.findOneAndUpdate({_id:req.body.chartID,author:req.session.userId}, 
+    Charts.findOneAndUpdate(
+        {_id:req.body.chartID,author:req.session.userId}, 
         {is_deleted: true}, 
         function(err,chart){
             if (err){
@@ -134,24 +135,16 @@ router.put('/',function(req,res,next){
                     success: false,
                     message: err
                 }); //end if
+            } else {
+                if (chart===null){
+                    res.send(400);
+                } else{
+                    //delete the chart
+                    res.send(200);
+                }//end if
             }
-            else if (chart===null){
-                res.send(400);
-            }
-            else{
-            //delete the chart
-                res.send(200);
-            }//end if
-        });
-    
-    else{
-        //trying to delete chart they didn't make
-        res.send({
-                    success: false,
-                    message: "Don't have permission to delete this!"
-                });
-    }//end else
-    
+        }
+    );
 });
 
 
