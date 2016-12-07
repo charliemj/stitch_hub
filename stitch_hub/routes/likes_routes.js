@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Like = require('../model/like_model.js');
 var passport = require('passport');
 var Users = require('../model/user_model.js');
+var Charts = require('../model/chart_model.js');
 
 
 router.post('/', function(req, res){
@@ -100,6 +101,46 @@ router.get('/likes',function(req, res, next){
               message: number
 
           });
+        } //end else
+    })
+});
+
+router.get('/likedcharts',function(req, res, next){
+    var userID = req.session.userId;
+    Like.find({user:userID}, function(err,likes){
+         if (err) {
+             console.log(err);
+             res.send({
+                 success: false,
+                 message: err
+
+             }); 
+         } else{
+            
+            var likedChartIDs = [];
+            for (var i = 0; i<likes.length; i++){
+              likedChartIDs.push(likes[i].chart);
+            }
+            console.log("liked IDs: " + likedChartIDs);
+            Charts.find({_id: {$in: likedChartIDs}}, function(err, docs){
+              if (err) {
+                console.log(err);
+                res.send({
+                  success: false,
+                  message: err});
+              } else{
+                console.log('docs ' + docs );
+                res.send({
+
+                  success: true,
+                  message: docs});
+              }
+
+
+            })
+
+
+            
         } //end else
     })
 });
