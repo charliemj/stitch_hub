@@ -1,5 +1,7 @@
 var loadChartFeedTemplate = function(charts) {
   $.get('mustache-templates/chart_feed.template.html', function (template) {
+    $('.grid-pad').remove();
+    $('.col-1-5').remove();
     var html = Mustache.render($(template).html(), { charts: getRelevantChartsInfo(charts) });
     $('#charts-container').append(html);
 

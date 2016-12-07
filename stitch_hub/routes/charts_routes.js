@@ -56,9 +56,69 @@ router.get('/user/:userId', function(req, res) {
 * have the error as the value.
 */
 router.get('/',function(req, res/*, next*/){
-    Charts.find({})
-    .sort({'date':-1})
-    .exec(function(err,charts){
+    var searchFor = req.query.searchFor ? JSON.parse(req.query.searchFor) : [];
+    var filterSizeOn = req.query.filterSizeOn ? JSON.parse(req.query.filterSizeOn) : [];
+    var filterTypeOn = req.query.filterTypeOn ? JSON.parse(req.query.filterTypeOn) : [];
+    var tokens = req.query.tokens ? JSON.parse(req.query.tokens) : [];
+    searchRegex = tokens.map(function(token) {
+        return new RegExp('\\b' + token + '\\b', 'i'); // consider as substring
+    });
+
+    // construct the query based on the request parameters
+    // overall structure of the query is
+    // { $or: [ {property1: {$in: tokens}}, ..., {propertyN: {$in: tokens}} ] }
+    var searchForFilter = {};
+    if (searchFor.length > 0) {
+        var propertyQueries = [];
+        searchForFilter = {$or: propertyQueries};
+        searchFor.forEach(function(property) {
+            var propertyQuery = {};
+            propertyQuery[property] = { $in: searchRegex };
+            propertyQueries.push(propertyQuery);
+        });
+    }
+    if (filterTypeOn.length > 0) {
+        searchForFilter.type = { $in: filterTypeOn }
+    }
+    var sizeFilter = {}
+    if (filterSizeOn.length > 0) {
+        var SMALL_SIZE = 400;
+        var MEDIUM_SIZE = 1600;
+        var sizeConditions = [];
+        sizeFilter = {$or: sizeConditions };
+        filterSizeOn.forEach(function(sizeType) {
+            if (sizeType == 'small') {
+                sizeConditions.push({ size: { $lte: SMALL_SIZE } });
+            } else if (sizeType == 'medium') {
+                sizeConditions.push({ size: { $gt: SMALL_SIZE, $lte: MEDIUM_SIZE } });
+            } else if (sizeType == 'large') {
+                sizeConditions.push({ size: { $gt: MEDIUM_SIZE } });
+            }
+        })
+    }
+
+    // perform query
+    Charts.aggregate([ 
+        { $match: searchForFilter },
+        //instead of projecting, we could also just store the size in the chart when handling post
+        { $project:
+            {
+                _id: "$_id",
+                date: "$date",
+                title: "$title",
+                description: "$description",
+                type: "$type",
+                rowSize: "$rowSize",
+                colSize: "$colSize",
+                size: { $multiply: ["$rowSize", "$colSize"]},
+                rows: "$rows",
+                parent: "$parent",
+                tags: "$tags",
+            }
+        },
+        { $match: sizeFilter },
+        { $sort: {'date':-1} },
+    ]).exec(function(err,charts){
         if (err) {
             res.send({
                 success: false,
