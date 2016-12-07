@@ -38,7 +38,11 @@ router.post('/', function(req, res){
             message: err
           }); //end if
         } else{
-          res.send(200); // send a response
+          if (user) {
+            res.send({registered: true});
+          } else {
+            res.send({registered: false});
+          }
         }
       }
     );
