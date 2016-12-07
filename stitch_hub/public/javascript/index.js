@@ -6,6 +6,7 @@
 $(document).ready(function() {
   // LOAD TEMPLATES
   loadLoginTemplate();
+  loadLogoutTemplate();
   loadSignupTemplate();
 
   loadNavBarTemplate();
