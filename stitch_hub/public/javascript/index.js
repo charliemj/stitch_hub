@@ -10,7 +10,7 @@ $(document).ready(function() {
   loadSignupTemplate();
 
   loadNavBarTemplate();
-
+  
   $.ajax({
     url: '/charts',
     method: 'GET',
