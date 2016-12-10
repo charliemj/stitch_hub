@@ -70,7 +70,6 @@ $(document).ready(function() {
       return;
     }
 
-
     $.ajax({
       url: '/charts',
       method: 'POST',

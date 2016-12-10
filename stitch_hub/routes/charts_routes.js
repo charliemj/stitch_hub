@@ -123,6 +123,7 @@ router.get('/',function(req, res/*, next*/){
                 parent: "$parent",
                 tags: "$tags",
                 is_deleted: "$is_deleted",
+                nsfw: "$nsfw",
             }
         },
         { $match: sizeFilter },
@@ -163,8 +164,9 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var rows = JSON.parse(req.body.rows);
     var parent = req.body.parent;
     var tags = JSON.parse(req.body.tags);
+    var nsfw = req.body.nsfw;
 
-    Charts.create({author:author,title:title,description:description,tags:tags,
+    Charts.create({author:author,title:title,description:description,tags:tags,nsfw:nsfw,
         type:type,rowSize:rowSize,colSize:colSize,rows:rows,parent:parent,is_deleted: false}, 
         function(err,chart){
             if (err) {
