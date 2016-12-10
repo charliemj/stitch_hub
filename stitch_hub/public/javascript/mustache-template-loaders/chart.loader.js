@@ -178,5 +178,24 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             goToParent();
           });
         }
+
+        var comments = getComments(jsonChart._id);
+
+  //var comments = ["test comment", "test comment 2", "test comment 3"];
+
+  for (var i = 0; i<comments.length; i++){
+    $('#comments-container').append("<b>" +comments[i].user + ": </b><br>");
+    $('#comments-container').append(comments[i].text);
+    $('#comments-container').append("<hr>");
+
+  }
+
+  console.log("REACHED THE CHART PAGE");
+  $('#saveComment-button').on('click', function() {
+    console.log("Is this really clicked?");
+    var text = document.getElementById('newComment').value;
+    doComment(jsonChart._id, text);
+    window.location.reload();
+  });
   });
 };
