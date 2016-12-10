@@ -7,13 +7,12 @@ var Users = require('../model/user_model.js');
 
 
 router.post('/', function(req, res){
-
+  
     if (!req.session.username) {
         res.send(400, {msg:"user not logged in"});
         return;
     }
 
-  
     Comment.create(
           {user: req.session.userId, chart: req.body.chartID, text:req.body.text }, 
           function(err, like){
@@ -22,15 +21,13 @@ router.post('/', function(req, res){
                 console.log(err);
                 res.send(
                   {success: false,
-                  message: err}
+                  message: err,
+                  error: "error creating like"}
                   ); //end if
               } else{
                 res.sendStatus(200,{sucess:"comment created!"}); // send a response
               }
             });
-              
-            
-
     });
 
 

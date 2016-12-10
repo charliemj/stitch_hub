@@ -20,7 +20,6 @@ router.post('/', function(req, res){
              res.send({
                  success: false,
                  message: err
-
              }); //end if
          } else{
             console.log("this is history");
