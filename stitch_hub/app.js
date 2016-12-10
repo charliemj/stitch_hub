@@ -12,7 +12,9 @@ var session = require('express-session');
 
 // connect with mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_database25');
+//mongoose.connect('mongodb://localhost/my_database25');
+//mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
+mongoose.connect('mongodb://kjmoore:password@ds063946.mlab.com:63946/heroku_vqt01pgt');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
