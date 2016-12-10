@@ -1,17 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Homemade+Apple');
 @import url('https://fonts.googleapis.com/css?family=Dosis');
-
+@import url('https://fonts.googleapis.com/css?family=Aref+Ruqaa|Indie+Flower');
 html,body {
 margin:0;
 padding:0;
 }
 
 body {
-    background-color: lavender;
-    font-family: 'Dosis', sans-serif;
+    background-color:#b39fc7;
+    /*font-family: 'Dosis', sans-serif;*/
+    font-family: 'Indie Flower', cursive;
     padding-left:5px;
-    color:black;
-   
+    color:black;   
+}
+
+a{
+  font-size:25px;
 }
 
 h1{
@@ -20,11 +24,13 @@ h1{
 */  padding:0;
   margin:0;
   padding-left: 5px;
+  font-family: 'Indie Flower', cursive;
 }
 
 h2{
   color:black;
   padding-left:5px;
+  font-family: 'Indie Flower', cursive;
   /*text-shadow: 2px 2px black;*/
 }
 
@@ -35,9 +41,9 @@ h2{
 }
 
 #banner{
-  height:200px;
+  height:250px;
   /*background-image: url("../img/banner.jpg");*/ 
-  background-color: #f88379;
+  background-color: #EF767A;
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center; 
@@ -45,23 +51,42 @@ h2{
 }
 
 #banner a, #user-profile-link{
-  size:15px;
+  /*size:15px;*/
   /*color:white;*/
+  font-size: 25px;
+  text-decoration: none;
+  border-bottom: 1px dotted black;
+  
+}
+
+
+
+#user-profile-link a{
+  text-decoration: none;
 }
 
 #banner li{
   float:left;
   padding: 10px;
   display:inline-block;
+  margin-bottom: 20px;
+  
 }
+
+#banner li a:visited{
+  color:inherit; 
+}
+
 
 #loginButtons{
   padding-bottom:20px;
+  margin-right: 10px;
 }
 #loginButtons button{
   float:right;
   padding:5px;
   margin: 10px;
+  
 }
 
 #search-widget{
@@ -69,6 +94,8 @@ h2{
   bottom:5px;
   position:absolute;
   margin-left:5px;
+  font-family: 'Indie Flower', cursive;
+ 
 }
 
 button {
@@ -80,7 +107,9 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    font-family: 'Dosis',sans-serif;
+    font-family: 'Indie Flower', cursive;
+    border-radius: 5px;
+
 }
 
 
@@ -135,6 +164,8 @@ button {
   margin-right:60px;
   text-align: center;
   border:none;
+  border-radius: 5px;
+  
 }
 
 #wholeThing{
@@ -150,6 +181,13 @@ button {
     
 }
 
+#chart{
+  padding:50px;
+  background-color: #cccccc;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 
 .chart-canvas{
   margin-left:10%;
@@ -171,5 +209,14 @@ button {
 }
 .shown{
     visibility: visible;
+}
+
+#contactAbout{
+  margin-top:10px;
+  background-color:white;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  padding:50px;
 }
 
