@@ -12,29 +12,31 @@
     <li><h2>{{title}}</h2></li>
     <li>by</li> <li><h3><a id="user-profile-link" href="user_profile.html">{{authorname}}</a></h3></li>
   </div> <!-- end chartInfo -->
-    <h3>Description:</h3>
+    <h2 class="chartDesc">Description:</h2>
     <p id="chart-description" contentEditable="true">{{description}}</p>
     <button id="edit-description-button" style="display: none;">Save description</button><br>
-    This chart has {{number}} likes!
+    <p class="chartDesc"> This chart has {{number}} likes! </p>
     <div id="chart">
       <canvas id="canvas"></canvas>
     </div>
-    <h2>Tags</h2>
+    <h2 class="chartDesc">Tags</h2>
     <p id="chart-tags" contentEditable="true">{{tagsConcatenated}}</p>
-    <button id="edit-tags-button" style="display: none;">Save tags</button><br>
+    <div id="allButtons">
+    <button id="edit-tags-button" style="display: none;">Save tags</button>
 
-    <button id="remix-button" style="background-color:olivedrab;">Remix!</button><br><br>
-    <button id="like-button" style="background-color:#000080;">Like!</button><br><br>
+    <button id="remix-button" style="background-color:olivedrab;">Remix!</button>
+    <button id="like-button" style="background-color:#000080;">Like!</button>
     {{/is_deleted}}
-    <button id="parent-button" style="background-color:rebeccapurple">Parent</button><br><br>
+    <button id="parent-button" style="background-color:rebeccapurple">Parent</button>
 
     {{^is_deleted}}
-    <button id="delete-button" class="hidden" style="background-color:red;">Delete!</button><br><br>
+    <button id="delete-button" class="hidden" style="background-color:red;">Delete!</button>
+  </div> <!-- end all buttons -->
   </div>
   <div id="comment-block">
+    
+    <textarea id="newComment" type="text" maxlength="140" style="width: 249px; height: 101px;"></textarea><br>
     <button id="saveComment-button">Comment</button><br>
-    <textarea id="newComment" type="text" maxlength="140" style="width: 249px; height: 101px;"></textarea>
-
 
     <div id="comments-container">
     <h2> Comments </h2>
