@@ -126,8 +126,13 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           });
 
           $('#remix-button').on('click', function() {
-            window.sessionStorage.setItem('chart', JSON.stringify(jsonChart));
-            window.location = "chart_editing.html";
+            if (window.sessionStorage.getItem("sessionUserId") != null){
+
+               alert("You are not logged in");
+            }else{
+              window.sessionStorage.setItem('chart', JSON.stringify(jsonChart));
+              window.location = "chart_editing.html";
+            }
           });
 
           getCurrentUserLike(jsonChart._id, function(err, like) {

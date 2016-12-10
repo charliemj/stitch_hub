@@ -34,8 +34,13 @@ var loadChartFeedTemplate = function(charts) {
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
       jbutton.on('click', function() {
+        if (window.sessionStorage.getItem("sessionUserId") != null){
+
+          alert("You are not logged in");
+        }else{
         window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
         window.location = "chart_editing.html";
+      }
       });
     });
 
