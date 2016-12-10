@@ -13,11 +13,16 @@ body {
 }
 
 #banner{
-  height:200px;
+  height:400px;
   background-image: url("../img/banner.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center; 
+}
+
+#banner a{
+  size:15px;
+  color:white;
 }
 
 button {
@@ -32,21 +37,22 @@ button {
     font-family: 'Dosis',sans-serif;
 }
 
+
+#logout-button,#LogButton, .cancelbtn,#signup-button{
+  
+}
+
 #login-signup-container button {
 
   color:white;
   float:right;
   margin-right:20px;
-
-
 }
 
 
-h1, h2, h3 {
-    color: white;   
-}
 
 h1{
+  color:white;
   text-shadow: 2px 3px black;
   padding:0;
   margin:0;
@@ -77,12 +83,28 @@ h2{
 .like-button {
   background-color: #000080;
   position:absolute;
-  right:2px;
+  right:0;
   bottom:0;
   /*margin-left:10%;
   margin-top:10px;*/
   margin-bottom: 5px;
   margin-right:5px;
+}
+
+.like-box{
+  background-color: #000080;
+  width:40px;
+  height:31px;
+  color: white;
+  position:absolute;
+  right:2px;
+  bottom:0;
+  /*margin-left:10%;
+  margin-top:10px;*/
+  margin-bottom: 5px;
+  margin-right:60px;
+  text-align: center;
+  border:none;
 }
 
 #wholeThing{
@@ -121,4 +143,16 @@ input[type="color"] {
 }
 
 
+#chart-tags:hover,#chart-description:hover{
+  background-color:white;
+} 
+
+
+/*for hiding the delete button
+*/.hidden{
+    visibility: hidden;
+}
+.shown{
+    visibility: visible;
+}
 

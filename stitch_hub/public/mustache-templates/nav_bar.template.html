@@ -1,0 +1,15 @@
+<div id='nav-bar-template'>
+  <ul class="nav">
+    <div class="nav-home">
+      <li class="active"><a href="index.html">Homepage</a></li>
+    </div>
+    <div class="nav-pages">
+      <!-- create link to user profile if user is logged in -->
+      {{#loggedIn}}
+      <li><span id="user-profile-link">{{username}}</span></li>
+      {{/loggedIn}}
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </div>
+  </ul>
+</div>

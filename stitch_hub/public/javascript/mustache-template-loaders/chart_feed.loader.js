@@ -1,16 +1,12 @@
 var loadChartFeedTemplate = function(charts) {
   $.get('mustache-templates/chart_feed.template.html', function (template) {
+    $('.grid-pad').remove();
+    $('.col-1-5').remove();
     var html = Mustache.render($(template).html(), { charts: getRelevantChartsInfo(charts) });
     $('#charts-container').append(html);
 
     // draw each chart and add a link to its page
     $('.chart-canvas').each(function(i, canvas) {
-      // add link to chart page
-      $(canvas).on('click', function() {
-        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
-        window.location = "chart_page.html"
-      });
-
       var id = $(canvas).attr('data-id');
       var chartJson = findChartWithId(charts, id);
       var chartModel = getChartFromJson(chartJson);
@@ -18,6 +14,12 @@ var loadChartFeedTemplate = function(charts) {
       var chartView = ChartView(standardSize.cellWidth, standardSize.cellHeight, chartModel, canvas);
       // draw chart
       renderChartToFeed(canvas, chartView);
+
+      // add link to chart page
+      $(canvas).on('click', function() {
+        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
+        window.location = "chart_page.html"
+      });
 
       $(canvas).on('mouseenter', function() {
         handleMouseEnterGrid(chartView);
@@ -39,14 +41,32 @@ var loadChartFeedTemplate = function(charts) {
 
     //add like button for each chart
     $('.like-button').each(function(i, button) {
+      // get whether or not the user has currently liked this
+
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
-      jbutton.on('click', function() {
-        //TODO: DO LIKE
-        alert("Likes not implemented yet!");
+      getCurrentUserLike(id, function(err, like) {
+        // set the initial state of the button
+        var liked = like ? true : false;
+        jbutton.text(liked ? 'Unlike' : 'Like');
+        // set the onclick listener of the button
+        jbutton.on('click', function() {
+          if (liked) {
+            jbutton.text('Like');
+            unlikeChart(id);
+            liked = false;
+          } else {
+            jbutton.text('Unlike');
+            likeChart(id);
+            liked = true;
+          }
+        });
       });
+
     });
+
+
 
     // upon window resize, rescale the chart sizes
     $ (window).resize(function() {
@@ -89,6 +109,9 @@ var getRelevantChartsInfo = function(charts) {
     chartsInfo.push({
       _id: chart._id,
       title: chart.title,
+      author: chart.author,
+      likeCount: getNumberOfLikes(chart._id),
+      authorname: getUsernameFromID(chart.author)
     });
   });
   return chartsInfo;

@@ -28,12 +28,11 @@ var chartSchema = mongoose.Schema({
     colSize: {type:Number},
     rows:[[{type:String, validate: validators.isHexColor()}]],
     parent: {type:ObjectId, ref:"Chart"},
-
+    is_deleted: Boolean,
     nsfw: Boolean,
     tags: [String],
-    comments: [String], //TODO: this is probably not how we want to represent this-- any suggestions?
+    comments: [{type:ObjectId, ref:"Comment"}],
     author: {type: ObjectId, ref:"User"}
-
 });
 
 

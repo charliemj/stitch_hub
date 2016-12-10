@@ -3,38 +3,31 @@
 * information about the chart. It also adds logic to the remix button
 */
 $(document).ready(function() {
+  loadNavBarTemplate();
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
-
-
-
-
-
-
-
-
-
-
+  var chartID = jsonChart._id;
+    
   // load template into #chart-container
   loadChartTemplate(jsonChart);
 
-  var comments = jsonChart.comments;
 
-  var comments = ["test comment", "test comment 2", "test comment 3"];
+  var comments = getComments(chartID);
+
+  //var comments = ["test comment", "test comment 2", "test comment 3"];
 
   for (var i = 0; i<comments.length; i++){
-  	console.log(comments[i]);
-  	$('#comments-container').append(comments[i]);
-  	$('#comments-container').append("<hr>");
+    $('#comments-container').append("<b>" +comments[i].user + ": </b><br>");
+    $('#comments-container').append(comments[i].text);
+    $('#comments-container').append("<hr>");
 
   }
 
 
   $('#saveComment-button').on('click', function() {
-    //TODO: make put request to server to add comment.
-    	alert("Comment Adding Not Implemented Yet");
-
+    var text = document.getElementById('newComment').value;
+    doComment(chartID, text);
+    window.location.reload();
   });
 
   
-
 });

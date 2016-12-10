@@ -3,11 +3,17 @@
 <head>
   <title>StitchHub</title>
   <!-- TEMPLATES -->
-  <script src="mustache-templates/login_signup.template.html" type="text/x-mustache"></script>
+  <script src="mustache-templates/login.template.html" type="text/x-mustache"></script>
+  <script src="mustache-templates/logout.template.html" type="text/x-mustache"></script>
+  <script src="mustache-templates/signup.template.html" type="text/x-mustache"></script>
   <script src="mustache-templates/chart_feed.template.html" type="text/x-mustache"></script>
+  <script src="mustache-templates/nav_bar.template.html" type="text/x-mustache"></script>
   <!-- TEMPLATE LOADERS -->
-  <script src="javascript/mustache-template-loaders/login_signup.loader.js" type="text/javascript"></script>
+  <script src="javascript/mustache-template-loaders/login.loader.js" type="text/javascript"></script>
+  <script src="javascript/mustache-template-loaders/logout.loader.js" type="text/javascript"></script>
+  <script src="javascript/mustache-template-loaders/signup.loader.js" type="text/javascript"></script>
   <script src="javascript/mustache-template-loaders/chart_feed.loader.js" type="text/javascript"></script>
+  <script src="javascript/mustache-template-loaders/nav_bar.loader.js" type="text/javascript"></script>
   <!-- SCRIPTS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
   <script src="javascript/chart-util/chart_model.js" type="text/javascript"></script>
@@ -15,21 +21,68 @@
   <script src="javascript/chart-util/chart_controller.js" type="text/javascript"></script>
   <script src="javascript/chart-util/json_chart_conversion.js" type="text/javascript"></script>
   <script src="javascript/chart-util/ratios.js" type="text/javascript"></script>
+  <script src="javascript/like_helper.js" type="text/javascript"></script>
+  <script src="javascript/delete-chart-helper.js" type="text/javascript"></script>
   <script src="javascript/mustache.js" type="text/javascript"></script>
   <script src="javascript/index.js" type="text/javascript"></script>
+  <script src="javascript/name_helper.js" type="text/javascript"></script>
   <link href="css/style.css" rel="stylesheet">
   <link href="css/modal.css" rel="stylesheet">
   <link href="css/grid.css" rel="stylesheet">
 </head>
 <body>
   <div id="banner">
+  <div id='nav-bar-template-container'>
+
+    <!-- nav bar template goes in here -->
+  </div>
   <h1>Welcome to StitchHub</h1>
-  <div id="login-signup-container">
+
+  <div id="search-widget">
+    <input type="checkbox" id="search-all-checkbox">Search all charts?<br>
+    <input type="text" id="search-bar" placeholder="Enter a query">
+    <select multiple required id="property-select">
+      <optgroup label="Search by:">
+      <option value='tags' selected="selected">tags</option>
+      <option value='title'>title</option>
+      <option value='author'>author</option>
+      <option value='description'>description</option>
+    </select>
+    <select multiple id="size-filter-select">
+      <optgroup label="Size">
+        <option value="small">small</option>
+        <option value="medium">medium</option>
+        <option value="large">large</option>
+      </optgroup>
+    </select>
+    <select multiple id="type-filter-select">
+      <optgroup label="Chart type">
+        <option value="CROSS_STITCH">cross stitch</option>
+        <option value="KNIT_V">vertical knit</option>
+        <option value="KNIT_H">horizontal knit</option>
+        <option value="CROCHET_V">vertical crochet</option>
+        <option value="CROCHET_H">horizontal crochet</option>
+      </optgroup>
+    </select>
+    <select id="sort-select">
+        <option value="recent">Likes</option>
+        <option value="likes">Recent</option>
+        <option value="hot">Hot</option>
+    </select>
+    <button id="search-button">Search</button>
+  </div>
+  <div id="login-container">
     <!-- Log in button template goes in here -->
+  </div>
+  <div id="logout-container">
+    <!-- Log out button template goes in here -->
+  </div>
+  <div id="signup-container">
+    <!-- Sign up button template goes in here -->
   </div>  <!-- endof banner -->
   <br>
   <button id="make-chart-button">Make a new chart</button>
-</div> 
+  </div> <!-- end banner -->
   <h2>Recent Charts</h2>
   <hr>
   <div id="charts-container">

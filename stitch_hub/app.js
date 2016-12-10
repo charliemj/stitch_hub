@@ -12,7 +12,9 @@ var session = require('express-session');
 
 // connect with mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_database8');
+mongoose.connect('mongodb://localhost/my_database25');
+//mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
+//mongoose.connect('mongodb://kjmoore:password@ds063946.mlab.com:63946/heroku_vqt01pgt');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -59,6 +61,16 @@ app.use('/users', users);
 // routes for login/logout
 var login = require('./routes/login_routes.js');
 app.use('/login', login);
+var logout = require('./routes/logout_routes.js');
+app.use('/logout', logout);
+
+// routes for likes
+var like = require('./routes/likes_routes.js');
+app.use('/like', like);
+
+// routes for comments
+var comment = require('./routes/comment_routes.js');
+app.use('/comment', comment);
 
 // 404 Route
 app.use(function(req, res){

@@ -1,9 +1,46 @@
 <div id="chart-template">
-  <h1>{{title}}</h1>
-  <p>{{description}}</p>
-  <div id="chart">
-    <canvas id="canvas"></canvas>
+  <!-- do not display any chart information if the chart is deleted -->
+  {{#is_deleted}}
+    <div id="renderIfDeleted">
+    <h1>This chart was deleted bro</h1>
+    </div>
+  {{/is_deleted}}
+  <!-- chart was not deleted, so this is good to display -->
+  {{^is_deleted}}
+  <div id="renderIfNotDeleted">
+    <h2>{{title}}</h2>
+    by <h3><a id="user-profile-link" href="user_profile.html">{{authorname}}</a></h3>
+    <h3>Description:</h3>
+    <p id="chart-description" contenteditable="true">{{description}}</p>
+    <button id="edit-description-button" style="display: none;">Save description</button><br>
+    This chart has {{number}} likes!
+    <div id="chart">
+      <canvas id="canvas"></canvas>
+    </div>
+    <h2>Tags</h2>
+    <p id="chart-tags" contenteditable="true">{{tagsConcatenated}}</p>
+    <button id="edit-tags-button" style="display: none;">Save tags</button><br>
+
+    <button id="remix-button" style="background-color:olivedrab;">Remix!</button><br><br>
+    <button id="like-button" style="background-color:#000080;">Like!</button><br><br>
+    {{/is_deleted}}
+    <button id="parent-button" style="background-color:rebeccapurple">Parent</button><br><br>
+
+    {{^is_deleted}}
+    <button id="delete-button" class="hidden" style="background-color:red;">Delete!</button><br><br>
   </div>
-  <button id="remix-button" style="background-color:olivedrab;">Remix!</button><br><br>
-  <button id="like-button" style="background-color:#000080;">Like!</button><br><br>
+  <div id="comment-block">
+    <button id="saveComment-button">Comment</button><br>
+    <textarea id="newComment" type="text" maxlength="140" style="width: 249px; height: 101px;"></textarea>
+
+
+    <div id="comments-container">
+    <h2> Comments </h2>
+    <hr>
+    <!--comments go here -->
+    </div>
+    </div>
+  
+  {{/is_deleted}}
+
 </div>
