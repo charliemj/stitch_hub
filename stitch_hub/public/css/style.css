@@ -211,3 +211,12 @@ button {
     visibility: visible;
 }
 
+#contactAbout{
+  margin-top:10px;
+  background-color:white;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  padding:50px;
+}
+
