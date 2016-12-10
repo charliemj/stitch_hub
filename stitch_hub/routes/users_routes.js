@@ -7,13 +7,13 @@ var Charts = require('../model/chart_model.js');
 router.get('/:id', function(req, res) {
   var id = req.params.id;
   Users.findOne({
-    _id: id,
+    _id: id
   }, function(err, user) {
     console.log(user);
     if (err) {
       res.send({
         success: false,
-        message: err,
+        message: err
       });
     } else {
       res.send({user: user});
@@ -81,7 +81,7 @@ router.post('/', function(req, res){
       username: username,
       password: password,
       dob: dob,
-      email: email,
+      email: email
     }, function(err, user){
         if (err) {
           res.send({
