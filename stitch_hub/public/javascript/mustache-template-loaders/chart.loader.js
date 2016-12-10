@@ -25,6 +25,12 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             window.location = "user_profile.html";
           });
 
+          if (window.sessionStorage.getItem('sessionUserId') != jsonChart.author){
+              document.getElementById('chart-description').contentEditable='false';
+              document.getElementById('chart-tags').contentEditable='false';
+          }
+
+
           // make the chart description editable
           // Find all editable content.
           // http://stackoverflow.com/questions/6256342/trigger-an-event-when-contenteditable-is-changed
