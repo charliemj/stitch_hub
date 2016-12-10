@@ -88,12 +88,12 @@ var getLikedCharts = function(){
         method: 'GET',
         async: false,
         data: {},
-        success: function(number) {
-          console.log("successfully counted likes");
-          result = number.message;
+        success: function(likedCharts) {
+          console.log("successfully got liked charts");
+          result = likedCharts.message;
         },
         error: function(error) {
-          console.log('Error counting likes');
+          console.log('Error getting liked charts');
           console.log(error);
         }
 
