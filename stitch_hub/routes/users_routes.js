@@ -7,17 +7,19 @@ var Charts = require('../model/chart_model.js');
 router.get('/:id', function(req, res) {
   var id = req.params.id;
   Users.findOne({
-    _id: id,
-  }, function(err, user) {
+    _id: id,}, 
+    function(err, user) {
     console.log(user);
     if (err) {
       res.send({
         success: false,
         message: err,
+        error:"error getting user"
       });
-    } else {
-      res.send({user: user});
-    }
+    } //end if
+    else {
+      res.send(200,{user: user});
+    } // end else
   });
 });
 
@@ -31,21 +33,22 @@ router.put('/follow', function(req, res) {
     if (err) {
       res.send({
         success: false,
-        message: err
+        message: err,
+        error:"error following"
       }); //end if
     } else{
-      if (user) {
-        res.send({updated: true});
-      } else {
-        res.send({updated: false});
-      }
-    }
+        if (user) {
+          res.send(200,{updated: true});
+        } else {
+          res.send({updated: false});
+        }
+    }//end else
   });
 });
 
 router.get('/following/charts', function(req, res) {
   if (req.session.userId == null) {
-    res.send(400);
+    res.send(400,{error:"you must be logged in to see this!"});
     return;
   }
   Users.findOne({ _id: req.session.userId }, function (err, user) {
@@ -86,7 +89,8 @@ router.post('/', function(req, res){
         if (err) {
           res.send({
             success: false,
-            message: err
+            message: err,
+            error:"problem creating user"
           }); //end if
         } else{
           if (user) {

@@ -27,21 +27,20 @@ router.post('/', function(req, res){
             console.log(history);
             if (history===0){
                 Like.create(
-                      {user: req.session.userId, chart: req.body.chartID}, 
-                      function(err, like){
-                          if (err) {
-                            console.log("error creating like");
-                            console.log(err);
-                            res.send(
-                              {success: false,
-                              message: err}
-                              ); //end if
-                          } else{
-                            res.sendStatus(200); // send a response
-                          }
-                        });
-                };
-            
+                {user: req.session.userId, chart: req.body.chartID}, 
+                function(err, like){
+                    if (err) {
+                      console.log("error creating like");
+                      console.log(err);
+                      res.send(
+                        {success: false,
+                        message: err}
+                        ); //end if
+                    } else{
+                      res.sendStatus(200,{sucess:"Like created!"}); // send a response
+                    }
+                  });
+                };  
         }; //end else
     });
 });
@@ -72,11 +71,12 @@ router.delete('/', function(req, res) {
     if (err) {
        res.send({
            success: false,
-           message: err
+           message: err,
+           error:"problem unliking"
 
        }); //end if
     } else {
-      res.send(200);
+      res.send(200,{sucess:"like sucessfully removed"});
     }
   });
 });
@@ -102,7 +102,7 @@ router.get('/likes',function(req, res, next){
 
           });
         } //end else
-    })
+    });
 });
 
 router.get('/likedcharts',function(req, res, next){
@@ -131,18 +131,12 @@ router.get('/likedcharts',function(req, res, next){
               } else{
                 console.log('docs ' + docs );
                 res.send({
-
                   success: true,
                   message: docs});
-              }
-
-
-            })
-
-
-            
+              }//end else
+            }); //end Charts.find
         } //end else
-    })
+    });
 });
 
 module.exports = router;
