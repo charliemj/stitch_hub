@@ -159,6 +159,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param callback
  */
 chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, callback) {
+  console.log("attempting to make new chart");
   Charts.create({
     author: author, title: title, description: description, tags: tags,
     type: type, rowSize: rowSize, colSize: colSize, rows: rows, parent: parent, is_deleted: false

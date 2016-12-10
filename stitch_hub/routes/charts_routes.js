@@ -86,10 +86,10 @@ router.get('/', function (req, res/*, next*/) {
  */
 router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
   function (req, res, next) {
-    if (!req.session.username) {
-      res.send(400);
-      return;
-    }
+    // if (!req.session.username) {
+    //   res.send(400);
+    //   return;
+    // }
     var author = req.session.userId;
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;

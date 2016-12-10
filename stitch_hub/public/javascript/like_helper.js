@@ -19,7 +19,7 @@ var getNumberOfLikes = function (chartID){
 
       });//end ajax
       return result;
-}
+};
 
 var getCurrentUserLike = function(chartId, callback) {
   $.ajax({
@@ -33,7 +33,7 @@ var getCurrentUserLike = function(chartId, callback) {
     },
     error: function(err) {
       callback(err, null);
-    },
+    }
   });
 };
 
@@ -57,7 +57,7 @@ $.ajax({
 
       });//end ajax
 
-}
+};
 
 var unlikeChart = function (chartId){
 
@@ -78,7 +78,7 @@ var unlikeChart = function (chartId){
 
       });//end ajax
 
-}
+};
 
 var getLikedCharts = function(){
 
@@ -100,4 +100,4 @@ var getLikedCharts = function(){
       });//end ajax
       console.log(result);
       return result;
-}
+};
