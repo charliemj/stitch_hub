@@ -10,6 +10,7 @@ $(document).ready(function() {
   // load template into #chart-container
   loadChartTemplate(jsonChart);
 
+
   var comments = getComments(chartID);
 
   //var comments = ["test comment", "test comment 2", "test comment 3"];
@@ -29,5 +30,4 @@ $(document).ready(function() {
   });
 
   
-
 });
