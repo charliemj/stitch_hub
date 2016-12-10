@@ -9,20 +9,41 @@ padding:0;
 body {
     background-color: lavender;
     font-family: 'Dosis', sans-serif;
+    padding-left:5px;
+    color:black;
    
 }
 
 #banner{
   height:400px;
-  background-image: url("../img/banner.jpg");
+  /*background-image: url("../img/banner.jpg");*/
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center; 
 }
 
-#banner a{
+#banner a, #user-profile-link{
   size:15px;
-  color:white;
+  /*color:white;*/
+}
+
+#banner li{
+  float:left;
+  padding: 10px;
+  display:inline-block;
+}
+
+#loginButtons{
+  padding-bottom:20px;
+}
+#loginButtons button{
+  float:right;
+  padding:5px;
+  margin: 10px;
+}
+
+#search-widget{
+  float:right;
 }
 
 button {
@@ -52,9 +73,9 @@ button {
 
 
 h1{
-  color:white;
-  text-shadow: 2px 3px black;
-  padding:0;
+  /*color:white;*/
+/*  text-shadow: 2px 3px black;
+*/  padding:0;
   margin:0;
   padding-left: 5px;
 }
@@ -140,6 +161,12 @@ input[type="color"] {
   margin-left: auto ;
   margin-right: auto ;
   /*width:800px;*/
+}
+
+#chart-tags,#chart-description{
+  border:1px;
+  border-style:dotted;
+  border-color: black;
 }
 
 
