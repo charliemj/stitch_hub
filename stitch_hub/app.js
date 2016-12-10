@@ -12,7 +12,7 @@ var session = require('express-session');
 
 // connect with mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_database25');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/my_database25');
 //mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
 //mongoose.connect('mongodb://kjmoore:password@ds063946.mlab.com:63946/heroku_vqt01pgt');
 
@@ -77,7 +77,7 @@ app.use(function(req, res){
   res.status(404).end('404 Error: Page not found');
 });
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Server listening on http://localhost:" + port);
 });
