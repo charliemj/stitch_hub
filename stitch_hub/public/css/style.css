@@ -59,15 +59,7 @@ h2{
   
 }
 
-#chartInfo{
-  position:relative;
-  background-color:#8da6dd;
-}
 
-#chartInfo li{
-  display:inline-block;
-  
-}
 
 #user-profile-link a{
   text-decoration: none;
@@ -172,6 +164,8 @@ button {
   margin-right:60px;
   text-align: center;
   border:none;
+  border-radius: 5px;
+  
 }
 
 #wholeThing{
