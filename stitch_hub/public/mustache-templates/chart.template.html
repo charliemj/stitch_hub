@@ -2,14 +2,16 @@
   <!-- do not display any chart information if the chart is deleted -->
   {{#is_deleted}}
     <div id="renderIfDeleted">
-    <h1>This chart was deleted bro</h1>
+    <h1>This chart was deleted!</h1>
     </div>
   {{/is_deleted}}
   <!-- chart was not deleted, so this is good to display -->
   {{^is_deleted}}
   <div id="renderIfNotDeleted">
-    <h2>{{title}}</h2>
-    by <h3><a id="user-profile-link" href="user_profile.html">{{authorname}}</a></h3>
+    <div id="chartInfo">
+    <li><h2>{{title}}</h2></li>
+    <li>by</li> <li><h3><a id="user-profile-link" href="user_profile.html">{{authorname}}</a></h3></li>
+  </div> <!-- end chartInfo -->
     <h3>Description:</h3>
     <p id="chart-description" contentEditable="true">{{description}}</p>
     <button id="edit-description-button" style="display: none;">Save description</button><br>
