@@ -1,0 +1,12 @@
+/*CHART PAGE CSS*/
+
+#chart-tags,#chart-description{
+  border:1px;
+  border-style:dotted;
+  border-color: black;
+}
+
+
+#chart-tags:hover,#chart-description:hover{
+  background-color:white;
+} 

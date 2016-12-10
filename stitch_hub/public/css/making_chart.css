@@ -1,0 +1,11 @@
+/*MAKE CHART PAGE CSS*/
+
+/*color picker*/
+input[type="color"] {
+  /*position:absolute;*/
+  display: block;
+  margin-left:25%;
+  width: 50%;
+  /*top:50%;*/
+
+}

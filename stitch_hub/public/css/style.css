@@ -14,12 +14,34 @@ body {
    
 }
 
+h1{
+  /*color:white;*/
+/*  text-shadow: 2px 3px black;
+*/  padding:0;
+  margin:0;
+  padding-left: 5px;
+}
+
+h2{
+  color:black;
+  padding-left:5px;
+  /*text-shadow: 2px 2px black;*/
+}
+
+/*BANNER AND NAV BAR CSS*/
+
+#header{
+  position:relative;
+}
+
 #banner{
-  height:400px;
-  /*background-image: url("../img/banner.jpg");*/
+  height:200px;
+  /*background-image: url("../img/banner.jpg");*/ 
+  background-color: #f88379;
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center; 
+  position: relative;
 }
 
 #banner a, #user-profile-link{
@@ -43,7 +65,10 @@ body {
 }
 
 #search-widget{
-  float:right;
+  float:left;
+  bottom:5px;
+  position:absolute;
+  margin-left:5px;
 }
 
 button {
@@ -71,25 +96,13 @@ button {
 }
 
 
-
-h1{
-  /*color:white;*/
-/*  text-shadow: 2px 3px black;
-*/  padding:0;
-  margin:0;
-  padding-left: 5px;
-}
-
-h2{
-  color:black;
-  padding-left:5px;
-  /*text-shadow: 2px 2px black;*/
-}
-
 #make-chart-button {
     /*background-color: green;*/ /* Green */
     margin-left:5px;
 }
+
+
+/*CHART CARD AND CHART-RELATED CSS*/
 
 .remix-button {
     background-color: olivedrab; /* Green */
@@ -106,8 +119,6 @@ h2{
   position:absolute;
   right:0;
   bottom:0;
-  /*margin-left:10%;
-  margin-top:10px;*/
   margin-bottom: 5px;
   margin-right:5px;
 }
@@ -120,8 +131,6 @@ h2{
   position:absolute;
   right:2px;
   bottom:0;
-  /*margin-left:10%;
-  margin-top:10px;*/
   margin-bottom: 5px;
   margin-right:60px;
   text-align: center;
@@ -141,16 +150,6 @@ h2{
     
 }
 
-/*color picker*/
-input[type="color"] {
-  /*position:absolute;*/
-  display: block;
-  margin-left:25%;
-  width: 50%;
-  /*top:50%;*/
-
-}
-
 
 .chart-canvas{
   margin-left:10%;
@@ -161,22 +160,13 @@ input[type="color"] {
   margin-left: auto ;
   margin-right: auto ;
   /*width:800px;*/
-}
 
-#chart-tags,#chart-description{
-  border:1px;
-  border-style:dotted;
-  border-color: black;
 }
 
 
-#chart-tags:hover,#chart-description:hover{
-  background-color:white;
-} 
+/*for hiding the delete button*/
 
-
-/*for hiding the delete button
-*/.hidden{
+.hidden{
     visibility: hidden;
 }
 .shown{
