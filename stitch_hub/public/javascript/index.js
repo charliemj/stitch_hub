@@ -102,7 +102,7 @@ $(document).ready(function() {
 
   // NON-TEMPLATE CONTROLLERS
   $('#make-chart-button').on('click', function() {
-    if (window.sessionStorage.getItem("sessionUserId") != null){
+    if (window.sessionStorage.getItem("sessionUserId") == null){
 
       alert("You are not logged in");
     }else{

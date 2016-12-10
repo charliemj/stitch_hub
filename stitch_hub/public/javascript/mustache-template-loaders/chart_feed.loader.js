@@ -33,7 +33,7 @@ var loadChartFeedTemplate = function(charts) {
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
       jbutton.on('click', function() {
-        if (window.sessionStorage.getItem("sessionUserId") != null){
+        if (window.sessionStorage.getItem("sessionUserId") == null){
 
           alert("You are not logged in");
         }else{
