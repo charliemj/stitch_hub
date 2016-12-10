@@ -2,13 +2,12 @@
   <div class="grid grid-pad"></div>
   {{#charts}}
     <div class="col-1-5">
-      <h3>{{title}}</h3>
-      <h4>{{authorname}}</h4>
+      <h3 id="chartTitle">{{title}}</h3>
+      <h4>by {{authorname}}</h4>
       <canvas class='chart-canvas' data-id='{{_id}}'/>
       <br>
       <button class='remix-button' data-id='{{_id}}'>Remix!</button>
-
-
+      
       <button class='like-button' data-id='{{_id}}'></button>
       <input type="text" class="like-box" data-id='{{_id}}' readonly value='{{likeCount}}'>
       <br>
