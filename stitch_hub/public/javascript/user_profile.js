@@ -11,7 +11,7 @@ $(document).ready(function () {
     },
     error: function (err) {
       console.log(err);
-    },
+    }
   });
 
   // load chart feed template

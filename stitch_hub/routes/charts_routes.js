@@ -5,34 +5,6 @@ var Charts = require('../model/chart_model.js');
 var passport = require('passport');
 
 /**
- * Handles the GET request for a chart with a specific id.
- *
- * When successful, the response is JSON. Most importantly, the value of the
- * 'message' key is a chart following the same format as the schema in mongoose.
- * When an error occurs, the response is a JSON with keys 'success' and
- * 'message'. The 'success' key has a value of false and 'message' key will
- * have the error as the value.
- */
-router.get('/parent', function (req, res, next) {
-  var chartId = req.query.chartId;
-  Charts.getChartById(chartId,
-    function (err, chart) {
-      if (err) {
-        console.log("routing err, chart: " + err + chart);
-        res.json({
-          success: false,
-          message: err
-        }); //end if
-      } else {
-        res.json({
-          success: true,
-          message: chart
-        })
-      } //end else
-    })
-});
-
-/**
  * TODO
  */
 router.get('/user/:userId', function (req, res) {
@@ -86,10 +58,10 @@ router.get('/', function (req, res/*, next*/) {
  */
 router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
   function (req, res, next) {
-    // if (!req.session.username) {
-    //   res.send(400);
-    //   return;
-    // }
+    if (!req.session.username) {
+      res.send(400);
+      return;
+    }
     var author = req.session.userId;
     var title = req.body.title; //make sure view is named correctly
     var description = req.body.description;

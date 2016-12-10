@@ -80,7 +80,7 @@ var loadChartFeedTemplate = function(charts) {
       });
     });
   });
-}
+};
 
 /**
 * Draws charts onto the feed so that they are scaled to fit inside its container.
@@ -97,7 +97,7 @@ var renderChartToFeed = function(canvas, chartView) {
   } else {
     chartView.draw();
   }
-}
+};
 
 /**
 * Converts a list of charts (as returned as a response from GET /charts) to a
@@ -105,6 +105,7 @@ var renderChartToFeed = function(canvas, chartView) {
 */
 var getRelevantChartsInfo = function(charts) {
   var chartsInfo = [];
+  console.log(charts);
   charts.forEach(function(chart) {
     chartsInfo.push({
       _id: chart._id,
