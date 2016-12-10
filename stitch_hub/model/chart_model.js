@@ -217,5 +217,4 @@ chartSchema.statics.deleteChart = function(chartId,userId,callback) {
 };
 
 var Charts = mongoose.model("Charts", chartSchema);
-
 module.exports = Charts; //keep at bottom of file

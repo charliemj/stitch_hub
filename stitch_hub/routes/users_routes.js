@@ -4,12 +4,12 @@ var mongoose = require('mongoose');
 var Users = require('../model/user_model.js');
 var Charts = require('../model/chart_model.js');
 
-router.get('/:id', function(req, res) {
-  var id = req.params.id;
-  Users.findOne({
-    _id: id
-  }, function(err, user) {
-    console.log(user);
+/**
+ * TODO
+ */
+router.get('/:id', function (req, res) {
+  var userId = req.params.id;
+  Users.getUserById(userId, function (err, user) {
     if (err) {
       res.send({
         success: false,
@@ -21,82 +21,75 @@ router.get('/:id', function(req, res) {
   });
 });
 
-router.put('/follow', function(req, res) {
-  var id = req.body.id;
-  console.log("I am: " + req.session.userId);
-  Users.findOneAndUpdate(
-    { _id: req.session.userId},
-    { $addToSet: { following: id } }
-  ).exec(function (err, user) {
-    if (err) {
-      res.send({
-        success: false,
-        message: err
-      }); //end if
-    } else{
-      if (user) {
-        res.send({updated: true});
+/**
+ * TODO
+ */
+router.put('/follow', function (req, res) {
+  var userIDToFollow = req.body.id;
+  var currentUserID = req.session.userId;
+  Users.followUser(currentUserID, userIDToFollow,
+    function (err, user) {
+      if (err) {
+        res.send({
+          success: false,
+          message: err
+        }); //end if
       } else {
-        res.send({updated: false});
+        if (user) {
+          res.send({updated: true});
+        } else {
+          res.send({updated: false});
+        }
       }
-    }
-  });
+    });
 });
 
-router.get('/following/charts', function(req, res) {
+/**
+ * TODO
+ */
+router.get('/following/charts', function (req, res) {
   if (req.session.userId == null) {
     res.send(400);
     return;
   }
-  Users.findOne({ _id: req.session.userId }, function (err, user) {
-    if (err) {
-      console.log('There was an eror!' + err);
-      res.send({
-        success: false,
-        message: err,
-      });
-    } else {
-      console.log('Get following in ' + user);
-      Charts.find({ author: { $in: user.following } }, function (err, charts) {
-        if (err) {
-          res.send({
-            success: false,
-            message: err,
-          });
-        } else {
-          res.send(charts);
-        }
-      });
-    }
-  });
+  var userId = req.session.userId;
+  Users.getFollowersCharts(userId,
+    function (err, charts) {
+      if (err) {
+        res.send({
+          success: false,
+          message: err
+        });
+      } else {
+        res.send(charts);
+      }
+    });
 });
 
-router.post('/', function(req, res){
-    var username = req.body.username;
-    var password = req.body.password;
-    var dob = req.body.dob;
-    var email = req.body.email;
+/**
+ * TODO
+ */
+router.post('/', function (req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var dob = req.body.dob;
+  var email = req.body.email;
 
-    Users.create({
-      username: username,
-      password: password,
-      dob: dob,
-      email: email
-    }, function(err, user){
-        if (err) {
-          res.send({
-            success: false,
-            message: err
-          }); //end if
-        } else{
-          if (user) {
-            res.send({registered: true});
-          } else {
-            res.send({registered: false});
-          }
+  Users.createUser(username, password, dob, email, function (err, user) {
+      if (err) {
+        res.send({
+          success: false,
+          message: err
+        }); //end if
+      } else {
+        if (user) {
+          res.send({registered: true});
+        } else {
+          res.send({registered: false});
         }
       }
-    );
+    }
+  );
 });
 
 module.exports = router;

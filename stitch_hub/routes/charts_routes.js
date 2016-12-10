@@ -100,6 +100,8 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
     var parent = req.body.parent;
     var tags = JSON.parse(req.body.tags);
 
+    console.log("CHARTS: " + Charts);
+
     Charts.makeNewChart(author, title, description, type, rowSize, colSize, rows, parent, tags,
       function (err, chart) {
         if (err) {
