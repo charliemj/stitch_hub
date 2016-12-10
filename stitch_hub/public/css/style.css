@@ -53,22 +53,36 @@ h2{
 #banner a, #user-profile-link{
   /*size:15px;*/
   /*color:white;*/
+  font-size: 25px;
+  text-decoration: none;
+  border-bottom: 1px dotted black;
+  
+  
+  
 }
 
 #banner li{
   float:left;
   padding: 10px;
   display:inline-block;
+  margin-bottom: 20px;
+  
+}
+
+#banner li a:visited{
+  color:inherit; 
 }
 
 
 #loginButtons{
   padding-bottom:20px;
+  margin-right: 10px;
 }
 #loginButtons button{
   float:right;
   padding:5px;
   margin: 10px;
+  
 }
 
 #search-widget{
@@ -77,6 +91,7 @@ h2{
   position:absolute;
   margin-left:5px;
   font-family: 'Indie Flower', cursive;
+ 
 }
 
 button {
@@ -89,6 +104,8 @@ button {
     display: inline-block;
     font-size: 14px;
     font-family: 'Indie Flower', cursive;
+    border-radius: 5px;
+
 }
 
 

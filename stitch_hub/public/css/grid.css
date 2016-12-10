@@ -11,7 +11,8 @@
 
 .col-1-5 {
     width: 15%;
-    background-color:gray;
+    /*background-color:gray;*/
+    background-color:#cccccc;
     margin: 5px;
     height: 325px;
     position:relative;
