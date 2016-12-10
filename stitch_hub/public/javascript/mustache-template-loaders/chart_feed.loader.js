@@ -17,8 +17,7 @@ var loadChartFeedTemplate = function(charts) {
 
       // add link to chart page
       $(canvas).on('click', function() {
-        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
-        window.location = "chart_page.html"
+        goToChartPage(chartJson);
       });
 
       $(canvas).on('mouseenter', function() {
