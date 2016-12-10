@@ -190,6 +190,10 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           });
         }
 
+        if (jsonChart.parent == null){
+          $('#parent-button').hide()
+        }
+
         var comments = getComments(jsonChart._id);
 
   //var comments = ["test comment", "test comment 2", "test comment 3"];

@@ -95,10 +95,14 @@ var loadChartFeedTemplate = function(charts) {
 var renderChartToFeed = function(canvas, chartView) {
   // make sure that each chart fits into at most 80% of container
   var containerWidth = $(canvas).parent().width();
+  var containerHeight = $(canvas).parent().height();
   if (containerWidth * 0.8 < canvas.width) {
     var factor = containerWidth * 0.8 / canvas.width;
     chartView.scale(factor, factor);
-  } else {
+  }else if(containerHeight * 0.5 <canvas.height){
+    var factor = containerHeight * 0.5 / canvas.height;
+    chartView.scale(factor, factor);
+  }else {
     chartView.draw();
   }
 }
