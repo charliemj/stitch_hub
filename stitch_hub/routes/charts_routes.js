@@ -43,7 +43,8 @@ router.get('/user/:userId', function(req, res) {
         if (err) {
              res.send({
                  success: false,
-                 message: err
+                 message: err,
+                 error: "this chart doesn't exist!"
              }); //end if
         } else{
             res.send(charts);
@@ -130,7 +131,8 @@ router.get('/',function(req, res/*, next*/){
         if (err) {
             res.send({
                 success: false,
-                message: err
+                message: err,
+                error: "Problem getting chart!"
             }); //end if
         } else{
             res.send(charts)
@@ -153,7 +155,7 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
         return;
     }
     var author = req.session.userId;
-    var title = req.body.title; //make sure view is named correctly
+    var title = req.body.title; 
     var description = req.body.description;
     var type = req.body.type;
     var rowSize = req.body.rowSize;
@@ -168,10 +170,12 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
             if (err) {
                 res.send({
                     success: false,
-                    message: err
+                    message: err,
+                    error: "Problem posing the chart!"
                 }); //end if
             } else{
-                res.send(200); // send a response
+                res.send(200,
+                    {success: "Your chart is posted!"}); // end  of send a response
             }
         }
     );
@@ -185,13 +189,14 @@ router.put('/:id/description', function (req, res) {
         {description: req.body.description}, 
         function(err,chart){
             if (err){
-                res.send({
+                res.send(401,{
                     success: false,
-                    message: err
+                    message: err,
+                    error:"You can't update this!"
                 }); //end if
             } else {
                 var updated = (chart != null);
-                res.send({ updated: updated });
+                res.send(200,{ updated: updated });
             }
         }
     );
@@ -204,13 +209,14 @@ router.put('/:id/tags', function (req, res) {
         {tags: req.body.tags}, 
         function(err,chart){
             if (err){
-                res.send({
+                res.send(401,{
                     success: false,
-                    message: err
+                    message: err,
+                    error:"You can't update this!"
                 }); //end if
             } else {
                 var updated = (chart != null);
-                res.send({ updated: updated });
+                res.send(200,{ updated: updated });
             }
         }
     );
@@ -237,14 +243,15 @@ router.put('/',function(req,res,next) {
             if (err){
                 res.send({
                     success: false,
-                    message: err
+                    message: err,
+                    error:"You can't delete this!"
                 }); //end if
             } else {
                 if (chart===null){
                     res.send(400);
                 } else{
                     //delete the chart
-                    res.send({
+                    res.send(200,{
                         success: true,
                         message: chart
                         });

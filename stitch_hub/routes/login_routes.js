@@ -15,7 +15,9 @@ router.post('/', function (req, res) {
       req.session.userId = user._id;
       res.send({loggedIn: true, userId: user._id});
     } else {
-      res.send({loggedIn: false});
+      res.send({loggedIn: false,
+        error:"not logged in"
+      });
     }
   });
 });

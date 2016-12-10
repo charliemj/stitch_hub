@@ -2,6 +2,8 @@
 * Handle the logic for chart editing page
 */
 $(document).ready(function() {
+  //load nav bar
+  loadNavBarTemplate();
   // fetch the chart JSON
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
 
@@ -25,7 +27,7 @@ $(document).ready(function() {
 
   // add event listener for zooming buttons
   $('#zoomer').change( function() {
-  	zoomset = document.getElementById("zoomer").value;
+    zoomset = document.getElementById("zoomer").value;
     view = ChartView(xscale*zoomset, yscale*zoomset, model, canvas);
     view.draw();
   });

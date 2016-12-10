@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  loadNavBarTemplate();
   var userProfileId = window.sessionStorage.getItem('userProfileId');
   var currentUser = window.sessionStorage.getItem('sessionUserId');
 
