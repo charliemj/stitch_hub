@@ -22,8 +22,6 @@ router.post('/', function(req, res){
                  message: err
              }); //end if
          } else{
-            console.log("this is history");
-            console.log(history);
             if (history===0){
                 Like.create(
                 {user: req.session.userId, chart: req.body.chartID}, 
@@ -94,7 +92,6 @@ router.get('/likes',function(req, res, next){
 
              }); //end if
          } else{
-            console.log("there were "+ number);
             res.send({
               success: true,
               message: number
