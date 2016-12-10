@@ -110,7 +110,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             $.ajax({
               url: '/charts/' + jsonChart._id + '/tags',
               data: {
-                tags: newTags,
+                tags: JSON.stringify(newTags),
               },
               method: 'PUT',
               success: function(data) {
