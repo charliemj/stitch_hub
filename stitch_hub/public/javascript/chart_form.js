@@ -5,6 +5,13 @@
 * windws.sessionStorage for the item 'chart'. 
 * Furthermore, will redirect to the chart editing page.
 */
+
+$(document).ready(function() {
+  // LOAD TEMPLATES
+  
+  loadNavBarTemplate();
+});
+
 var makeChart = function() {
   var type = $('#typeSelect').val();
   var rowSize = parseInt($('#rowSize').val());

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  loadNavBarTemplate();
   var userProfileId = window.sessionStorage.getItem('userProfileId');
 
   $.ajax({

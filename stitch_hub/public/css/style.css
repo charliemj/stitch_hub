@@ -47,8 +47,6 @@ button {
   color:white;
   float:right;
   margin-right:20px;
-
-
 }
 
 
@@ -145,6 +143,9 @@ input[type="color"] {
 }
 
 
+#chart-tags:hover,#chart-description:hover{
+  background-color:white;
+} 
 
 
 /*for hiding the delete button
