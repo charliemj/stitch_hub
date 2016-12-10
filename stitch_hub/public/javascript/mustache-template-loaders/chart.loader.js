@@ -76,7 +76,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             });
           });
 
-          // make the chart description editable
+          // make the chart tags editable
           // Find all editable content.
           // http://stackoverflow.com/questions/6256342/trigger-an-event-when-contenteditable-is-changed
           $('#chart-tags')
@@ -94,7 +94,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
                       //console.log($(this).html());
                   }
               });
-          // save when clicking on the edit description button
+          // save when clicking on the edit tags button
           $('#edit-tags-button').on('click', function() {
             var newTags = $('#chart-tags').html().split(' ')
             .filter(function (tag) {
@@ -106,11 +106,11 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
               alert('Must have at least one tag');
               return;
             }
-
+            console.log(newTags);
             $.ajax({
               url: '/charts/' + jsonChart._id + '/tags',
               data: {
-                tags: newTags,
+                tags: JSON.stringify(newTags),
               },
               method: 'PUT',
               success: function(data) {
@@ -132,7 +132,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           });
 
           $('#remix-button').on('click', function() {
-            if (window.sessionStorage.getItem("sessionUserId") != null){
+            if (window.sessionStorage.getItem("sessionUserId") == null){
 
                alert("You are not logged in");
             }else{
@@ -195,7 +195,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
   //var comments = ["test comment", "test comment 2", "test comment 3"];
 
   for (var i = 0; i<comments.length; i++){
-    $('#comments-container').append("<b>" +comments[i].user + ": </b><br>");
+    $('#comments-container').append("<b>" +getUsernameFromID(comments[i].user) + ": </b><br>");
     $('#comments-container').append(comments[i].text);
     $('#comments-container').append("<hr>");
 
