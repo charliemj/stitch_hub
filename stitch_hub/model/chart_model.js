@@ -35,6 +35,7 @@ var chartSchema = mongoose.Schema({
   author: {type: ObjectId, ref: "User"}
 });
 
+
 /**
  * TODO
  * @param chartId
@@ -215,5 +216,6 @@ chartSchema.statics.deleteChart = function(chartId,userId,callback) {
   );
 };
 
+var Charts = mongoose.model("Charts", chartSchema);
 
-module.exports = mongoose.model("Charts", chartSchema); //keep at bottom of file
+module.exports = Charts; //keep at bottom of file
