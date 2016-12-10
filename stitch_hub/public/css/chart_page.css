@@ -25,12 +25,20 @@
 }
 
 #allButtons button{
-    margin:5px;
+    margin-left:5px;
     float:right;
 }
 
 #allButtons{
-    padding-right:30px;
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+}
+
+#comment-block{
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
 }
 
 #chartInfo{
