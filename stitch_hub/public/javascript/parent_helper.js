@@ -2,7 +2,7 @@ goToParent = function(jsonChart) {
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
   console.log("find my parent: " + jsonChart.parent);
   $.ajax({
-    url: '/charts/parent',
+    url: '/charts',
     method: 'GET',
     data: {
       chartId: jsonChart.parent
