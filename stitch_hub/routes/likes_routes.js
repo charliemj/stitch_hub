@@ -88,8 +88,8 @@ router.get('/chart/:chartId/count', function (req, res, next) { //TODO is this R
   });
 });
 
-router.get('/likedcharts', function (req, res, next) { //TODO is this RESTful?
-  var userId = req.session.userId;
+router.get('/user/:userId/likedCharts', function (req, res, next) { //TODO is this RESTful?
+  var userId = req.params.userId;
   Likes.getLikedCharts(userId, function (err, docs) {
     if (err) {
       console.log(err);
