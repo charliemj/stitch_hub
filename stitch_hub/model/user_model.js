@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var crypto = require('crypto');
+
 // things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
 // can validate one or multiple things
 // to validate multiple fields, put in a list
@@ -116,9 +118,12 @@ userSchema.statics.getFollowersCharts = function (userId, callback) {
  * @param callback
  */
 userSchema.statics.createUser = function(username, password, dob, email, callback) {
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  var hashedPassword = hash.digest('hex'); 
   Users.create({
     username: username,
-    password: password,
+    password: hashedPassword,
     dob: dob,
     email: email
   }, function(err, user) {
