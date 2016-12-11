@@ -79,7 +79,7 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
  * @param callback
  */
 likesSchema.statics.getNumLikes = function(chartId,callback) {
-  Likes.count({chart: chartID},function(err,number) {
+  Likes.count({chart: chartId},function(err,number) {
     callback(err,number)
   })
 };
@@ -90,7 +90,7 @@ likesSchema.statics.getNumLikes = function(chartId,callback) {
  * @param callback
  */
 likesSchema.statics.getLikedCharts = function(userId,callback) {
-  Likes.find({user: userID}, function (err, likes) {
+  Likes.find({user: userId}, function (err, likes) {
     if (err) {
       console.log(err);
       res.send({

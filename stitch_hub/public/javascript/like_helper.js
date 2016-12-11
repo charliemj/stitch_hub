@@ -6,7 +6,7 @@ var getNumberOfLikes = function (chartID) {
     method: 'GET',
     async: false,
     data: {
-      chartID: chartID
+      chartId: chartID
     },
     success: function (number) {
       console.log("successfully counted likes");

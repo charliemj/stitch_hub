@@ -10,7 +10,6 @@ var getUsernameFromID = function(ID){
           
         },
         error: function(error) {
-          console.log('Error liking it');
           console.log(error);
         }
 
