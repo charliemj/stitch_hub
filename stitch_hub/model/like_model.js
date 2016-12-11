@@ -29,7 +29,7 @@ var likesSchema = mongoose.Schema({
  * @param callback
  */
 likesSchema.statics.likeChart = function (chartId, userId, callback) {
-  Likes.count({chart: chartId, user: userId}, function (err, history) {
+  Likes.count({chart: chartId, user: userId}, function (err, history) { //history is either 1 or 0, indicating if a user has liked a particualr chart
     if (err) {
       console.log(err);
       res.send({
@@ -37,9 +37,7 @@ likesSchema.statics.likeChart = function (chartId, userId, callback) {
         message: err
       }); //end if
     } else {
-      console.log("this is history");
-      console.log(history);
-      if (history === 0) {
+      if (history === 0) { //they can like the chart
         Likes.create(
           {user: req.session.userId, chart: req.body.chartID}, function (err, like) {
             callback(err, like)
@@ -62,6 +60,7 @@ likesSchema.statics.getLike = function(chartId, userId, callback) {
   })
 };
 
+
 /**
  * TODO
  * @param chartId
@@ -69,9 +68,26 @@ likesSchema.statics.getLike = function(chartId, userId, callback) {
  * @param callback
  */
 likesSchema.statics.unLike = function(chartId, userId, callback) {
-  Likes.remove({chart: chartId, user: userId}, function(err,like) {
-    callback(err,like);
-  })
+  //check if user even liked the chart to begin with
+  Likes.getLike(chartId,userId,function(err,like){
+    if (err){
+      res.send({
+        success: false,
+        message: err
+      });//end res.send
+    }//end if
+    else if (like > 0){
+      Likes.remove({chart: chartId, user: userId}, function(err,like) {
+        callback(err,like);
+      });//end remove
+    }//end else if
+    else{
+      res.send({
+        success: false,
+        message: "this chart was not previously liked"
+      });//end res.send
+    }//end else
+  });//end doesLike check
 };
 
 /**
