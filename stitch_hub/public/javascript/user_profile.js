@@ -4,7 +4,7 @@ $(document).ready(function () {
   var currentUser = window.sessionStorage.getItem('sessionUserId');
 
   if (userProfileId != currentUser){
-    $('#button-holder').hide()
+    $('#button-holder').hide();
     $('#following-template-container').hide()
   }
 
@@ -22,7 +22,7 @@ $(document).ready(function () {
     },
     error: function (err) {
       console.log(err);
-    },
+    }
   });
 
   
