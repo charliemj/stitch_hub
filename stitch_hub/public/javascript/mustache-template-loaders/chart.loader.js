@@ -170,7 +170,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
 
           $('#report-button').on("click",function() {
             console.log("REPORT!");
-            window.location = 'chart_page.html'
+            window.location = 'contact.html'
           });
 
           // NEED TO DO: complete this part which should make it so we only display a delete button
