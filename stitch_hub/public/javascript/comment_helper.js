@@ -1,9 +1,11 @@
 var doComment = function (chartID, text){
 
 $.ajax({
-        url: '/comment/chart/' + chartID + '/user/' + window.sessionStorage.getItem('sessionUserId'),
+        url: '/comment',
         method: 'POST',
         data: {
+          chartId: chartID,
+          userId: window.sessionStorage.getItem('sessionUserId'),
           text: text          
         },
         success: function() {
