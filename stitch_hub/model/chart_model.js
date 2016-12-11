@@ -53,6 +53,7 @@ chartSchema.statics.getChartById = function (chartId, callback) {
   })
 };
 
+
 /**
  * Fetches all charts authored by a user.
  * 
@@ -72,9 +73,11 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
   })
 };
 
+
 /**
- * TODO
- * @param searchFor
+ * Searches for charts that meet parameters' specifications.
+ *
+ * @param searchFor TODO
  * @param filterSizeOn
  * @param filterTypeOn
  * @param tokens
@@ -117,7 +120,6 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
     })
   }
   var matchQuery = {$and: [searchForFilter, {is_deleted: false}]};
-
   // perform query
   Charts.aggregate([
     {$match: matchQuery},
@@ -146,17 +148,19 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
   });
 };
 
+
 /**
- * TODO
- * @param author
- * @param title
- * @param description
- * @param type
- * @param rowSize
- * @param colSize
- * @param rows
- * @param parent
- * @param tags
+ * Creates and saves a new chart.
+ *
+ * @param author {ObjectId} ID of the author {User}
+ * @param title {String} title of the chart
+ * @param description {String} description of the chart
+ * @param type {String} type of chart, must be one of the following: ["CROSS_STITCH", "KNIT_V", "KNIT_H", "CROCHET_V", "CROCHET_H"]
+ * @param rowSize {Number} number of rows in the chart
+ * @param colSize {Number} number of columns in the chart
+ * @param rows [[{String}]] list of list of Hex values. Each list inside main list represents a row.
+ * @param parent {ObjectId} ID of the parent {Chart}, null if it has no parent
+ * @param tags [{String}] list of tags assigned to the chart
  * @param callback function to execute
  */
 chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, callback) {
@@ -169,10 +173,12 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
   })
 };
 
+
 /**
- * TODO
- * @param chartId
- * @param userId
+ * Checks if a user can edit a chart (ie: if the user in question is the author of the chart).
+ *
+ * @param chartId {ObjectId} ID of the chart in question
+ * @param userId {ObjectId} ID of the user in question
  * @param callback function to execute
  */
 chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
@@ -193,11 +199,15 @@ chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
   });//end of Charts.getChartById
 };//end of checkIfCanEdit
 
+
 /**
- * TODO
- * @param chartId
- * @param userId
- * @param newDescription
+ * Attempts to edit the description of a chart.
+ * If currently logged-in user has permission to edit the chart description, edits the chart description.
+ * Else, returns and error.
+ *
+ * @param chartId {ObjectId} ID of the chart in question
+ * @param userId {ObjectId} ID of the user in question
+ * @param newDescription {String} revised description of the chart
  * @param callback function to execute
  */
 chartSchema.statics.editDescription = function(chartId,userId,newDescription,callback) {
@@ -211,21 +221,22 @@ chartSchema.statics.editDescription = function(chartId,userId,newDescription,cal
         }//end function
       ) //end findoneandupdate
     }//end if
-
     else{
       //the person doesn't have authorization to edit
         callback(err,canEdit); //this err is auth prob
     }//end else
-
   });//end checkIfCanEdit
-
 };//end of editDescription
 
+
 /**
- * TODO
- * @param chartId
- * @param userId
- * @param newTags
+ * Attempts to edit the tags of a chart.
+ * If currently logged-in user has permission to edit the chart tags, edits the chart tags.
+ * Else, returns and error.
+ *
+ * @param chartId {ObjectId} ID of the chart in question
+ * @param userId {ObjectId} ID of the user in question
+ * @param newTags [{String}] list of set of tags with which to replace old set of tags
  * @param callback function to execute
  */
 chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
@@ -239,7 +250,6 @@ chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
         }
       )
     }//end if
-
     else{
       //the person doesn't have authorization to edit
       callback(err,canEdit); //this err is auth prob
@@ -247,10 +257,13 @@ chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
   });//end checkIfCanEdit
 };
 
+
 /**
- * TODO
- * @param chartId
- * @param userId
+ * Attempts to "delete" a chart. Not a true delete, but marks chart as deleted.
+ * If a chart is not found whose ID matches the chartId and has the author userId, error.
+ *
+ * @param chartId {ObjectId} ID of chart in question
+ * @param userId {ObjectId} ID of logged-in user
  * @param callback function to execute
  */
 chartSchema.statics.deleteChart = function(chartId,userId,callback) {
@@ -263,6 +276,7 @@ chartSchema.statics.deleteChart = function(chartId,userId,callback) {
     }
   );
 };
+
 
 var Charts = mongoose.model("Charts", chartSchema);
 module.exports = Charts; //keep at bottom of file
