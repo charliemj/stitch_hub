@@ -1,18 +1,4 @@
 var mongoose = require('mongoose');
-// things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
-// can validate one or multiple things
-// to validate multiple fields, put in a list
-
-// single validator like this:
-// var Schema = new mongoose.Schema({
-//     email: {type: String, validate: validators.isEmail()}
-// });
-
-// multiple validators like this:
-// var Schema = new mongoose.Schema({
-//     username: {type: String, validate: [validators.isAlphanumeric(), validators.isLength(2, 60)]}
-// });
-
 var validators = require('mongoose-validators');
 var Charts = require('./chart_model.js');
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -26,9 +12,10 @@ var userSchema = mongoose.Schema({
 });
 
 /**
+ * Given an ID, get a specific user.
  *
- * @param userId
- * @param callback
+ * @param userId {ObjectId} ID of user in question
+ * @param callback function to execute
  */
 userSchema.statics.getUserById = function (userId, callback) {
   Users.findOne({
@@ -39,10 +26,11 @@ userSchema.statics.getUserById = function (userId, callback) {
 };
 
 /**
+ * Make one specified user follow another specified user.
  *
- * @param currentUser
- * @param userToFollow
- * @param callback
+ * @param currentUser {ObjectId} ID of user
+ * @param userToFollow {ObjectId} ID of user to follow
+ * @param callback function to execute
  */
 userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
   Users.findOneAndUpdate(
@@ -54,9 +42,10 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
 };
 
 /**
+ * Get all charts authored by a user's followers.
  *
- * @param userId
- * @param callback
+ * @param userId {ObjectId} ID of
+ * @param callback function to execute
  */
 userSchema.statics.getFollowersCharts = function (userId, callback) {
   Users.getUserById(userId, function(err,user) {
@@ -78,12 +67,13 @@ userSchema.statics.getFollowersCharts = function (userId, callback) {
 };
 
 /**
+ * Create a new User.
  *
- * @param username
- * @param password
- * @param dob
- * @param email
- * @param callback
+ * @param username {String} username of user
+ * @param password {String} hashed password of user
+ * @param dob {Date} user's birthday
+ * @param email {String} user's email address
+ * @param callback function to execute
  */
 userSchema.statics.createUser = function(username, password, dob, email, callback) {
   Users.create({

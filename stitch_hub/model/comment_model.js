@@ -1,18 +1,4 @@
 var mongoose = require('mongoose');
-// things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
-// can validate one or multiple things
-// to validate multiple fields, put in a list
-
-// single validator like this:
-// var Schema = new mongoose.Schema({
-//     email: {type: String, validate: validators.isEmail()}
-// });
-
-// multiple validators like this:
-// var Schema = new mongoose.Schema({
-//     username: {type: String, validate: [validators.isAlphanumeric(), validators.isLength(2, 60)]}
-// });
-
 var validators = require('mongoose-validators');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -24,11 +10,12 @@ var commentSchema = mongoose.Schema({
 });
 
 /**
- * TODO
- * @param userId
- * @param chartId
- * @param text
- * @param callback
+ * Creates a new comment.
+ *
+ * @param userId {ObjectId} ID of the author of the comment
+ * @param chartId {ObjectId} ID of the chart being commented on
+ * @param text {String} text of comment
+ * @param callback function to execute
  */
 commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
   Comment.create(
@@ -38,9 +25,10 @@ commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
 };
 
 /**
- * TODO
- * @param chartId
- * @param callback
+ * Get all comments made on chart.
+ *
+ * @param chartId {ObjectId} ID of chart in question
+ * @param callback function to execute
  */
 commentSchema.statics.getChartComments = function(chartId, callback) {
   Comment.find({chart: chartId}, function(err, comments) {

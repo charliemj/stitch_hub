@@ -1,18 +1,4 @@
 var mongoose = require('mongoose');
-// things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
-// can validate one or multiple things
-// to validate multiple fields, put in a list
-
-// single validator like this:
-// var Schema = new mongoose.Schema({
-//     email: {type: String, validate: validators.isEmail()}
-// });
-
-// multiple validators like this:
-// var Schema = new mongoose.Schema({
-//     username: {type: String, validate: [validators.isAlphanumeric(), validators.isLength(2, 60)]}
-// });
-
 var validators = require('mongoose-validators');
 var Charts = require('./chart_model.js');
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -23,10 +9,11 @@ var likesSchema = mongoose.Schema({
 });
 
 /**
- * TODO
- * @param chartId
- * @param userId
- * @param callback
+ * Create a Like given a chart and user.
+ * 
+ * @param chartId {ObjectId} ID of chart being liked
+ * @param userId {ObjectId} ID of user doing the liking
+ * @param callback function to execute
  */
 likesSchema.statics.likeChart = function (chartId, userId, callback) {
   Likes.count({chart: chartId, user: userId}, function (err, history) { //history is either 1 or 0, indicating if a user has liked a particualr chart
@@ -49,10 +36,11 @@ likesSchema.statics.likeChart = function (chartId, userId, callback) {
 };
 
 /**
- * TODO
- * @param chartId
- * @param userId
- * @param callback
+ * Fetch a specific Like.
+ *
+ * @param chartId {ObjectId} ID of liked chart
+ * @param userId {ObjectId} ID of user who liked chart
+ * @param callback function to execute
  */
 likesSchema.statics.getLike = function(chartId, userId, callback) {
   Likes.findOne({chart: chartId, user: userId}, function(err,like) {
@@ -62,10 +50,11 @@ likesSchema.statics.getLike = function(chartId, userId, callback) {
 
 
 /**
- * TODO
- * @param chartId
- * @param userId
- * @param callback
+ * Remove a Like.
+ *
+ * @param chartId {ObjectId} ID of liked chart
+ * @param userId {ObjectId} ID of user who liked chart
+ * @param callback function to execute
  */
 likesSchema.statics.unLike = function(chartId, userId, callback) {
   //check if user even liked the chart to begin with
@@ -85,9 +74,10 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
 };
 
 /**
- * TODO
- * @param chartId
- * @param callback
+ * Get number of likes a chart has.
+ *
+ * @param chartId {ObjectId} ID of the chart in question
+ * @param callback function to execute
  */
 likesSchema.statics.getNumLikes = function(chartId,callback) {
   Likes.count({chart: chartId},function(err,number) {
@@ -96,9 +86,10 @@ likesSchema.statics.getNumLikes = function(chartId,callback) {
 };
 
 /**
- * TODO
- * @param userId
- * @param callback
+ * Get a user's liked charts.
+ *
+ * @param userId {ObjectId} ID of user in question.
+ * @param callback function to execute
  */
 likesSchema.statics.getLikedCharts = function(userId,callback) {
   Likes.find({user: userId}, function (err, likes) {
