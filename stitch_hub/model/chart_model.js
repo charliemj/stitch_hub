@@ -174,7 +174,7 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
  * @param callback
  */
 chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
-  Charts.getChartById(chartId,function (err, charts) {
+  Charts.getChartById(chartId,function (err, chart) {
     var canEdit = false;
     if (err) {
       var chartAuthor = null;
