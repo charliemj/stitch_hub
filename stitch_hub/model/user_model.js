@@ -38,6 +38,23 @@ userSchema.statics.getUserById = function (userId, callback) {
   })
 };
 
+
+
+/**
+ * TODO
+ * @param userId
+ * @param callback
+ */
+userSchema.statics.isLoggedIn = function (userId,callback){
+  var isLoggedIn = false;
+  Users.getUserById(userId,function(err,user){
+    if (user){
+      isLoggedIn = true;
+    }
+    callback(err, isLoggedIn);
+  });
+};//end isLoggedIn
+
 /**
  *
  * @param currentUser
@@ -45,12 +62,19 @@ userSchema.statics.getUserById = function (userId, callback) {
  * @param callback
  */
 userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
-  Users.findOneAndUpdate(
-    {_id: userToFollow},
-    {$addToSet: {following: currentUser}},
-    function (err, user) {
-      callback(err, user)
-    })
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+    if (isLoggedIn){
+      Users.findOneAndUpdate(
+        {_id: userToFollow},
+        {$addToSet: {following: currentUser}},
+        function (err, user) {
+          callback(err, user)
+        })//end findone
+    } //end if
+    else{
+      callback(err, isLoggedIn);
+    }//end else
+  }//end isLoggedIn
 };
 
 /**
@@ -59,22 +83,28 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
  * @param callback
  */
 userSchema.statics.getFollowersCharts = function (userId, callback) {
-  Users.getUserById(userId, function(err,user) {
-    if (err) {
-      console.log('There was an error!' + err);
-      res.send({
-        success: false,
-        message: err
-      });
-    } else {
-      console.log('Get following in ' + user);
-      Charts.find({author: {$in: user.following}},
-        function (err, charts) {
-          callback(err, charts)
-        })
-    }
-
-  })
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+    if (isLoggedIn){
+      Users.getUserById(userId, function(err,user) {
+        if (err) {
+          console.log('There was an error!' + err);
+          res.send({
+            success: false,
+            message: err
+          });
+        } else {
+          console.log('Get following in ' + user);
+          Charts.find({author: {$in: user.following}},
+            function (err, charts) {
+              callback(err, charts)
+            })
+        }
+      })
+    }//end if
+    else{
+      callback(err,isLoggedIn);
+    }//end else
+  }//end isLoggedIn
 };
 
 /**
