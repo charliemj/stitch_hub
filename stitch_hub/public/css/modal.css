@@ -1,7 +1,10 @@
 /* Full-width input fields */
 
 
-/* Set a style for all buttons */
+.container {
+    padding: 50px;
+}
+
 
 /* Extra styles for the cancel button */
 .cancelbtn {
@@ -18,9 +21,7 @@
 }
 
 
-.container {
-    padding: 16px;
-}
+
 
 span.psw {
     float: right;

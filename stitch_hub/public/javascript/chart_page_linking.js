@@ -7,7 +7,7 @@ var getAge = function(dateString) {
         age--;
     }
     return age;
-}
+};
 
 var goToChartPage = function(jsonChart) {
   var userDobString = window.sessionStorage.getItem('userDob');
@@ -24,4 +24,4 @@ var goToChartPage = function(jsonChart) {
   }
   window.sessionStorage.setItem('chart', JSON.stringify(jsonChart));
   window.location = 'chart_page.html';
-}
+};

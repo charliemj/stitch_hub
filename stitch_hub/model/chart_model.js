@@ -58,13 +58,12 @@ chartSchema.statics.getChartById = function (chartId, callback) {
  * @param callback
  */
 chartSchema.statics.getChartsByUser = function (userId, callback) {
-  var that = this;
   Charts.find({
     author: userId,
     is_deleted: false
   }, function (err, charts) {
     if (err) {
-      callback(err)
+      callback(err) 
     } else {
       callback(null, charts)
     }
@@ -175,7 +174,7 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
  * @param callback
  */
 chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
-  Charts.getChartById(chartId,function (err, charts) {
+  Charts.getChartById(chartId,function (err, chart) {
     var canEdit = false;
     if (err) {
       var chartAuthor = null;
