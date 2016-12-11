@@ -167,9 +167,9 @@ router.put('/:id/tags', function (req, res) {
  * has a value of false and 'message' will tell the user that they can't delete a chart
  * that isn'theirs
  */
-router.put('/', function (req, res, next) {
+router.put('/:chartId/is_deleted', function (req, res, next) {
   //TODO authentication: check if user is the user who posted the chart
-  var chartId = req.body.chartID;
+  var chartId = req.params.chartId;
   var userId = req.session.userId;
   Charts.deleteChart(chartId,userId,function (err, chart) {
     if (err) {
