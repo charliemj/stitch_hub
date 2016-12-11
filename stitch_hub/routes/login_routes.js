@@ -13,9 +13,11 @@ router.post('/', function (req, res) {
     if (user) {
       req.session.username = req.body.username;
       req.session.userId = user._id;
-      res.send({loggedIn: true, userId: user._id});
+      res.send({loggedIn: true, userId: user._id, userDob: user.dob});
     } else {
-      res.send({loggedIn: false});
+      res.send({loggedIn: false,
+        error:"not logged in"
+      });
     }
   });
 });

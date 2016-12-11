@@ -3,11 +3,13 @@
 * information about the chart. It also adds logic to the remix button
 */
 $(document).ready(function() {
+  loadNavBarTemplate();
   var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
   var chartID = jsonChart._id;
     
   // load template into #chart-container
   loadChartTemplate(jsonChart);
+
 
   var comments = getComments(chartID);
 
@@ -15,8 +17,8 @@ $(document).ready(function() {
 
   for (var i = 0; i<comments.length; i++){
     $('#comments-container').append("<b>" +comments[i].user + ": </b><br>");
-  	$('#comments-container').append(comments[i].text);
-  	$('#comments-container').append("<hr>");
+    $('#comments-container').append(comments[i].text);
+    $('#comments-container').append("<hr>");
 
   }
 
@@ -28,5 +30,4 @@ $(document).ready(function() {
   });
 
   
-
 });

@@ -15,9 +15,10 @@ router.get('/:id', function (req, res) {
         success: false,
         message: err
       });
-    } else {
-      res.send({user: user});
-    }
+    } //end if
+    else {
+      res.send(200,{user: user});
+    } // end else
   });
 });
 
@@ -49,7 +50,7 @@ router.put('/follow', function (req, res) {
  */
 router.get('/following/charts', function (req, res) {
   if (req.session.userId == null) {
-    res.send(400);
+    res.send(400,{error:"you must be logged in to see this!"});
     return;
   }
   var userId = req.session.userId;

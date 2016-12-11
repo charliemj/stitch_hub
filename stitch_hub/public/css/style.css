@@ -1,28 +1,101 @@
 @import url('https://fonts.googleapis.com/css?family=Homemade+Apple');
 @import url('https://fonts.googleapis.com/css?family=Dosis');
-
+@import url('https://fonts.googleapis.com/css?family=Aref+Ruqaa|Indie+Flower');
 html,body {
 margin:0;
 padding:0;
 }
 
 body {
-    background-color: lavender;
-    font-family: 'Dosis', sans-serif;
-   
+    background-color:#b39fc7;
+    /*font-family: 'Dosis', sans-serif;*/
+    font-family: 'Indie Flower', cursive;
+    padding-left:5px;
+    color:black;   
+}
+
+a{
+  font-size:25px;
+}
+
+h1{
+  /*color:white;*/
+/*  text-shadow: 2px 3px black;
+*/  padding:0;
+  margin:0;
+  padding-left: 5px;
+  font-family: 'Indie Flower', cursive;
+}
+
+h2{
+  color:black;
+  padding-left:5px;
+  font-family: 'Indie Flower', cursive;
+  /*text-shadow: 2px 2px black;*/
+}
+
+/*BANNER AND NAV BAR CSS*/
+
+#header{
+  position:relative;
 }
 
 #banner{
-  height:400px;
-  background-image: url("../img/banner.jpg");
+  height:250px;
+  /*background-image: url("../img/banner.jpg");*/ 
+  background-color: #EF767A;
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center; 
+  position: relative;
 }
 
-#banner a{
-  size:15px;
-  color:white;
+#banner a, #user-profile-link{
+  /*size:15px;*/
+  /*color:white;*/
+  font-size: 25px;
+  text-decoration: none;
+  border-bottom: 1px dotted black;
+  
+}
+
+
+
+#user-profile-link a{
+  text-decoration: none;
+}
+
+#banner li{
+  float:left;
+  padding: 10px;
+  display:inline-block;
+  margin-bottom: 20px;
+  
+}
+
+#banner li a:visited{
+  color:inherit; 
+}
+
+
+#loginButtons{
+  padding-bottom:20px;
+  margin-right: 10px;
+}
+#loginButtons button{
+  float:right;
+  padding:5px;
+  margin: 10px;
+  
+}
+
+#search-widget{
+  float:left;
+  bottom:5px;
+  position:absolute;
+  margin-left:5px;
+  font-family: 'Indie Flower', cursive;
+ 
 }
 
 button {
@@ -34,7 +107,9 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    font-family: 'Dosis',sans-serif;
+    font-family: 'Indie Flower', cursive;
+    border-radius: 5px;
+
 }
 
 
@@ -47,30 +122,16 @@ button {
   color:white;
   float:right;
   margin-right:20px;
-
-
 }
 
-
-
-h1{
-  color:white;
-  text-shadow: 2px 3px black;
-  padding:0;
-  margin:0;
-  padding-left: 5px;
-}
-
-h2{
-  color:black;
-  padding-left:5px;
-  /*text-shadow: 2px 2px black;*/
-}
 
 #make-chart-button {
     /*background-color: green;*/ /* Green */
     margin-left:5px;
 }
+
+
+/*CHART CARD AND CHART-RELATED CSS*/
 
 .remix-button {
     background-color: olivedrab; /* Green */
@@ -87,8 +148,6 @@ h2{
   position:absolute;
   right:0;
   bottom:0;
-  /*margin-left:10%;
-  margin-top:10px;*/
   margin-bottom: 5px;
   margin-right:5px;
 }
@@ -101,12 +160,12 @@ h2{
   position:absolute;
   right:2px;
   bottom:0;
-  /*margin-left:10%;
-  margin-top:10px;*/
   margin-bottom: 5px;
   margin-right:60px;
   text-align: center;
   border:none;
+  border-radius: 5px;
+  
 }
 
 #wholeThing{
@@ -122,16 +181,13 @@ h2{
     
 }
 
-/*color picker*/
-input[type="color"] {
-  /*position:absolute;*/
-  display: block;
-  margin-left:25%;
+#chart{
+  padding:50px;
+  background-color: #cccccc;
+  margin-left: auto;
+  margin-right: auto;
   width: 50%;
-  /*top:50%;*/
-
 }
-
 
 .chart-canvas{
   margin-left:10%;
@@ -142,16 +198,25 @@ input[type="color"] {
   margin-left: auto ;
   margin-right: auto ;
   /*width:800px;*/
+
 }
 
 
+/*for hiding the delete button*/
 
-
-/*for hiding the delete button
-*/.hidden{
+.hidden{
     visibility: hidden;
 }
 .shown{
     visibility: visible;
+}
+
+#contactAbout{
+  margin-top:10px;
+  background-color:white;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  padding:50px;
 }
 

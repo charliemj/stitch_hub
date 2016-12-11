@@ -1,103 +1,98 @@
-var getNumberOfLikes = function (chartID){
-  
+var getNumberOfLikes = function (chartID) {
+
   var result;
   $.ajax({
-        url: '/like/likes/',
-        method: 'GET',
-        async: false,
-        data: {
-          chartID: chartID          
-        },
-        success: function(number) {
-          console.log("successfully counted likes");
-          result = number.message;
-        },
-        error: function(error) {
-          console.log('Error counting likes');
-          console.log(error);
-        }
+    url: '/like/likes/',
+    method: 'GET',
+    async: false,
+    data: {
+      chartId: chartID
+    },
+    success: function (number) {
+      console.log("successfully counted likes");
+      result = number.message;
+    },
+    error: function (error) {
+      console.log('Error counting likes');
+      console.log(error);
+    }
 
-      });//end ajax
-      return result;
-}
+  });//end ajax
+  return result;
+};
 
-var getCurrentUserLike = function(chartId, callback) {
+var getCurrentUserLike = function (chartId, callback) {
   $.ajax({
     url: '/like',
     data: {
-      chartId: chartId,
+      chartId: chartId
     },
     method: 'GET',
-    success: function(data) {
+    success: function (data) {
       callback(null, data);
     },
-    error: function(err) {
+    error: function (err) {
       callback(err, null);
-    },
+    }
   });
 };
 
-var likeChart = function (chartID){
+var likeChart = function (chartID) {
+  $.ajax({
+    url: '/like',
+    method: 'POST',
+    data: {
+      chartID: chartID
+    },
+    success: function () {
+      console.log("successfully liked it");
+      window.location.reload();
+    },
+    error: function (error) {
+      console.log('Error liking it');
+      console.log(error);
+    }
+  });//end ajax
+};
 
-$.ajax({
-        url: '/like',
-        method: 'POST',
-        data: {
-          chartID: chartID,
-          
-        },
-        success: function() {
-          console.log("successfully liked it");
-          window.location.reload();
-        },
-        error: function(error) {
-          console.log('Error liking it');
-          console.log(error);
-        }
+var unlikeChart = function (chartId) {
+  $.ajax({
+    url: '/like',
+    data: {
+      chartId: chartId
+    },
+    method: 'DELETE',
+    success: function () {
+      console.log("successfully unliked it");
+      window.location.reload();
+    },
+    error: function (error) {
+      console.log('Error unliking it');
+      console.log(error);
+    }
+  });//end ajax
+};
 
-      });//end ajax
-
-}
-
-var unlikeChart = function (chartId){
-
-    $.ajax({
-        url: '/like',
-        data: {
-          chartId: chartId,
-        },
-        method: 'DELETE',
-        success: function() {
-          console.log("successfully unliked it");
-          window.location.reload();
-        },
-        error: function(error) {
-          console.log('Error unliking it');
-          console.log(error);
-        }
-
-      });//end ajax
-
-}
-
-var getLikedCharts = function(){
-
+var getLikedCharts = function () {
   var result;
   $.ajax({
-        url: '/like/likedcharts/',
-        method: 'GET',
-        async: false,
-        data: {},
-        success: function(number) {
-          console.log("successfully counted likes");
-          result = number.message;
-        },
-        error: function(error) {
-          console.log('Error counting likes');
-          console.log(error);
-        }
+    url: '/like/likedcharts/',
+    method: 'GET',
+    async: false,
+    data: {}
+    ,
+    success: function (likedCharts) {
+      console.log("successfully got liked charts");
+      result = likedCharts.message;
+    }
+    ,
+    error: function (error) {
+      console.log('Error getting liked charts');
+      console.log(error);
+    }
 
-      });//end ajax
-      console.log(result);
-      return result;
-}
+  })
+  ;//end ajax
+  console.log(result);
+  return result;
+};

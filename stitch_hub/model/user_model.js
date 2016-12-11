@@ -31,7 +31,7 @@ var userSchema = mongoose.Schema({
  */
 userSchema.statics.getUserById = function (userId, callback) {
   Users.findOne({
-    _id: id
+    _id: userId
   }, function (err, user) {
     callback(err, user)
   })

@@ -25,6 +25,12 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             window.location = "user_profile.html";
           });
 
+          if (window.sessionStorage.getItem('sessionUserId') != jsonChart.author){
+              document.getElementById('chart-description').contentEditable='false';
+              document.getElementById('chart-tags').contentEditable='false';
+          }
+
+
           // make the chart description editable
           // Find all editable content.
           // http://stackoverflow.com/questions/6256342/trigger-an-event-when-contenteditable-is-changed
@@ -70,7 +76,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             });
           });
 
-          // make the chart description editable
+          // make the chart tags editable
           // Find all editable content.
           // http://stackoverflow.com/questions/6256342/trigger-an-event-when-contenteditable-is-changed
           $('#chart-tags')
@@ -88,7 +94,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
                       //console.log($(this).html());
                   }
               });
-          // save when clicking on the edit description button
+          // save when clicking on the edit tags button
           $('#edit-tags-button').on('click', function() {
             var newTags = $('#chart-tags').html().split(' ')
             .filter(function (tag) {
@@ -100,11 +106,11 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
               alert('Must have at least one tag');
               return;
             }
-
+            console.log(newTags);
             $.ajax({
               url: '/charts/' + jsonChart._id + '/tags',
               data: {
-                tags: newTags,
+                tags: JSON.stringify(newTags),
               },
               method: 'PUT',
               success: function(data) {
@@ -126,8 +132,13 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           });
 
           $('#remix-button').on('click', function() {
-            window.sessionStorage.setItem('chart', JSON.stringify(jsonChart));
-            window.location = "chart_editing.html";
+            if (window.sessionStorage.getItem("sessionUserId") == null){
+
+               alert("You are not logged in");
+            }else{
+              window.sessionStorage.setItem('chart', JSON.stringify(jsonChart));
+              window.location = "chart_editing.html";
+            }
           });
 
           getCurrentUserLike(jsonChart._id, function(err, like) {
@@ -178,5 +189,28 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             goToParent();
           });
         }
+
+        if (jsonChart.parent == null){
+          $('#parent-button').hide()
+        }
+
+        var comments = getComments(jsonChart._id);
+
+  //var comments = ["test comment", "test comment 2", "test comment 3"];
+
+  for (var i = 0; i<comments.length; i++){
+    $('#comments-container').append("<b>" +getUsernameFromID(comments[i].user) + ": </b><br>");
+    $('#comments-container').append(comments[i].text);
+    $('#comments-container').append("<hr>");
+
+  }
+
+  console.log("REACHED THE CHART PAGE");
+  $('#saveComment-button').on('click', function() {
+    console.log("Is this really clicked?");
+    var text = document.getElementById('newComment').value;
+    doComment(jsonChart._id, text);
+    window.location.reload();
+  });
   });
 };

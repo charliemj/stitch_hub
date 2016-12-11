@@ -54,7 +54,7 @@ $(document).ready(function() {
       var tokens = query.trim().split(/\s+/); // split by whitespace
       data = {
         searchFor: JSON.stringify(searchFor),
-        tokens: JSON.stringify(tokens),
+        tokens: JSON.stringify(tokens)
       };
     }
     var filterTypeOn = $('#type-filter-select').val();
@@ -83,9 +83,9 @@ $(document).ready(function() {
             //redefine f later to be some hotness algorithm
             var f = function(obj){
               return getNumberOfLikes(obj._id);
-            }
+            };
             return f(obj2) - f(obj1);
-          })
+          });
         loadChartFeedTemplate(sortedHot);
 
       }else{
@@ -102,6 +102,11 @@ $(document).ready(function() {
 
   // NON-TEMPLATE CONTROLLERS
   $('#make-chart-button').on('click', function() {
+    if (window.sessionStorage.getItem("sessionUserId") == null){
+
+      alert("You are not logged in");
+    }else{
     window.location = "chart_form.html";
+  }
   });
 });

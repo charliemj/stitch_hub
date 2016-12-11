@@ -14,6 +14,7 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/my_database8');
 
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
@@ -33,7 +34,7 @@ app.use(session({
   secret: 'supersecret',
   resave: true,
   saveUninitialized: true,
-  cookie: {secure: false},
+  cookie: {secure: false}
 }));
 
 //app.use(express.session({ secret: 'keyboard cat' })); //TODO replace above line with this?

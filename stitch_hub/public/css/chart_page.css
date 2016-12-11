@@ -1,0 +1,55 @@
+/*CHART PAGE CSS*/
+
+#chart-tags,#chart-description{
+  border:1px;
+  border-style:dotted;
+  border-color: black;
+  margin-left: auto;
+  margin-right: auto;
+  width:80%;
+}
+
+
+#chart-tags:hover,#chart-description:hover{
+  background-color:white;
+  
+} 
+
+.chartDesc{
+    margin-left: 10%;
+  
+}
+
+.chartDesc p{
+    font-size:14px;
+}
+
+#allButtons button{
+    margin-left:5px;
+    float:right;
+}
+
+#allButtons{
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+}
+
+#comment-block{
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+}
+
+#chartInfo{
+  position:relative;
+  background-color:#8da6dd;
+  margin-left: auto;
+  margin-right: auto;
+  width:80%;
+}
+
+#chartInfo li{
+  display:inline-block;
+  
+}

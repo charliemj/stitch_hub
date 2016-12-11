@@ -17,8 +17,7 @@ var loadChartFeedTemplate = function(charts) {
 
       // add link to chart page
       $(canvas).on('click', function() {
-        window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
-        window.location = "chart_page.html"
+        goToChartPage(chartJson);
       });
 
       $(canvas).on('mouseenter', function() {
@@ -34,8 +33,13 @@ var loadChartFeedTemplate = function(charts) {
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
       jbutton.on('click', function() {
+        if (window.sessionStorage.getItem("sessionUserId") == null){
+
+          alert("You are not logged in");
+        }else{
         window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
         window.location = "chart_editing.html";
+      }
       });
     });
 
@@ -80,7 +84,7 @@ var loadChartFeedTemplate = function(charts) {
       });
     });
   });
-}
+};
 
 /**
 * Draws charts onto the feed so that they are scaled to fit inside its container.
@@ -91,13 +95,17 @@ var loadChartFeedTemplate = function(charts) {
 var renderChartToFeed = function(canvas, chartView) {
   // make sure that each chart fits into at most 80% of container
   var containerWidth = $(canvas).parent().width();
+  var containerHeight = $(canvas).parent().height();
   if (containerWidth * 0.8 < canvas.width) {
     var factor = containerWidth * 0.8 / canvas.width;
     chartView.scale(factor, factor);
-  } else {
+  }else if(containerHeight * 0.5 <canvas.height){
+    var factor = containerHeight * 0.5 / canvas.height;
+    chartView.scale(factor, factor);
+  }else {
     chartView.draw();
   }
-}
+};
 
 /**
 * Converts a list of charts (as returned as a response from GET /charts) to a
@@ -105,6 +113,7 @@ var renderChartToFeed = function(canvas, chartView) {
 */
 var getRelevantChartsInfo = function(charts) {
   var chartsInfo = [];
+  console.log(charts);
   charts.forEach(function(chart) {
     chartsInfo.push({
       _id: chart._id,
