@@ -18,7 +18,7 @@ $.ajax({
 
       });//end ajax
 
-}
+};
 
 var getComments = function(chartID){
 var result;
@@ -27,8 +27,7 @@ $.ajax({
         method: 'get',
         async: false, 
         data: {
-          chartID: chartID,
-          
+          chartID: chartID
         },
         success: function(message) {
           console.log("successfully got comments");
@@ -38,10 +37,6 @@ $.ajax({
           console.log('Error getting comments');
           console.log(error);
         }
-
       });//end ajax
       return result;
-
-
-
-}
+};
