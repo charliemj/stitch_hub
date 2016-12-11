@@ -71,10 +71,7 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
   //check if user even liked the chart to begin with
   Likes.getLike(chartId,userId,function(err,like){
     if (err){
-      res.send({
-        success: false,
-        message: err
-      });//end res.send
+      callback(err,like);
     }//end if
     else if (like > 0){
       Likes.remove({chart: chartId, user: userId}, function(err,like) {
@@ -82,10 +79,7 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
       });//end remove
     }//end else if
     else{
-      res.send({
-        success: false,
-        message: "this chart was not previously liked"
-      });//end res.send
+      callback(err,like);
     }//end else
   });//end doesLike check
 };
