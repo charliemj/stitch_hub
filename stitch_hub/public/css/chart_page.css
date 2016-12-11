@@ -24,6 +24,22 @@
     font-size:14px;
 }
 
+#remixLikeReport{
+  height:20px;
+}
+
+#remixLike{
+  float:right;
+  margin-right:10%;
+  margin-top: 5px;
+}
+
+#report{
+  float:left;
+  margin-left: 10%;
+  margin-top: 5px;
+}
+
 #allButtons button{
     margin-left:5px;
     float:right;
@@ -47,9 +63,25 @@
   margin-left: auto;
   margin-right: auto;
   width:80%;
+  margin-bottom: 5px;
 }
 
 #chartInfo li{
   display:inline-block;
   
 }
+
+
+#numLikes{
+ /* margin-top: 50px;*/
+  /*position:relative;*/
+  display: inline-block;
+  margin-right:10px;
+  float:right;
+}
+
+#delete-button{
+  
+}
+
+

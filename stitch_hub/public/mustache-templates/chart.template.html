@@ -11,29 +11,42 @@
         <div id="chartInfo">
             <li><h2>{{title}}</h2></li>
             <li>by</li>
+<<<<<<< HEAD
+            <li><h3><a id="user-profile-link" href="user_profile.html">{{authorname}}</a></h3></li>
+            {{^is_deleted}}
+            <li><button id="delete-button" class="hidden" style="background-color:red;">Delete!</button></li>
+=======
             <li><h3><a id="author-profile-link">{{authorname}}</a></h3></li>
+>>>>>>> master
         </div> <!-- end chartInfo -->
-        <h2 class="chartDesc">Description:</h2>
-        <p id="chart-description" contentEditable="true">{{description}}</p>
-        <button id="edit-description-button" style="display: none;">Save description</button>
-        <br>
-        <p class="chartDesc"> This chart has {{number}} likes! </p>
+        
         <div id="chart">
             <canvas id="canvas"></canvas>
         </div>
+        <div id="remixLikeReport">
+            <div id="remixLike">
+                <button id="like-button" style="background-color:#000080;">Like!</button>
+                <button id="remix-button" style="background-color:olivedrab;">Remix!</button>
+                {{/is_deleted}}
+            <button id="parent-button" style="background-color:rebeccapurple">Parent</button>
+            </div> <!-- end of remixLike -->
+            <div id="report">
+                <button id="report-button" style="background-color:cadetblue;">Report this chart</button>
+            </div> <!-- end of report -->
+            <p id="numLikes"> This chart has {{number}} likes! </p>
+        </div> <!-- end of remixLikeReport -->
+    
+        <h2 class="chartDesc">Description:</h2>
+        <p id="chart-description" contentEditable="true">{{description}}</p>
+        <div id="allButtons">
+            <button id="edit-description-button" style="display: none;">Save description</button>
+        </div> <!-- end all buttons -->
+        <br>
         <h2 class="chartDesc">Tags</h2>
         <p id="chart-tags" contentEditable="true">{{tagsConcatenated}}</p>
         <div id="allButtons">
             <button id="edit-tags-button" style="display: none;">Save tags</button>
-
-            <button id="remix-button" style="background-color:olivedrab;">Remix!</button>
-            <button id="like-button" style="background-color:#000080;">Like!</button>
-            <button id="report-button" style="background-color:cadetblue;">Report this chart</button>
-            {{/is_deleted}}
-            <button id="parent-button" style="background-color:rebeccapurple">Parent</button>
-
-            {{^is_deleted}}
-            <button id="delete-button" class="hidden" style="background-color:red;">Delete!</button>
+            
         </div> <!-- end all buttons -->
     </div>
     <div id="comment-block">
