@@ -5,7 +5,7 @@ var Charts = require('../model/chart_model.js');
 var passport = require('passport');
 
 /**
- * TODO
+ * gets all charts by a user
  */
 router.get('/user/:userId', function (req, res) {
   var userId = req.params.userId;
@@ -18,6 +18,28 @@ router.get('/user/:userId', function (req, res) {
         }); //end if
       } else {
         res.send(charts); //TODO change to match pattern above?
+      } //end else
+    })
+});
+
+/**
+ * gets a single chart
+ */
+router.get('/:chartId', function (req, res) {
+  var chartId = req.params.chartId;
+  Charts.getChartById(chartId,
+    function (err, chart) {
+      if (err) {
+        res.send({
+          success: false,
+          message: err
+        }); //end if
+      } else {
+        console.log(chart);
+        res.send({
+          success: true,
+          message: JSON.stringify(chart)
+        }); //TODO change to match pattern above?
       } //end else
     })
 });

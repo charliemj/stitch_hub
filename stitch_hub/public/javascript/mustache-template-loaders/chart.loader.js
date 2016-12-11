@@ -165,7 +165,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           });
 
           $('#parent-button').on("click", function () {
-            goToParent();
+            goToParent(jsonChart);
           });
 
           $('#report-button').on("click",function() {
