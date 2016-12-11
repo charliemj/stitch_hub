@@ -44,7 +44,7 @@ var chartSchema = mongoose.Schema({
  */
 chartSchema.statics.getChartById = function (chartId, callback) {
   var that = this;
-  Charts.findOne({_id: chartId}, function (err, chart) {
+  Charts.findOne({_id: chartId,is_deleted: false}, function (err, chart) {
     if (err) {
       callback(err)
     } else {
