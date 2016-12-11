@@ -140,15 +140,14 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             }
           });
 
-          getCurrentUserLike(jsonChart._id, window.sessionStorage.getItem('sessionUserId'), function(err, like) {
+          getCurrentUserLike(jsonChart._id, window.sessionStorage.getItem('sessionUserId'), function(err, liked) {
             // set the initial state of the button
-            var liked = like ? true : false;
             $('#like-button').text(liked ? 'Unlike' : 'Like');
             // set the onclick listener of the button
             $('#like-button').on('click', function() {
               if (liked) {
                 $('#like-button').text('Like');
-                unlikeChart(jsonChart._id, jsonChart.author);
+                unlikeChart(jsonChart._id);
                 liked = false;
               } else {
                 $('#like-button').text('Unike');

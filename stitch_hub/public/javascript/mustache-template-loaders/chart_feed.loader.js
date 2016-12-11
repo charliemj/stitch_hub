@@ -62,20 +62,19 @@ var loadChartFeedTemplate = function(charts) {
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
-      getCurrentUserLike(id, window.sessionStorage.getItem('sessionUserId'), function(err, like) {
+      getCurrentUserLike(id, window.sessionStorage.getItem('sessionUserId'), function(err, liked) {
         // set the initial state of the button
-        var liked = like ? true : false;
         jbutton.text(liked ? 'Unlike' : 'Like');
         // set the onclick listener of the button
         jbutton.on('click', function() {
           if (liked) {
             jbutton.text('Like');
-            unlikeChart(id);
             liked = false;
+            unlikeChart(id);
           } else {
             jbutton.text('Unlike');
-            likeChart(id);
             liked = true;
+            likeChart(id);
           }
         });
       });

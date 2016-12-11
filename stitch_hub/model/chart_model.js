@@ -1,18 +1,4 @@
 var mongoose = require('mongoose');
-// things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
-// can validate one or multiple things
-// to validate multiple fields, put in a list
-
-// single validator like this:
-// var Schema = new mongoose.Schema({
-//     email: {type: String, validate: validators.isEmail()}
-// });
-
-// multiple validators like this:
-// var Schema = new mongoose.Schema({
-//     username: {type: String, validate: [validators.isAlphanumeric(), validators.isLength(2, 60)]}
-// });
-
 var validators = require('mongoose-validators');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -40,11 +26,11 @@ var chartSchema = mongoose.Schema({
  * Fetches chart information for a chart, given that chart's ID
  *
  * @param chartId {ObjectId} the ID of the chart to fetch
- * @param callback {function to execute
+ * @param callback function to execute
  */
 chartSchema.statics.getChartById = function (chartId, callback) {
   var that = this;
-  Charts.findOne({_id: chartId}, function (err, chart) {
+  Charts.findOne({_id: chartId,is_deleted: false}, function (err, chart) {
     if (err) {
       callback(err)
     } else {
@@ -216,6 +202,7 @@ chartSchema.statics.editDescription = function(chartId,userId,newDescription,cal
       Charts.findOneAndUpdate(
         {_id: chartId}, // NOTE LOWERCASE d
         {description: newDescription},
+        {new: true},
         function(err,chart){
           callback(err,chart); //this err is database prob
         }//end function
@@ -245,6 +232,7 @@ chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
       Charts.findOneAndUpdate(
         {_id: userId}, // NOTE LOWERCASE d
         {tags: newTags},
+        {new: true},
         function(err,chart) {
           callback(err,chart);
         }
