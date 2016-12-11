@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Charts = require('../model/chart_model.js');
-var passport = require('passport');
 
 /**
  * gets all charts by a user
@@ -78,7 +77,7 @@ router.get('/', function (req, res/*, next*/) {
  * response is a JSON with keys 'success' and 'message'. The 'success' key
  * has a value of false and 'message' key have the error as the value
  */
-router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
+router.post('/', 
   function (req, res, next) {
     if (!req.session.username) { //checks to make sure user is logged in
       res.send(400),{msg:"You need to log in to make a chart!"};

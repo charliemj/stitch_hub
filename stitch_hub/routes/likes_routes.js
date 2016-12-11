@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Likes = require('../model/like_model.js');
-var passport = require('passport');
 
 
 router.post('/', function (req, res) {

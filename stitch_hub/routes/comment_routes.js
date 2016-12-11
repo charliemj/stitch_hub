@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Comments = require('../model/comment_model.js');
-var passport = require('passport');
 
 
 router.post('/chart/:chartId/user/:userId', function (req, res) {
