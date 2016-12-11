@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Likes = require('../model/like_model.js');
-var passport = require('passport');
 
 
 router.post('/', function (req, res) {
@@ -25,9 +24,9 @@ router.post('/', function (req, res) {
 });//end router.post
 
 
-router.get('/', function (req, res) {
-  var chartId = req.query.chartId;
-  var userId = req.session.userId;
+router.get('/chart/:chartId/user/:userId', function (req, res) {
+  var chartId = req.params.chartId;
+  var userId = req.params.userId;
   Likes.getLike(chartId, userId, function (err, like) {
     if (err) {
       console.log(err);
@@ -61,8 +60,8 @@ router.delete('/', function (req, res) {
   });
 });
 
-router.get('/likes', function (req, res, next) { //TODO is this RESTful?
-  var chartId = req.query.chartID;
+router.get('/chart/:chartId/count', function (req, res, next) { //TODO is this RESTful?
+  var chartId = req.params.chartID;
   console.log("like route");
   console.log("chart " + req.query.chartID);
   Likes.getNumLikes(chartId, function (err, number) {
@@ -83,8 +82,8 @@ router.get('/likes', function (req, res, next) { //TODO is this RESTful?
   });
 });
 
-router.get('/likedcharts', function (req, res, next) { //TODO is this RESTful?
-  var userId = req.session.userId;
+router.get('/user/:userId/likedCharts', function (req, res, next) { //TODO is this RESTful?
+  var userId = req.params.userId;
   Likes.getLikedCharts(userId, function (err, docs) {
     if (err) {
       console.log(err);

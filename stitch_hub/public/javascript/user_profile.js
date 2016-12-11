@@ -31,7 +31,7 @@ $(document).ready(function () {
 
   // load chart feed template
   $.ajax({
-    url: '/charts/user/' + userProfileId,
+    url: '/charts/author/' + userProfileId,
     method: 'GET',
     success: function(charts) {
       // loads the chart feed into #charts-container div and sets all controllers
@@ -45,8 +45,9 @@ $(document).ready(function () {
   });
 
   $('#following-charts-button').on('click', function () {
+    var sessionUserId = window.sessionStorage.getItem('sessionUserId');
     $.ajax({
-      url: '/users/following/charts',
+      url: '/users/' + sessionUserId + '/following/charts',
       method: 'GET',
       success: function(charts) {
         loadChartFeedTemplate(charts);
@@ -68,7 +69,7 @@ $(document).ready(function () {
 
       $('#made-charts-button').on('click', function () {
     $.ajax({
-    url: '/charts/user/' + userProfileId,
+    url: '/charts/author/' + userProfileId,
     method: 'GET',
     success: function(charts) {
       // loads the chart feed into #charts-container div and sets all controllers
