@@ -30,9 +30,9 @@ router.post('/', function (req, res) {
 });
 
 
-router.get('/', function (req, res) {
-  var chartId = req.query.chartId;
-  var userId = req.session.userId;
+router.get('/chart/:chartId/user/:userId', function (req, res) {
+  var chartId = req.params.chartId;
+  var userId = req.params.userId;
   Likes.getLike(chartId, userId, function (err, like) {
     if (err) {
       console.log(err);
@@ -66,8 +66,8 @@ router.delete('/', function (req, res) {
   });
 });
 
-router.get('/likes', function (req, res, next) { //TODO is this RESTful?
-  var chartId = req.query.chartID;
+router.get('/chart/:chartId/count', function (req, res, next) { //TODO is this RESTful?
+  var chartId = req.params.chartID;
   console.log("like route");
   console.log("chart " + req.query.chartID);
   Likes.getNumLikes(chartId, function (err, number) {
