@@ -3,12 +3,17 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Users = require('../model/user_model.js');
 var session = require('express-session');
+var crypto = require('crypto');
 
 
 
 router.post('/', function (req, res) {
   console.log(req.body);
-  Users.findOne({ username: req.body.username, password: req.body.password }, function (err, user) {
+  var hash = crypto.createHash('sha256');
+  var password = req.body.password;
+  hash.update(password);
+  var hashedPassword = hash.digest('hex');
+  Users.findOne({ username: req.body.username, password: hashedPassword}, function (err, user) {
     if (user) {
       req.session.username = req.body.username;
       req.session.userId = user._id;
