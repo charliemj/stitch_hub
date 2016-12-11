@@ -6,29 +6,23 @@ var passport = require('passport');
 
 
 router.post('/', function (req, res) {
-  if (!req.session.username) {
-    res.send(400,{error:"not logged in!"});
-    return;
-  }
-  var chartId = req.body.chartID;
   var userId = req.session.userId;
+  var chartId = req.body.chartID;
   Likes.likeChart(chartId, userId,
     function (err, like) {
       if (err) {
-        console.log("error creating like");
-        console.log(err);
         res.send(
           {
             success: false,
             message: err,
             error: "error creating like"
-          }
-        ); //end if
-      } else {
+          });//end res.sed 
+      } //end if
+      else {
         res.sendStatus(200); // send a response
-      }
-    });
-});
+      }//end else
+    });//end likeChart
+});//end router.post
 
 
 router.get('/', function (req, res) {
