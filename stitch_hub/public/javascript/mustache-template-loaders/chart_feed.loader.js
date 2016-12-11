@@ -108,15 +108,20 @@ var renderChartToFeed = function(canvas, chartView) {
   // make sure that each chart fits into at most 80% of container
   var containerWidth = $(canvas).parent().width();
   var containerHeight = $(canvas).parent().height();
+
+  var xfactor = 1;
+  var yfactor = 1;
+
+
+
   if (containerWidth * 0.8 < canvas.width) {
-    var factor = containerWidth * 0.8 / canvas.width;
-    chartView.scale(factor, factor);
-  }else if(containerHeight * 0.5 <canvas.height){
-    var factor = containerHeight * 0.5 / canvas.height;
-    chartView.scale(factor, factor);
-  }else {
-    chartView.draw();
+    var xfactor = containerWidth * 0.8 / canvas.width;
   }
+  if(containerHeight * 0.5 <canvas.height){
+    var yfactor = containerHeight * 0.5 / canvas.height;
+  }
+  var factor = Math.min(xfactor, yfactor);
+  chartView.scale(factor,factor);
 };
 
 /**
