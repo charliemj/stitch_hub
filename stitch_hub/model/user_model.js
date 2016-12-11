@@ -57,6 +57,7 @@ userSchema.statics.isLoggedIn = function (userId,callback){
   });
 };//end isLoggedIn
 
+
 /**
  *
  * @param currentUser
@@ -67,17 +68,48 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
   Users.isLoggedIn(userId, function(err,isLoggedIn){
     if (isLoggedIn){
       Users.findOneAndUpdate(
-        {_id: userToFollow},
-        {$addToSet: {following: currentUser}},
+        {_id: currentUser},
+        {$addToSet: {following: userToFollow}},
         function (err, user) {
           callback(err, user)
-        })//end findone
+        });//end findone
     } //end if
     else{
       callback(err, isLoggedIn);
     }//end else
   });//end isLoggedIn
 };
+
+userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback){
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+
+    if (isLoggedIn){
+      //if they are following the user
+      Users.findOne({_id: currentUser},function (err, currentUser){
+        if (err){
+          callback(err);
+        }//end if
+        else{
+          var following = currentUser.following;
+          var indexOfUser = following.indexOf(userToUnfollow);
+          if (indexOfUser != -1){
+            following.splice(i,1);
+            Users.findOneAndUpdate(
+              {_id: currentUser},
+              {following:following},
+              function (err, user) {
+                callback(err, user)
+            });//end findone
+          }
+        }//end else
+      });//end find one
+    }//end if
+
+    else{
+      callback(err, isLoggedIn);
+    }//end else
+  });//end isLoggedIn
+}//end unfollowUser
 
 /**
  *
