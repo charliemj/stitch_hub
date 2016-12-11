@@ -7,7 +7,6 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
 
 
   $.get('mustache-templates/chart.template.html', function (template) {
-    console.log(jsonChart);
     var html = Mustache.render($(template).html(), jsonChart);
     $('#chart-container').append(html);
 
@@ -20,7 +19,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           view.draw();
 
           // add a link to the user when clicked in the username
-          $('#user-profile-link').on('click', function() {
+          $('#author-profile-link').on('click', function() {
             window.sessionStorage.setItem('userProfileId', jsonChart.author);
             window.location = "user_profile.html";
           });
@@ -180,7 +179,6 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           var author = jsonChart.author;
           var user = window.sessionStorage.getItem('sessionUserId'); //TODO get current user!
           
-          console.log("user",user,"author",author); //user is null for some reason.... so button never displayed
           
           if (user == author){
             $('#delete-button').removeClass("hidden").addClass("shown").on('click', 

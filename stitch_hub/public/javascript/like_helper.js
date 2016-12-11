@@ -9,7 +9,6 @@ var getNumberOfLikes = function (chartID) {
       chartId: chartID
     },
     success: function (number) {
-      console.log("successfully counted likes");
       result = number.message;
     },
     error: function (error) {
@@ -45,7 +44,6 @@ var likeChart = function (chartID) {
       chartID: chartID
     },
     success: function () {
-      console.log("successfully liked it");
       window.location.reload();
     },
     error: function (error) {
@@ -63,7 +61,6 @@ var unlikeChart = function (chartId) {
     },
     method: 'DELETE',
     success: function () {
-      console.log("successfully unliked it");
       window.location.reload();
     },
     error: function (error) {
@@ -82,7 +79,6 @@ var getLikedCharts = function () {
     data: {}
     ,
     success: function (likedCharts) {
-      console.log("successfully got liked charts");
       result = likedCharts.message;
     }
     ,
@@ -93,6 +89,5 @@ var getLikedCharts = function () {
 
   })
   ;//end ajax
-  console.log(result);
   return result;
 };

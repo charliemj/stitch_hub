@@ -7,7 +7,6 @@ $.ajax({
           text: text          
         },
         success: function() {
-          console.log("successfully commented");
         },
         error: function(error) {
           console.log('Error commenting');
@@ -28,7 +27,6 @@ $.ajax({
           chartID: chartID
         },
         success: function(message) {
-          console.log("successfully got comments");
           result = message.message;
         },
         error: function(error) {
