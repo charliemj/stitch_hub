@@ -113,7 +113,6 @@ var renderChartToFeed = function(canvas, chartView) {
 */
 var getRelevantChartsInfo = function(charts) {
   var chartsInfo = [];
-  console.log(charts);
   charts.forEach(function(chart) {
     chartsInfo.push({
       _id: chart._id,

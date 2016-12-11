@@ -1,5 +1,4 @@
 var loadFollowingTemplate = function(user) {
-  console.log(user);
   $.get('mustache-templates/following.template.html', function (template) {
 
   	user.followedUserNames = [];

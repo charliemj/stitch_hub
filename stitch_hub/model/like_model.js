@@ -147,7 +147,6 @@ likesSchema.statics.getLikedCharts = function(userId,callback) {
       for (var i = 0; i < likes.length; i++) {
         likedChartIDs.push(likes[i].chart);
       }
-      console.log("liked IDs: " + likedChartIDs);
       Charts.find({_id: {$in: likedChartIDs}}, function (err, charts) {
         callback(err, charts)
       })

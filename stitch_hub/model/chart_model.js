@@ -37,9 +37,10 @@ var chartSchema = mongoose.Schema({
 
 
 /**
- * TODO
- * @param chartId
- * @param callback
+ * Fetches chart information for a chart, given that chart's ID
+ *
+ * @param chartId {ObjectId} the ID of the chart to fetch
+ * @param callback {function to execute
  */
 chartSchema.statics.getChartById = function (chartId, callback) {
   var that = this;
@@ -53,9 +54,10 @@ chartSchema.statics.getChartById = function (chartId, callback) {
 };
 
 /**
- * TODO
- * @param userId
- * @param callback
+ * Fetches all charts authored by a user.
+ * 
+ * @param userId ID of the user
+ * @param callback function to execute
  */
 chartSchema.statics.getChartsByUser = function (userId, callback) {
   Charts.find({
@@ -76,7 +78,7 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
  * @param filterSizeOn
  * @param filterTypeOn
  * @param tokens
- * @param callback
+ * @param callback function to execute
  */
 chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTypeOn, tokens, callback) {
   searchRegex = tokens.map(function (token) {
@@ -155,7 +157,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param rows
  * @param parent
  * @param tags
- * @param callback
+ * @param callback function to execute
  */
 chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, callback) {
   console.log("attempting to make new chart");
@@ -169,35 +171,34 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
 
 /**
  * TODO
- * @param id
- * @param newDescription
- * @param callback
+ * @param chartId
+ * @param userId
+ * @param callback function to execute
  */
 chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
   Charts.getChartById(chartId,function (err, chart) {
+    var chartAuthor = null;
     var canEdit = false;
     if (err) {
-      var chartAuthor = null;
-      } //end if
-    
+      callback(err,canEdit);
+    } //end if
     else {
-      var chartAuthor = chart.author;
+      chartAuthor = chart.author;
     } //end else
 
     if (userId == chartAuthor){
       canEdit = true;
     }
-    
     callback(err,canEdit);
-
   });//end of Charts.getChartById
 };//end of checkIfCanEdit
 
 /**
  * TODO
- * @param id
+ * @param chartId
+ * @param userId
  * @param newDescription
- * @param callback
+ * @param callback function to execute
  */
 chartSchema.statics.editDescription = function(chartId,userId,newDescription,callback) {
   Charts.checkIfCanEdit(chartId,userId,function(err,canEdit){
@@ -208,7 +209,7 @@ chartSchema.statics.editDescription = function(chartId,userId,newDescription,cal
         function(err,chart){
           callback(err,chart); //this err is database prob
         }//end function
-      )//end findoneandupdate
+      ) //end findoneandupdate
     }//end if
 
     else{
@@ -222,9 +223,10 @@ chartSchema.statics.editDescription = function(chartId,userId,newDescription,cal
 
 /**
  * TODO
+ * @param chartId
  * @param userId
  * @param newTags
- * @param callback
+ * @param callback function to execute
  */
 chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
   Charts.checkIfCanEdit(chartId,userId,function(err,canEdit){
@@ -249,7 +251,7 @@ chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
  * TODO
  * @param chartId
  * @param userId
- * @param callback
+ * @param callback function to execute
  */
 chartSchema.statics.deleteChart = function(chartId,userId,callback) {
   Charts.findOneAndUpdate(
