@@ -1,7 +1,7 @@
 var deleteChart = function (chartID){
 var newChart;
 $.ajax({
-        url: '/charts/',
+        url: '/charts/' + chartID + '/is_deleted',
         method: 'PUT',
         async: false,
         data: {

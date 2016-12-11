@@ -43,6 +43,18 @@ var loadChartFeedTemplate = function(charts) {
       });
     });
 
+    // add link to user profile for each chart author
+    $('.author-name').each(function(i, button) {
+      var jbutton = $(button);
+      var id = jbutton.attr('data-id');
+      var chartJson = findChartWithId(charts, id);
+      var author = chartJson.author;
+      jbutton.on('click', function() {
+            window.sessionStorage.setItem('userProfileId', author);
+            window.location = "user_profile.html";
+             });
+      });
+
     //add like button for each chart
     $('.like-button').each(function(i, button) {
       // get whether or not the user has currently liked this
@@ -50,7 +62,7 @@ var loadChartFeedTemplate = function(charts) {
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
-      getCurrentUserLike(id, function(err, like) {
+      getCurrentUserLike(id, window.sessionStorage.getItem('sessionUserId'), function(err, like) {
         // set the initial state of the button
         var liked = like ? true : false;
         jbutton.text(liked ? 'Unlike' : 'Like');
@@ -96,15 +108,20 @@ var renderChartToFeed = function(canvas, chartView) {
   // make sure that each chart fits into at most 80% of container
   var containerWidth = $(canvas).parent().width();
   var containerHeight = $(canvas).parent().height();
+
+  var xfactor = 1;
+  var yfactor = 1;
+
+
+
   if (containerWidth * 0.8 < canvas.width) {
-    var factor = containerWidth * 0.8 / canvas.width;
-    chartView.scale(factor, factor);
-  }else if(containerHeight * 0.5 <canvas.height){
-    var factor = containerHeight * 0.5 / canvas.height;
-    chartView.scale(factor, factor);
-  }else {
-    chartView.draw();
+    var xfactor = containerWidth * 0.8 / canvas.width;
   }
+  if(containerHeight * 0.5 <canvas.height){
+    var yfactor = containerHeight * 0.5 / canvas.height;
+  }
+  var factor = Math.min(xfactor, yfactor);
+  chartView.scale(factor,factor);
 };
 
 /**

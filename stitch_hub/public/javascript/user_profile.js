@@ -31,7 +31,7 @@ $(document).ready(function () {
 
   // load chart feed template
   $.ajax({
-    url: '/charts/user/' + userProfileId,
+    url: '/charts/author/' + userProfileId,
     method: 'GET',
     success: function(charts) {
       // loads the chart feed into #charts-container div and sets all controllers
@@ -68,7 +68,7 @@ $(document).ready(function () {
 
       $('#made-charts-button').on('click', function () {
     $.ajax({
-    url: '/charts/user/' + userProfileId,
+    url: '/charts/author/' + userProfileId,
     method: 'GET',
     success: function(charts) {
       // loads the chart feed into #charts-container div and sets all controllers

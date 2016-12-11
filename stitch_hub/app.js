@@ -4,9 +4,8 @@ var fs = require('fs');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 
-// TODO: use passport instead of these
+
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
@@ -28,7 +27,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public')); //TODO what does this do?
 
-// TODO: use passport instead of cookieParser
 app.use(cookieParser());
 app.use(session({
   secret: 'supersecret',
@@ -38,8 +36,7 @@ app.use(session({
 }));
 
 //app.use(express.session({ secret: 'keyboard cat' })); //TODO replace above line with this?
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // homepage route
 app.get('/', function(req, res) {
@@ -68,8 +65,8 @@ var like = require('./routes/likes_routes.js');
 app.use('/like', like);
 
 // routes for comments
-var comment = require('./routes/comment_routes.js');
-app.use('/comment', comment);
+var comments = require('./routes/comment_routes.js');
+app.use('/comments', comments);
 
 // 404 Route
 app.use(function(req, res){
