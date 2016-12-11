@@ -23,9 +23,9 @@ $.ajax({
 var getComments = function(chartID){
 var result;
 $.ajax({
-        url: '/comment',
+        url: '/comment/' + chartID,
         method: 'get',
-        async: false, 
+        async: false,
         data: {
           chartID: chartID
         },
@@ -38,5 +38,8 @@ $.ajax({
           console.log(error);
         }
       });//end ajax
+      if (result == null){
+        return [];
+      }
       return result;
 };

@@ -43,12 +43,12 @@ commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
  * @param callback
  */
 commentSchema.statics.getChartComments = function(chartId, callback) {
-  Comment.find({chart: chartID}, function(err, comments) {
+  Comment.find({chart: chartId}, function(err, comments) {
     callback(err,comments);
   })
 };
 
-var Comments = mongoose.model("Comment", commentSchema);
-module.exports = Comments; //keep at bottom of file
+var Comment = mongoose.model("Comment", commentSchema);
+module.exports = Comment; //keep at bottom of file
 
 

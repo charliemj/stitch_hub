@@ -25,8 +25,8 @@
       <option value='KNIT_H'>Knit Horizontal</option>
       <option value='CROCHET_H'>Crochet Horizontal</option>
     </select>
-  <p>Row size: </p><input type="number" id="rowSize" min='1' max='70'><br>
-  <p>Column size: </p><input type="number" id="colSize" min='1' max='70'>
+  <p>Row size: </p><input type="number" id="rowSize" min='1' max='70' value='15' oninput="validity.valid||(value='1')"><br">
+  <p>Column size: </p><input type="number" id="colSize" min='1' max='70' value='15' oninput="validity.valid||(value='1')">
   <button class="make-chart-button" onclick='makeChart()'>Make a chart</button>
 </body>
 </html>
