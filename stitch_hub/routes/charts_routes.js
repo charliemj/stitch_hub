@@ -2,12 +2,11 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Charts = require('../model/chart_model.js');
-var passport = require('passport');
 
 /**
  * gets all charts by a user
  */
-router.get('/user/:userId', function (req, res) {
+router.get('/author/:userId', function (req, res) {
   var userId = req.params.userId;
   Charts.getChartsByUser(userId,
     function (err, charts) {
@@ -78,7 +77,7 @@ router.get('/', function (req, res/*, next*/) {
  * response is a JSON with keys 'success' and 'message'. The 'success' key
  * has a value of false and 'message' key have the error as the value
  */
-router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
+router.post('/', 
   function (req, res, next) {
     if (!req.session.username) { //checks to make sure user is logged in
       res.send(400),{msg:"You need to log in to make a chart!"}; // TODO
@@ -167,9 +166,9 @@ router.put('/:id/tags', function (req, res) {
  * has a value of false and 'message' will tell the user that they can't delete a chart
  * that isn'theirs
  */
-router.put('/', function (req, res, next) {
+router.put('/:chartId/is_deleted', function (req, res, next) {
   //TODO authentication: check if user is the user who posted the chart
-  var chartId = req.body.chartID;
+  var chartId = req.params.chartId;
   var userId = req.session.userId;
   Charts.deleteChart(chartId,userId,function (err, chart) {
     if (err) {
