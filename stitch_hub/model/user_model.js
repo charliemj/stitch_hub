@@ -1,17 +1,5 @@
 var mongoose = require('mongoose');
-// things we can easily validate with this package: https://www.npmjs.com/package/mongoose-validators
-// can validate one or multiple things
-// to validate multiple fields, put in a list
-
-// single validator like this:
-// var Schema = new mongoose.Schema({
-//     email: {type: String, validate: validators.isEmail()}
-// });
-
-// multiple validators like this:
-// var Schema = new mongoose.Schema({
-//     username: {type: String, validate: [validators.isAlphanumeric(), validators.isLength(2, 60)]}
-// });
+var crypto = require('crypto');
 
 var validators = require('mongoose-validators');
 var Charts = require('./chart_model.js');
@@ -26,9 +14,10 @@ var userSchema = mongoose.Schema({
 });
 
 /**
+ * Given an ID, get a specific user.
  *
- * @param userId
- * @param callback
+ * @param userId {ObjectId} ID of user in question
+ * @param callback function to execute
  */
 userSchema.statics.getUserById = function (userId, callback) {
   Users.findOne({
@@ -38,57 +27,93 @@ userSchema.statics.getUserById = function (userId, callback) {
   })
 };
 
-/**
- *
- * @param currentUser
- * @param userToFollow
- * @param callback
- */
-userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
-  Users.findOneAndUpdate(
-    {_id: userToFollow},
-    {$addToSet: {following: currentUser}},
-    function (err, user) {
-      callback(err, user)
-    })
-};
+
 
 /**
- *
+ * TODO
  * @param userId
  * @param callback
  */
-userSchema.statics.getFollowersCharts = function (userId, callback) {
-  Users.getUserById(userId, function(err,user) {
-    if (err) {
-      console.log('There was an error!' + err);
-      res.send({
-        success: false,
-        message: err
-      });
-    } else {
-      console.log('Get following in ' + user);
-      Charts.find({author: {$in: user.following}},
-        function (err, charts) {
-          callback(err, charts)
-        })
+userSchema.statics.isLoggedIn = function (userId,callback){
+  var isLoggedIn = false;
+  Users.getUserById(userId,function(err,user){
+    if (user){
+      isLoggedIn = true;
     }
+    callback(err, isLoggedIn);
+  });
+};//end isLoggedIn
 
-  })
+/**
+ * Make one specified user follow another specified user.
+ *
+ * @param currentUser {ObjectId} ID of user
+ * @param userToFollow {ObjectId} ID of user to follow
+ * @param callback function to execute
+ */
+userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+    if (isLoggedIn){
+      Users.findOneAndUpdate(
+        {_id: userToFollow},
+        {$addToSet: {following: currentUser}},
+        function (err, user) {
+          callback(err, user)
+        })//end findone
+    } //end if
+    else{
+      callback(err, isLoggedIn);
+    }//end else
+  });//end isLoggedIn
 };
 
 /**
+ * Get all charts authored by a user's followers.
  *
- * @param username
- * @param password
- * @param dob
- * @param email
- * @param callback
+ * @param userId {ObjectId} ID of
+ * @param callback function to execute
+ */
+userSchema.statics.getFollowersCharts = function (userId, callback) {
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+    if (isLoggedIn){
+      Users.getUserById(userId, function(err,user) {
+        if (err) {
+          console.log('There was an error!' + err);
+          res.send({
+            success: false,
+            message: err
+          });
+        } else {
+          console.log('Get following in ' + user);
+          Charts.find({author: {$in: user.following}},
+            function (err, charts) {
+              callback(err, charts)
+            })
+        }
+      })
+    }//end if
+    else{
+      callback(err,isLoggedIn);
+    }//end else
+  });//end isLoggedIn
+};
+
+/**
+ * Create a new User.
+ *
+ * @param username {String} username of user
+ * @param password {String} hashed password of user
+ * @param dob {Date} user's birthday
+ * @param email {String} user's email address
+ * @param callback function to execute
  */
 userSchema.statics.createUser = function(username, password, dob, email, callback) {
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  var hashedPassword = hash.digest('hex'); 
   Users.create({
     username: username,
-    password: password,
+    password: hashedPassword,
     dob: dob,
     email: email
   }, function(err, user) {

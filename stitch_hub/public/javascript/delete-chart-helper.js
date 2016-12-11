@@ -5,21 +5,17 @@ $.ajax({
         method: 'PUT',
         async: false,
         data: {
-          chartID: chartID,
-          
+          chartID: chartID
         },
         success: function(result) {
           newChart = result.message;
-
-
        },
         error: function(error) {
           console.log('Error deleting');
           console.log(error);
         }
-
       });//end ajax
       window.sessionStorage.setItem('chart', JSON.stringify(newChart));
       window.location.reload();
 
-}
+};
