@@ -4,10 +4,6 @@ var Comments = require('../model/comment_model.js');
 
 
 router.post('/', function (req, res) {
-  if (!req.session.username) {
-    res.send(400, {msg: "user not logged in"});
-    return;
-  }
   var userId = req.body.userId;
   var chartId = req.body.chartId;
   var text = req.body.text;

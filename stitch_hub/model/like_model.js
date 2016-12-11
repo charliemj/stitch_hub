@@ -8,6 +8,26 @@ var likesSchema = mongoose.Schema({
   user: {type: ObjectId, ref: "User"}
 });
 
+
+/**
+ * TODO
+ * @param chartId
+ * @param userId
+ * @param callback
+ */
+
+likesSchema.statics.canLike = function(userId,callback){
+  var canLike = false;
+  Users.getUserById(userId,function(err,user){
+    if (user){
+      canLike = true;
+    }
+    callback(err, canLike);
+  });
+};//end of canLike
+
+
+
 /**
  * Create a Like given a chart and user.
  * 
@@ -16,24 +36,31 @@ var likesSchema = mongoose.Schema({
  * @param callback function to execute
  */
 likesSchema.statics.likeChart = function (chartId, userId, callback) {
-  Likes.count({chart: chartId, user: userId}, function (err, history) { //history is either 1 or 0, indicating if a user has liked a particualr chart
-    if (err) {
-      console.log(err);
-      res.send({
-        success: false,
-        message: err
-      }); //end if
-    } else {
-      if (history === 0) { //they can like the chart
-        Likes.create(
-          {user: req.session.userId, chart: req.body.chartID}, function (err, like) {
-            callback(err, like)
+  Likes.canLike(userId, function(err,canLike){
+    if (canLike){
+      Likes.count({chart: chartId, user: userId}, function (err, history) { //history is either 1 or 0, indicating if a user has liked a particualr chart
+        if (err) {
+          console.log(err);
+          res.send({
+            success: false,
+            message: err
+          }); //end if
+        } else {
+          if (history === 0) { //they can like the chart
+            Likes.create(
+              {user: req.session.userId, chart: req.body.chartID}, function (err, like) {
+                callback(err, like)
+              }
+            )
           }
-        )
-      }
-    }
-  })
-};
+        }
+      })//end likes.count
+    } //end if canLike
+    else{
+      callback(err,canLike); //this err is auth prob
+    }//end else
+  });//end canLike
+};//end likeChart
 
 /**
  * Fetch a specific Like.

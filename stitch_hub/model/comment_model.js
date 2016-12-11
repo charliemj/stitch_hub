@@ -9,6 +9,25 @@ var commentSchema = mongoose.Schema({
   text: String //do we want to impose a length on this? if so, we can add a validator
 });
 
+
+
+/**
+ * TODO
+ * @param userId
+ * @param callback
+ */
+commentSchema.statics.canComment = function (userId,callback){
+  var canComment = false;
+  Users.getUserById(userId,function(err,user){
+    if (user){
+      canComment = true;
+    }
+    callback(err, canComment);
+  });
+};//end canComment
+
+
+
 /**
  * Creates a new comment.
  *
@@ -18,10 +37,17 @@ var commentSchema = mongoose.Schema({
  * @param callback function to execute
  */
 commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
-  Comment.create(
-    {user: userId, chart: chartId, text: text}, function (err) {
-      callback(err)
-    })
+  Comment.canComment(userId,function(err,canComment){
+    if (canComment){
+      Comment.create(
+        {user: userId, chart: chartId, text: text}, function (err) {
+          callback(err);
+        })
+    }//end if
+    else{
+      callback(err, canComment);
+    }//end else
+  });//end canComment
 };
 
 /**

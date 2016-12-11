@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var crypto = require('crypto');
+
 var validators = require('mongoose-validators');
 var Charts = require('./chart_model.js');
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -25,6 +27,23 @@ userSchema.statics.getUserById = function (userId, callback) {
   })
 };
 
+
+
+/**
+ * TODO
+ * @param userId
+ * @param callback
+ */
+userSchema.statics.isLoggedIn = function (userId,callback){
+  var isLoggedIn = false;
+  Users.getUserById(userId,function(err,user){
+    if (user){
+      isLoggedIn = true;
+    }
+    callback(err, isLoggedIn);
+  });
+};//end isLoggedIn
+
 /**
  * Make one specified user follow another specified user.
  *
@@ -33,12 +52,19 @@ userSchema.statics.getUserById = function (userId, callback) {
  * @param callback function to execute
  */
 userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
-  Users.findOneAndUpdate(
-    {_id: userToFollow},
-    {$addToSet: {following: currentUser}},
-    function (err, user) {
-      callback(err, user)
-    })
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+    if (isLoggedIn){
+      Users.findOneAndUpdate(
+        {_id: userToFollow},
+        {$addToSet: {following: currentUser}},
+        function (err, user) {
+          callback(err, user)
+        })//end findone
+    } //end if
+    else{
+      callback(err, isLoggedIn);
+    }//end else
+  });//end isLoggedIn
 };
 
 /**
@@ -48,22 +74,28 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
  * @param callback function to execute
  */
 userSchema.statics.getFollowersCharts = function (userId, callback) {
-  Users.getUserById(userId, function(err,user) {
-    if (err) {
-      console.log('There was an error!' + err);
-      res.send({
-        success: false,
-        message: err
-      });
-    } else {
-      console.log('Get following in ' + user);
-      Charts.find({author: {$in: user.following}},
-        function (err, charts) {
-          callback(err, charts)
-        })
-    }
-
-  })
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+    if (isLoggedIn){
+      Users.getUserById(userId, function(err,user) {
+        if (err) {
+          console.log('There was an error!' + err);
+          res.send({
+            success: false,
+            message: err
+          });
+        } else {
+          console.log('Get following in ' + user);
+          Charts.find({author: {$in: user.following}},
+            function (err, charts) {
+              callback(err, charts)
+            })
+        }
+      })
+    }//end if
+    else{
+      callback(err,isLoggedIn);
+    }//end else
+  });//end isLoggedIn
 };
 
 /**
@@ -76,9 +108,12 @@ userSchema.statics.getFollowersCharts = function (userId, callback) {
  * @param callback function to execute
  */
 userSchema.statics.createUser = function(username, password, dob, email, callback) {
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  var hashedPassword = hash.digest('hex'); 
   Users.create({
     username: username,
-    password: password,
+    password: hashedPassword,
     dob: dob,
     email: email
   }, function(err, user) {
