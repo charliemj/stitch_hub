@@ -61,7 +61,7 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
 userSchema.statics.getFollowersCharts = function (userId, callback) {
   Users.getUserById(userId, function(err,user) {
     if (err) {
-      console.log('There was an eror!' + err);
+      console.log('There was an error!' + err);
       res.send({
         success: false,
         message: err
