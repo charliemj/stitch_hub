@@ -43,6 +43,18 @@ var loadChartFeedTemplate = function(charts) {
       });
     });
 
+    // add link to user profile for each chart author
+    $('.author-name').each(function(i, button) {
+      var jbutton = $(button);
+      var id = jbutton.attr('data-id');
+      var chartJson = findChartWithId(charts, id);
+      var author = chartJson.author;
+      jbutton.on('click', function() {
+            window.sessionStorage.setItem('userProfileId', author);
+            window.location = "user_profile.html";
+             });
+      });
+
     //add like button for each chart
     $('.like-button').each(function(i, button) {
       // get whether or not the user has currently liked this

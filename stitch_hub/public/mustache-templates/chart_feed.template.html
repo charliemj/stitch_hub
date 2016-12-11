@@ -3,7 +3,7 @@
   {{#charts}}
     <div class="col-1-5">
       <h3 id="chartTitle">{{title}}</h3>
-      <h4>by {{authorname}}</h4>
+      <h4 class='author-name' data-id='{{_id}}'>by {{authorname}}</h4>
       <canvas class='chart-canvas' data-id='{{_id}}'/>
       <br>
       <button class='remix-button' data-id='{{_id}}'>Remix!</button>
