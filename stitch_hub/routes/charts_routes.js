@@ -7,7 +7,7 @@ var passport = require('passport');
 /**
  * gets all charts by a user
  */
-router.get('/user/:userId', function (req, res) {
+router.get('/author/:userId', function (req, res) {
   var userId = req.params.userId;
   Charts.getChartsByUser(userId,
     function (err, charts) {
