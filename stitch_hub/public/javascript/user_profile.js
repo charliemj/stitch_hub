@@ -45,8 +45,9 @@ $(document).ready(function () {
   });
 
   $('#following-charts-button').on('click', function () {
+    var sessionUserId = window.sessionStorage.getItem('sessionUserId');
     $.ajax({
-      url: '/users/following/charts',
+      url: '/users/' + sessionUserId + '/following/charts',
       method: 'GET',
       success: function(charts) {
         loadChartFeedTemplate(charts);

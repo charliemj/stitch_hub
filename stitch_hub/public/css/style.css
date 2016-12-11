@@ -7,7 +7,7 @@ padding:0;
 }
 
 body {
-    background-color:#b39fc7;
+    background-color:#DCD6F7;
     /*font-family: 'Dosis', sans-serif;*/
     font-family: 'Indie Flower', cursive;
     padding-left:5px;
@@ -43,7 +43,7 @@ h2{
 #banner{
   height:250px;
   /*background-image: url("../img/banner.jpg");*/ 
-  background-color: #EF767A;
+  background-color: #A6B1E1;
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center; 
@@ -97,7 +97,7 @@ h2{
 }
 
 button {
-    background-color: darkslategrey;
+    background-color: #2A3D45;
     border: none;
     color: white;
     padding: 7px 10px;
@@ -116,8 +116,8 @@ button {
   right:10px;
   position:absolute;
   margin-right: 20px;
-  background-color:#89cff0;
-  border: 1px solid blue;
+  background-color:#E77B89;
+  border: 1px solid purple;
   color:black;
 }
 
@@ -142,7 +142,7 @@ button {
 /*CHART CARD AND CHART-RELATED CSS*/
 
 .remix-button {
-    background-color: olivedrab; /* Green */
+    background-color: #FA567B; /* Green */
     bottom:0;
     margin-left:2px;
     
