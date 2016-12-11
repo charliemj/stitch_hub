@@ -74,7 +74,7 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
     else{
       callback(err, isLoggedIn);
     }//end else
-  }//end isLoggedIn
+  });//end isLoggedIn
 };
 
 /**
@@ -104,7 +104,7 @@ userSchema.statics.getFollowersCharts = function (userId, callback) {
     else{
       callback(err,isLoggedIn);
     }//end else
-  }//end isLoggedIn
+  });//end isLoggedIn
 };
 
 /**

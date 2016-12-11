@@ -60,7 +60,7 @@ commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
     else{
       callback(err, canComment);
     }//end else
-  }//end canComment
+  });//end canComment
 };
 
 /**
