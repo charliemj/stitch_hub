@@ -190,11 +190,12 @@ button {
 }
 
 #chart{
-  padding:50px;
+  padding-top:50px;
+  padding-bottom:50px;
   background-color: #cccccc;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 80%;
 }
 
 .chart-canvas{
