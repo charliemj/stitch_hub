@@ -1,12 +1,10 @@
 var doComment = function (chartID, text){
 
 $.ajax({
-        url: '/comment',
+        url: '/comment/chart/' + chartID + '/user/' + window.sessionStorage.getItem('sessionUserId'),
         method: 'POST',
         data: {
-          chartID: chartID,
-          text: text
-          
+          text: text          
         },
         success: function() {
           console.log("successfully commented");
@@ -18,17 +16,16 @@ $.ajax({
 
       });//end ajax
 
-}
+};
 
 var getComments = function(chartID){
 var result;
 $.ajax({
-        url: '/comment',
+        url: '/comment/' + chartID,
         method: 'get',
-        async: false, 
+        async: false,
         data: {
-          chartID: chartID,
-          
+          chartID: chartID
         },
         success: function(message) {
           console.log("successfully got comments");
@@ -38,10 +35,9 @@ $.ajax({
           console.log('Error getting comments');
           console.log(error);
         }
-
       });//end ajax
+      if (result == null){
+        return [];
+      }
       return result;
-
-
-
-}
+};

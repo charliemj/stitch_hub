@@ -72,7 +72,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
               error: function(err) {
                 console.log('Error in editing chart description');
                 console.log(err);
-              },
+              }
             });
           });
 
@@ -166,6 +166,11 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
 
           $('#parent-button').on("click", function () {
             goToParent();
+          });
+
+          $('#report-button').on("click",function() {
+            console.log("REPORT!");
+            window.location = 'chart_page.html'
           });
 
           // NEED TO DO: complete this part which should make it so we only display a delete button

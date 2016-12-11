@@ -20,19 +20,19 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var validTypes = ["CROSS_STITCH", "KNIT_V", "KNIT_H", "CROCHET_V", "CROCHET_H"];
 
 var chartSchema = mongoose.Schema({
-  title: {type: String, validate: [validators.isLength(0, 16)]},
-  description: {type: String, validate: [validators.isLength(0, 100)]},
-  date: {type: Date, default: Date.now, validate: [validators.isDate()]},
-  type: {type: String, enum: validTypes},
-  rowSize: {type: Number},
-  colSize: {type: Number},
-  rows: [[{type: String, validate: validators.isHexColor()}]],
-  parent: {type: ObjectId, ref: "Chart"},
-  is_deleted: Boolean,
-  nsfw: Boolean,
-  tags: [String],
-  comments: [{type: ObjectId, ref: "Comment"}],
-  author: {type: ObjectId, ref: "User"}
+    title: {type:String, validate: [validators.isLength(0,16)]},
+    description: {type:String, validate: [validators.isLength(0,100)]},
+    date: { type: Date, default: Date.now,validate: [validators.isDate()] },
+    type: {type:String, enum: validTypes},
+    rowSize: {type:Number, min:1, max:70},
+    colSize: {type:Number, min:1, max:70},
+    rows:[[{type:String, validate: validators.isHexColor()}]],
+    parent: {type:ObjectId, ref:"Chart"},
+    is_deleted: Boolean,
+    nsfw: Boolean,
+    tags: [String],
+    comments: [{type:ObjectId, ref:"Comment"}],
+    author: {type: ObjectId, ref:"User"}
 });
 
 
@@ -58,13 +58,12 @@ chartSchema.statics.getChartById = function (chartId, callback) {
  * @param callback
  */
 chartSchema.statics.getChartsByUser = function (userId, callback) {
-  var that = this;
   Charts.find({
     author: userId,
-    isDeleted: false
+    is_deleted: false
   }, function (err, charts) {
     if (err) {
-      callback(err)
+      callback(err) 
     } else {
       callback(null, charts)
     }
@@ -174,15 +173,52 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
  * @param newDescription
  * @param callback
  */
-chartSchema.statics.editDescription = function(id,newDescription,callback) {
-  Charts.findOneAndUpdate(
-    {_id: id}, // NOTE LOWERCASE d
-    {description: newDescription},
-    function(err,chart){
-      callback(err,chart);
+chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
+  Charts.getChartById(chartId,function (err, charts) {
+    var canEdit = false;
+    if (err) {
+      var chartAuthor = null;
+      } //end if
+    
+    else {
+      var chartAuthor = chart.author;
+    } //end else
+
+    if (userId == chartAuthor){
+      canEdit = true;
     }
-  )
-};
+    
+    callback(err,canEdit);
+
+  });//end of Charts.getChartById
+};//end of checkIfCanEdit
+
+/**
+ * TODO
+ * @param id
+ * @param newDescription
+ * @param callback
+ */
+chartSchema.statics.editDescription = function(chartId,userId,newDescription,callback) {
+  Charts.checkIfCanEdit(chartId,userId,function(err,canEdit){
+    if (canEdit){
+      Charts.findOneAndUpdate(
+        {_id: chartId}, // NOTE LOWERCASE d
+        {description: newDescription},
+        function(err,chart){
+          callback(err,chart); //this err is database prob
+        }//end function
+      )//end findoneandupdate
+    }//end if
+
+    else{
+      //the person doesn't have authorization to edit
+        callback(err,canEdit); //this err is auth prob
+    }//end else
+
+  });//end checkIfCanEdit
+
+};//end of editDescription
 
 /**
  * TODO
@@ -190,14 +226,23 @@ chartSchema.statics.editDescription = function(id,newDescription,callback) {
  * @param newTags
  * @param callback
  */
-chartSchema.statics.editTags = function(userId,newTags,callback) {
-  Charts.findOneAndUpdate(
-    {_id: userId}, // NOTE LOWERCASE d
-    {tags: newTags},
-    function(err,chart) {
-      callback(err,chart);
+chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
+  Charts.checkIfCanEdit(chartId,userId,function(err,canEdit){
+    if (canEdit){
+      Charts.findOneAndUpdate(
+        {_id: userId}, // NOTE LOWERCASE d
+        {tags: newTags},
+        function(err,chart) {
+          callback(err,chart);
+        }
+      )
+    }//end if
+
+    else{
+      //the person doesn't have authorization to edit
+      callback(err,canEdit); //this err is auth prob
     }
-  )
+  });//end checkIfCanEdit
 };
 
 /**

@@ -58,8 +58,8 @@ router.get('/', function (req, res/*, next*/) {
  */
 router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
   function (req, res, next) {
-    if (!req.session.username) {
-      res.send(400);
+    if (!req.session.username) { //checks to make sure user is logged in
+      res.send(400),{msg:"You need to log in to make a chart!"};
       return;
     }
     var author = req.session.userId;
@@ -83,7 +83,7 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
             message: err
           }); //end if
         } else {
-          res.send(200); // send a response
+          res.send(200,{sucess:"Chart has been posted!"}); // send a response
         }
       }
     );
@@ -94,17 +94,18 @@ router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
  */
 router.put('/:id/description', function (req, res) {
   // TODO authentication: check if the user is the user who posted the chart
-  var userId = req.params.id;
+  var chartId = req.params.id;
+  var userId = req.session.username;
   var newDescription = req.body.description;
-  Charts.editDescription(userId,newDescription,
-    function (err, chart) {
+  Charts.editDescription(chartId,userId,newDescription,
+    function (err, msg) {
       if (err) {
         res.send({
           success: false,
           message: err
         }); //end if
       } else {
-        var updated = (chart != null);
+        var updated = (msg != null);
         res.send({updated: updated});
       }
     }
@@ -116,17 +117,18 @@ router.put('/:id/description', function (req, res) {
  */
 router.put('/:id/tags', function (req, res) {
   // TODO authentication: check if the user is the user who posted the chart
-  var userId = req.params.id;
+  var chartId = req.params.id;
+  var userId = req.session.username;
   var newTags = req.body.tags;
-  Charts.editTags(userId,newTags,
-    function (err, chart) {
+  Charts.editTags(chartId,userId,newTags,
+    function (err, msg) {
       if (err) {
         res.send({
           success: false,
           message: err
         }); //end if
       } else {
-        var updated = (chart != null);
+        var updated = (msg != null);
         res.send({updated: updated});
       }
     }

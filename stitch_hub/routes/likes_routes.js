@@ -7,7 +7,7 @@ var passport = require('passport');
 
 router.post('/', function (req, res) {
   if (!req.session.username) {
-    res.send(400);
+    res.send(400,{error:"not logged in!"});
     return;
   }
   var chartId = req.body.chartID;
@@ -20,7 +20,8 @@ router.post('/', function (req, res) {
         res.send(
           {
             success: false,
-            message: err
+            message: err,
+            error: "error creating like"
           }
         ); //end if
       } else {
