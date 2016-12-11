@@ -67,9 +67,9 @@ router.delete('/', function (req, res) {
 });
 
 router.get('/chart/:chartId/count', function (req, res, next) { //TODO is this RESTful?
-  var chartId = req.params.chartID;
+  var chartId = req.params.chartId;
   console.log("like route");
-  console.log("chart " + req.query.chartID);
+  console.log("chart " + req.params.chartId);
   Likes.getNumLikes(chartId, function (err, number) {
     if (err) {
       console.log(err);

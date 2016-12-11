@@ -216,6 +216,7 @@ chartSchema.statics.editDescription = function(chartId,userId,newDescription,cal
       Charts.findOneAndUpdate(
         {_id: chartId}, // NOTE LOWERCASE d
         {description: newDescription},
+        {new: true},
         function(err,chart){
           callback(err,chart); //this err is database prob
         }//end function
@@ -245,6 +246,7 @@ chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
       Charts.findOneAndUpdate(
         {_id: userId}, // NOTE LOWERCASE d
         {tags: newTags},
+        {new: true},
         function(err,chart) {
           callback(err,chart);
         }

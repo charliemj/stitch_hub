@@ -39,7 +39,7 @@ likesSchema.statics.likeChart = function (chartId, userId, callback) {
     } else {
       if (history === 0) { //they can like the chart
         Likes.create(
-          {user: req.session.userId, chart: req.body.chartID}, function (err, like) {
+          {user: userId, chart: chartId}, function (err, like) {
             callback(err, like)
           }
         )
@@ -73,7 +73,7 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
     if (err){
       callback(err,like);
     }//end if
-    else if (like > 0){
+    else if (like != null){
       Likes.remove({chart: chartId, user: userId}, function(err,like) {
         callback(err,like);
       });//end remove
@@ -91,7 +91,7 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
  */
 likesSchema.statics.getNumLikes = function(chartId,callback) {
   Likes.count({chart: chartId},function(err,number) {
-    callback(err,number)
+    callback(err,number);
   })
 };
 

@@ -20,12 +20,20 @@ var getNumberOfLikes = function (chartID) {
   return result;
 };
 
+
+//returns true if a user has liked a chart, false if not
 var getCurrentUserLike = function (chartId, userId, callback) {
   $.ajax({
     url: '/like/chart/' + chartId + '/user/' + userId,
     method: 'GET',
     success: function (data) {
-      callback(null, data);
+      var result = false;
+      if (data.message != null){
+        result = true;
+      }
+
+      
+      callback(null, result);
     },
     error: function (err) {
       callback(err, null);
@@ -33,12 +41,12 @@ var getCurrentUserLike = function (chartId, userId, callback) {
   });
 };
 
-var likeChart = function (chartID) {
+var likeChart = function (chartId) {
   $.ajax({
     url: '/like',
     method: 'POST',
     data: {
-      chartID: chartID
+      chartID: chartId
     },
     success: function () {
       window.location.reload();
