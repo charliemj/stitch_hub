@@ -30,9 +30,9 @@ router.post('/', function (req, res) {
 });
 
 
-router.get('/', function (req, res, next) {
-  var chartId = req.query.chartID;
-  console.log("chart " + req.query.chartID);
+router.get('/:chartId', function (req, res, next) {
+    var chartId = req.params.chartId;
+    console.log("chart " + chartId);
   Comments.getChartComments(chartId, function (err, comments) {
       if (err) {
         console.log(err);

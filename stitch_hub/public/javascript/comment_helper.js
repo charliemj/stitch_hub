@@ -23,13 +23,9 @@ $.ajax({
 var getComments = function(chartID){
 var result;
 $.ajax({
-        url: '/comment',
+        url: '/comment/' + chartID,
         method: 'get',
         async: false, 
-        data: {
-          chartID: chartID,
-          
-        },
         success: function(message) {
           console.log("successfully got comments");
           result = message.message;
@@ -40,6 +36,9 @@ $.ajax({
         }
 
       });//end ajax
+      if (result == null){
+        return [];
+      }
       return result;
 
 
