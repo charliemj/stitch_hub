@@ -81,7 +81,7 @@ router.get('/', function (req, res/*, next*/) {
 router.post('/', /*passport.authenticate('local',{failureRedirect: '/login'}),*/
   function (req, res, next) {
     if (!req.session.username) { //checks to make sure user is logged in
-      res.send(400),{msg:"You need to log in to make a chart!"};
+      res.send(400),{msg:"You need to log in to make a chart!"}; // TODO
       return;
     }
     var author = req.session.userId;
