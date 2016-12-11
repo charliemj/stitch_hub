@@ -14,6 +14,7 @@ var mongoose = require('mongoose');
 // });
 
 var validators = require('mongoose-validators');
+var Charts = require('./chart_model.js');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var userSchema = mongoose.Schema({
