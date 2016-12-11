@@ -7,77 +7,78 @@ var Users = require('../model/user_model.js');
 var Charts = require('../model/chart_model.js');
 
 
-router.post('/', function(req, res){
+router.post('/', function (req, res) {
+  if (!req.session.username) {
+    res.send(400);
+    return;
+  }
 
-    if (!req.session.username) {
-        res.send(400);
-        return;
-    }
-
-    Like.count({chart:req.body.chartID, user:req.session.userId}, function(err, history){
-      if (err) {
-             console.log(err);
-             res.send({
-                 success: false,
-                 message: err
-             }); //end if
-         } else{
-            if (history===0){
-                Like.create(
-                {user: req.session.userId, chart: req.body.chartID}, 
-                function(err, like){
-                    if (err) {
-                      console.log("error creating like");
-                      console.log(err);
-                      res.send(
-                        {success: false,
-                        message: err}
-                        ); //end if
-                    } else{
-                      res.sendStatus(200,{sucess:"Like created!"}); // send a response
-                    }
-                  });
-                };  
-        }; //end else
-    });
-});
-
-
-router.get('/', function(req, res) {
-  var chartId = req.query.chartId;
-  var userId = req.session.userId;
-  Like.findOne({ chart: chartId, user: userId })
-  .exec(function(err, like) {
+  Like.count({chart: req.body.chartID, user: req.session.userId}, function (err, history) {
     if (err) {
-       console.log(err);
-       res.send({
-           success: false,
-           message: err
-
-       }); //end if
+      console.log(err);
+      res.send({
+        success: false,
+        message: err
+      }); //end if
     } else {
-      res.send(like);
+      console.log("this is history");
+      console.log(history);
+      if (history === 0) {
+        Like.create(
+          {user: req.session.userId, chart: req.body.chartID},
+          function (err, like) {
+            if (err) {
+              console.log("error creating like");
+              console.log(err);
+              res.send(
+                {
+                  success: false,
+                  message: err
+                }
+              ); //end if
+            } else {
+              res.sendStatus(200); // send a response
+            }
+          });
+      }
     }
   });
 });
 
-router.delete('/', function(req, res) {
+
+router.get('/', function (req, res) {
+  var chartId = req.query.chartId;
+  var userId = req.session.userId;
+  Like.findOne({chart: chartId, user: userId})
+    .exec(function (err, like) {
+      if (err) {
+        console.log(err);
+        res.send({
+          success: false,
+          message: err
+
+        }); //end if
+      } else {
+        res.send(like);
+      }
+    });
+});
+
+router.delete('/', function (req, res) {
   var chartId = req.body.chartId;
   var userId = req.session.userId;
-  Like.remove({ chart: chartId, user: userId }, function (err) {
+  Like.remove({chart: chartId, user: userId}, function (err) {
     if (err) {
        res.send({
            success: false,
            message: err,
            error:"problem unliking"
-
-       }); //end if
+      }); //end if
     } else {
       res.send(200,{sucess:"like sucessfully removed"});
     }
   });
 });
-
 
 router.get('/likes',function(req, res, next){
     var chartID = req.query.chartID;

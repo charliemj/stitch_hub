@@ -12,9 +12,8 @@ var session = require('express-session');
 
 // connect with mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_database25');
-//mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
-//mongoose.connect('mongodb://kjmoore:password@ds063946.mlab.com:63946/heroku_vqt01pgt');
+mongoose.connect('mongodb://localhost/my_database8');
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -35,7 +34,7 @@ app.use(session({
   secret: 'supersecret',
   resave: true,
   saveUninitialized: true,
-  cookie: {secure: false},
+  cookie: {secure: false}
 }));
 
 //app.use(express.session({ secret: 'keyboard cat' })); //TODO replace above line with this?

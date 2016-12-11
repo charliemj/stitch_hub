@@ -2,7 +2,7 @@ var getUsernameFromID = function(ID){
 	var name;
 	$.ajax({
         url: '/users/'+ID,
-        method: 'get',
+        method: 'GET',
         async: false,
         success: function(res) {
           name = res.user.username;
@@ -17,4 +17,4 @@ var getUsernameFromID = function(ID){
       });//end ajax
 		console.log(name);
 		return name;
-}
+};

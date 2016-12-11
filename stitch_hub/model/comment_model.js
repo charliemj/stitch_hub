@@ -24,4 +24,11 @@ var commentSchema = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Comment", commentSchema); //keep at bottom of file
+
+
+
+var Comment = mongoose.model("Comment", commentSchema);
+
+module.exports = Comment //keep at bottom of file
+
+
