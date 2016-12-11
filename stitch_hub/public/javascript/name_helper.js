@@ -6,7 +6,6 @@ var getUsernameFromID = function(ID){
         async: false,
         success: function(res) {
           name = res.user.username;
-          console.log("successfully got username;");
           
         },
         error: function(error) {
@@ -14,6 +13,5 @@ var getUsernameFromID = function(ID){
         }
 
       });//end ajax
-		console.log(name);
 		return name;
 };

@@ -1,5 +1,4 @@
 var loadUserProfileHeaderTemplate = function(user) {
-  console.log(user);
   $.get('mustache-templates/user_profile_header.template.html', function (template) {
     var userProfileId = user._id;
     var username = user.username;

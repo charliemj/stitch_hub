@@ -12,8 +12,7 @@ $.ajax({
           newChart = result.message;
 
 
-          console.log("successfully deleted it");
-        },
+       },
         error: function(error) {
           console.log('Error deleting');
           console.log(error);
