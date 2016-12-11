@@ -2,7 +2,7 @@ var getNumberOfLikes = function (chartID) {
 
   var result;
   $.ajax({
-    url: '/like/likes/',
+    url: '/like/chart/' + chartID + '/count',
     method: 'GET',
     async: false,
     data: {
