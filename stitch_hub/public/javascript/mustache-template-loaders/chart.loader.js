@@ -140,7 +140,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             }
           });
 
-          getCurrentUserLike(jsonChart._id, function(err, like) {
+          getCurrentUserLike(jsonChart._id, window.sessionStorage.getItem('sessionUserId'), function(err, like) {
             // set the initial state of the button
             var liked = like ? true : false;
             $('#like-button').text(liked ? 'Unlike' : 'Like');

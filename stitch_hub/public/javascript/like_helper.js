@@ -20,12 +20,9 @@ var getNumberOfLikes = function (chartID) {
   return result;
 };
 
-var getCurrentUserLike = function (chartId, callback) {
+var getCurrentUserLike = function (chartId, userId, callback) {
   $.ajax({
-    url: '/like',
-    data: {
-      chartId: chartId
-    },
+    url: '/like/chart/' + chartId + '/user/' + userId,
     method: 'GET',
     success: function (data) {
       callback(null, data);
