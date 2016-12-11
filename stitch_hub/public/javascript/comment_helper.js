@@ -1,12 +1,10 @@
 var doComment = function (chartID, text){
 
 $.ajax({
-        url: '/comment',
+        url: '/comment/chart/' + chartID + '/user/' + window.sessionStorage.getItem('sessionUserId'),
         method: 'POST',
         data: {
-          chartID: chartID,
-          text: text
-          
+          text: text          
         },
         success: function() {
           console.log("successfully commented");
