@@ -3,11 +3,13 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Users = require('../model/user_model.js');
 var session = require('express-session');
+var crypto = require('crypto');
 
 
 
 router.post('/', function (req, res) {
   console.log(req.body);
+  var hash = crypto.createHash('sha256');
   var password = req.body.password;
   hash.update(password);
   var hashedPassword = hash.digest('hex');
