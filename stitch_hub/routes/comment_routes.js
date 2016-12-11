@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
 });
 
 
-router.get('/:chartId', function (req, res, next) {
+router.get('/chart/:chartId', function (req, res, next) {
     var chartId = req.params.chartId;
     console.log("chart " + chartId);
   Comments.getChartComments(chartId, function (err, comments) {

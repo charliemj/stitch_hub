@@ -65,8 +65,8 @@ var like = require('./routes/likes_routes.js');
 app.use('/like', like);
 
 // routes for comments
-var comment = require('./routes/comment_routes.js');
-app.use('/comment', comment);
+var comments = require('./routes/comment_routes.js');
+app.use('/comments', comments);
 
 // 404 Route
 app.use(function(req, res){

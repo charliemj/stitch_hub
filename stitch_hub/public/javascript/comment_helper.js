@@ -1,7 +1,7 @@
 var doComment = function (chartID, text){
 
 $.ajax({
-        url: '/comment',
+        url: '/comments',
         method: 'POST',
         data: {
           chartId: chartID,
@@ -22,7 +22,7 @@ $.ajax({
 var getComments = function(chartID){
 var result;
 $.ajax({
-        url: '/comment/' + chartID,
+        url: '/comments/chart/' + chartID,
         method: 'get',
         async: false,
         data: {
