@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Users = require('../model/user_model.js');
 var session = require('express-session');
-var crypto = require('crypto');
+var passwordSecurer = require('./password_securer.js')();
 
 /**
  * Handles POST request for login.
@@ -13,18 +13,26 @@ var crypto = require('crypto');
  */
 router.post('/', function (req, res) {
   console.log(req.body);
-  var hash = crypto.createHash('sha256');
   var password = req.body.password;
-  hash.update(password);
-  var hashedPassword = hash.digest('hex');
-  Users.findOne({ username: req.body.username, password: hashedPassword}, function (err, user) {
+  Users.findOne({ username: req.body.username }, function (err, user) {
     if (user) {
-      req.session.user = user;
-      delete req.session.user.password;
-      res.send({loggedIn: true, user: user});
+      var hashedPassword = user.password;
+      var salt = user.salt;
+      if (passwordSecurer.validateHash(hashedPassword, salt, password)) {
+        req.session.user = user;
+        delete req.session.user.password;
+        delete req.session.user.salt;
+        res.send({loggedIn: true, user: user});
+      } else {
+        res.send({
+          loggedIn: false,
+          error: 'not logged in',
+        });
+      }
     } else {
-      res.send({loggedIn: false,
-        error:"not logged in"
+      res.send({
+        loggedIn: false,
+        error: 'not logged in',
       });
     }
   });
