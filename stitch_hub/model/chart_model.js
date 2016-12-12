@@ -31,13 +31,6 @@ var chartSchema = mongoose.Schema({
  * @param callback function to execute
  */
 chartSchema.statics.getChartById = function (chartId, userId, callback) {
-  var allowNSFW = false;
-  Users.isAdult(userId, function(err,isAdult) {
-    if (isAdult) {
-      allowNSFW = true
-    }
-  });
-
   Charts.findOne({_id: chartId}, function (err, chart) {
     if (err) {
       callback(err)
@@ -55,16 +48,9 @@ chartSchema.statics.getChartById = function (chartId, userId, callback) {
  * @param callback function to execute
  */
 chartSchema.statics.getChartsByUser = function (userId, callback) {
-  var allowNSFW = false;
-  Users.isAdult(userId, function(err,isAdult) {
-    if (isAdult) {
-      allowNSFW = true
-    }
-  });
   Charts.find({
     author: userId,
     is_deleted: false,
-    nsfw: allowNSFW
   }, function (err, charts) {
     if (err) {
       callback(err) 
@@ -73,6 +59,38 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
     }
   })
 };
+
+/**
+ * Get all charts authored by a user's followers.
+ *
+ * @param userId {ObjectId} ID of
+ * @param callback function to execute
+ */
+chartSchema.statics.getFollowersCharts = function (userId, callback) {
+  Users.isLoggedIn(userId, function(err,isLoggedIn){
+    if (isLoggedIn){
+      Users.getUserById(userId, function(err,user) {
+        if (err) {
+          console.log('There was an error!' + err);
+          res.send({
+            success: false,
+            message: err
+          });
+        } else {
+          console.log('Get following in ' + user);
+          Charts.find({author: {$in: user.following}},
+            function (err, charts) {
+              callback(err, charts)
+            })
+        }
+      })
+    }//end if
+    else{
+      callback(err,isLoggedIn);
+    }//end else
+  });//end isLoggedIn
+};
+
 
 
 /**

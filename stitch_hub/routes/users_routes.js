@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Users = require('../model/user_model.js');
+var Charts = require('../model/chart_model.js');
 
 
 /**
@@ -83,7 +84,7 @@ router.put('/user/:userId/remove/following', function (req, res) {
  */
 router.get('/user/:userId/following/charts', function (req, res) {
   var userId = req.params.userId; // TODO: denisli fix
-  Users.getFollowersCharts(userId,
+  Charts.getFollowersCharts(userId,
     function (err, charts) {
       if (err) {
         res.send({

@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 
 var validators = require('mongoose-validators');
-var Charts = require('./chart_model.js');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var userSchema = mongoose.Schema({
@@ -26,8 +25,6 @@ userSchema.statics.getUserById = function (userId, callback) {
     callback(err, user)
   })
 };
-
-
 
 /**
  * TODO
@@ -100,37 +97,6 @@ userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback
     }//end else
   });//end isLoggedIn
 }//end unfollowUser
-
-/**
- * Get all charts authored by a user's followers.
- *
- * @param userId {ObjectId} ID of
- * @param callback function to execute
- */
-userSchema.statics.getFollowersCharts = function (userId, callback) {
-  Users.isLoggedIn(userId, function(err,isLoggedIn){
-    if (isLoggedIn){
-      Users.getUserById(userId, function(err,user) {
-        if (err) {
-          console.log('There was an error!' + err);
-          res.send({
-            success: false,
-            message: err
-          });
-        } else {
-          console.log('Get following in ' + user);
-          Charts.find({author: {$in: user.following}},
-            function (err, charts) {
-              callback(err, charts)
-            })
-        }
-      })
-    }//end if
-    else{
-      callback(err,isLoggedIn);
-    }//end else
-  });//end isLoggedIn
-};
 
 /**
  * Create a new User.
