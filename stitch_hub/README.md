@@ -2,16 +2,73 @@
 
 (Soon to be) A social network application for users to share knitting, crochetting, and cross-stitching patterns. 
 
-## How to run
+##We've deployed StitchHub on Heroku, it can be accessed [here]()!
 
-1. Start a MongoDB server via the default port (`mongod --dbpath=[existing_directory]`)
-2. Install the necessary node packages (`npm install`)
-3. Make sure that no process is using port 3000 or kill it if one exists (this app will listen to port 3000)
-4. Run the application (`npm start`)
-5. Go to `http://localhost:3000/` to visit our app
+- Model
+-- chart_model.js
+-- comment_model.js
+-- like_model.js
+-- user_model.js
 
-## MVP Implementation
-
-For the sake of convenience, the latest commit on branch `mvp` will represent our MVP implementation (but the latest commit on master before the due date should work as well).
-
-The MVP focused on the creative aspects of the application instead of social. We allow thse who visit the site to create and remix charts. However, there are no user accounts and hence there is also no notion of liking, saving, commenting, or following.
+- public
+-- about.html
+-- chart_editing.html
+-- chart_form.html
+-- contact.html
+-- css
+--- chart_page.css
+--- grid.css
+--- making_chart.css
+--- modal.css
+--- style.css
+- index.html
+- javascript
+-- about.js
+-- chart_editing.js
+-- chart_form.js
+-- chart_page_linking.js
+-- chart_page.js
+-- chart_util
+--- chart_controller.js
+--- chart_model.js
+--- chart_view.js
+--- json_chart_conversion.js
+--- ratio.js
+--- comment_helper.js
+--- contact.js
+--- delete-chart-helper.js
+--- index.js
+--- like_helper.js
+--- mustache-template-loaders
+---- chart_feed.loader.js
+---- chart.loader.js
+---- login.loader.js
+---- logout.loader.js
+---- nav_bar.loader.js
+---- signup.loader.js
+---- user_profile_header.loader.js
+--- mustache.js
+--- name_helper.js
+--- parent_helper.js
+--- user_profile.js
+-- mustache-templates
+--- chart_feed.template.html
+--- chart.template.html
+--- login.template.html
+--- logout.template.html
+--- nav_bar.template.html
+--- signup.template.html
+--- user_profile_header.template.html
+-- user_profile.html
+- routes
+-- charts_routes.js
+-- comment_routes.js
+-- likes_routes.js
+-- login_routes.js
+-- logout_routes.js
+-- users_routes.js
+- tests
+-- chart_model_test.js
+-- comment_model_test.js
+-- like_model_test.js
+-- user_model_test.js
