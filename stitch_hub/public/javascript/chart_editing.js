@@ -54,6 +54,17 @@ $(document).ready(function() {
     }
   });
 
+  // bind so you cannot insert space in tags
+  $('.tag').bind({
+    keydown: function(e) {
+      var SPACEBAR_KEY_CODE = 32;
+      if (e.which == SPACEBAR_KEY_CODE) {
+        return false;
+      }
+      return true;
+    }
+  })
+
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
     var stringifiedRows = JSON.stringify(model.getRows());
