@@ -62,6 +62,12 @@ var loadChartFeedTemplate = function(charts) {
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
+
+      if (window.sessionStorage.getItem('sessionUserId') == "null"){
+      jbutton.hide()
+      }
+
+
       getCurrentUserLike(id, window.sessionStorage.getItem('sessionUserId'), function(err, liked) {
         // set the initial state of the button
         jbutton.text(liked ? 'Unlike' : 'Like');

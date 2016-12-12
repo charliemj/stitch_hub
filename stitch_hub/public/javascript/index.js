@@ -10,6 +10,12 @@ $(document).ready(function() {
   loadSignupTemplate();
 
   loadNavBarTemplate();
+
+  console.log(window.sessionStorage.getItem('sessionUserId'));
+
+
+
+
   
   $.ajax({
     url: '/charts',
@@ -99,6 +105,22 @@ $(document).ready(function() {
       }
     });
   });
+
+
+ // SHOW/HIDE THINGS IF NOT LOGGED IN
+  if (window.sessionStorage.getItem('sessionUserId') != 'null'){
+    //should be logged in
+    $("#signup-container").hide();
+    $("#login-container").hide();
+    $("#logout-container").show();
+    $("#make-chart-button").show();
+  }else{
+    //should be not logged in
+    $("#login-container").show();
+    $("#logout-container").hide();
+    $("#signup-container").show();
+    $("#make-chart-button").hide();
+  }
 
   // NON-TEMPLATE CONTROLLERS
   $('#make-chart-button').on('click', function() {
