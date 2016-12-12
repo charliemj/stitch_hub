@@ -17,7 +17,7 @@ var loadUserProfileHeaderTemplate = function(user) {
       }
 
       $.ajax({
-        url: '/users/' + userProfileId + '/follow',
+        url: '/users/user/' + userProfileId + '/following',
         method: 'PUT',
         success: function(data) {
           if (data.updated) {

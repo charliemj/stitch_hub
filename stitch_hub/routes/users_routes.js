@@ -48,7 +48,7 @@ router.put('/user/:userId/following', function (req, res) {
 /**
  * TODO
  */
-router.get('user/:userId/following/charts', function (req, res) {
+router.get('/user/:userId/following/charts', function (req, res) {
   var userId = req.params.userId; // TODO: denisli fix
   Users.getFollowersCharts(userId,
     function (err, charts) {

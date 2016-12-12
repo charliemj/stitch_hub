@@ -76,10 +76,10 @@ var unlikeChart = function (chartId) {
 };
 
 var getLikedCharts = function () {
-  var usedId = window.sessionStorage.getItem('sessionUserId');
+  var userId = window.sessionStorage.getItem('sessionUserId');
   var result;
   $.ajax({
-    url: '/like/' + userId + '/likedCharts/',
+    url: '/like/user/' + userId + '/likedCharts/',
     method: 'GET',
     async: false,
     data: {}
