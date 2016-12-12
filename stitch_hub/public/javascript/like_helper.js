@@ -79,7 +79,7 @@ var unlikeChart = function (chartId) {
 };
 
 var getLikedCharts = function (currentUser) {
-  var usedId = currentUser._id;
+  var userId = currentUser._id;
   var result;
   $.ajax({
     url: '/like/user/' + userId + '/likedCharts/',
