@@ -100,7 +100,7 @@ router.post('/',
     var parent = req.body.parent;
     var tags = JSON.parse(req.body.tags);
     var nsfw = req.body.nsfw;
-    Charts.makeNewChart(author, title, description, type, rowSize, colSize, rows, parent, tags,
+    Charts.makeNewChart(author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw,
       function (err, chart) {
         if (err) {
           console.log("error creating chart! " + err);
