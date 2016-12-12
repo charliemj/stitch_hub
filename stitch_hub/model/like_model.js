@@ -11,10 +11,10 @@ var likesSchema = mongoose.Schema({
 
 
 /**
- * TODO
- * @param chartId
- * @param userId
- * @param callback
+ * Sees if user can like a chart.
+ *
+ * @param userId {ObjectId} ID of user in question
+ * @param callback function to execute
  */
 
 likesSchema.statics.canLike = function(userId,callback){

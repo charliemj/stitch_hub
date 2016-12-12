@@ -18,8 +18,18 @@ describe('Likes', function() {
     mongoose.connection.db.dropDatabase(done);
   });
 
+  describe('canComment', function() {
+    it('should return true if user exists', function (done) {
+      Comments.canComment()
+    });
+    it('should return false if user does not exist', function (done) {
+
+    });
+  });
+
   describe('makeComment', function() {
     it('should store a comment into database and return the new comment', function (done) {
+      Comments.makeComment()
 
     });
 

@@ -13,9 +13,10 @@ var commentSchema = mongoose.Schema({
 
 
 /**
- * TODO
- * @param userId
- * @param callback
+ * Sees if user can comment on chart.
+ *
+ * @param userId {ObjectId} ID of user
+ * @param callback function to execute
  */
 commentSchema.statics.canComment = function (userId,callback){
   var canComment = false;

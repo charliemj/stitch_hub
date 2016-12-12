@@ -78,4 +78,10 @@ describe('Likes', function() {
     });
   });
 
+  describe('canLike', function() {
+    it('should ???', function (done) {
+      done();
+    });
+  });
+
 });
