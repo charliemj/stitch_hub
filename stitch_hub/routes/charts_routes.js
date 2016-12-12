@@ -32,9 +32,9 @@ router.get('/author/:userId', function (req, res) {
  * If error, responds with success message (==true) and error message.
  */
 router.get('/:chartId', function (req, res) {
-  var userId = req.params.userId;
+  var userId = req.session.user._id;
   var chartId = req.params.chartId;
-    Charts.getChartById(chartId,
+    Charts.getChartById(chartId, userId,
       function (err, chart) {
         if (err) {
           res.send({

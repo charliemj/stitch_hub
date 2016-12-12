@@ -1,17 +1,19 @@
-var goToParent = function(jsonChart) {
-  var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
+var goToParent = function(jsonChart, currentUser) {
   $.ajax({
     url: '/charts/' + jsonChart.parent,
     method: 'GET',
-    data: {
-      chartId: jsonChart.parent
-    },
     success: function(res) {
       if (!res.message){
         alert("This chart has no Parent.");
         return;
       }
-      goToChartPage(JSON.parse(res.message));
+      console.log(res.message);
+
+      var birthday = +new Date(currentUser.dob);
+      var age = ~~((Date.now() - birthday) / (31557600000));
+      var isAdult = age >= 18;
+      
+      goToChartPage(JSON.parse(res.message), isAdult);
     }
   });//end ajax
 };

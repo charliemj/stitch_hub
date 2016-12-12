@@ -4,6 +4,11 @@
 $(document).ready(function() {
   getCurrentUser(function (currentUser) {
     //load nav bar
+
+    if(!currentUser){
+      window.location.replace("index.html");
+    }
+
     loadNavBarTemplate(currentUser);
     // fetch the chart JSON
     var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));

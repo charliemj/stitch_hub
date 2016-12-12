@@ -37,7 +37,7 @@ chartSchema.statics.getChartById = function (chartId, userId, callback) {
       allowNSFW = true
     }
   });
-  Charts.findOne({_id: chartId, is_deleted: false, nsfw: allowNSFW}, function (err, chart) {
+  Charts.findOne({_id: chartId}, function (err, chart) {
     if (err) {
       callback(err)
     } else {
