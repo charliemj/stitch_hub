@@ -15,7 +15,7 @@ $(document).ready(function () {
     method: 'GET',
     success: function (data) {
       // load the user header template
-      loadUserProfileHeaderTemplate(data.user);
+      loadUserProfileHeaderTemplate(data.user, currentUser);
     },
     error: function (err) {
       console.log(err);

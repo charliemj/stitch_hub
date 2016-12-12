@@ -17,7 +17,7 @@ var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
 
 
       $.ajax({
-        url: '/users/user/' + userId + '/following',
+        url: '/users/user/' + currentUser._id + '/following',
         method: 'PUT',
         data:{
           userIdToFollow: userProfileId
@@ -37,19 +37,18 @@ var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
     });
 
     $('#unfollow-button').on('click', function() {
-      var userId = window.sessionStorage.getItem('sessionUserId');
-      if (userId == 'null') {
+      if (currentUser == null) {
         alert('You must be logged in to follow someone!');
         return;
       }
-      if (userId == userProfileId) {
+      if (currentUser._id == userProfileId) {
         alert('You cannot follow yourself!');
         return;
       }
       
 
       $.ajax({
-        url: '/users/user/' + userId + '/remove/following',
+        url: '/users/user/' + currentUser._id + '/remove/following',
         method: 'PUT',
         data:{
           userIdToUnfollow: userProfileId
@@ -68,11 +67,12 @@ var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
       });
     });
 
-
+    console.log(currentUser);
     // SHOW/HIDE THINGS IF NOT LOGGED IN
     if (currentUser){
       //should be logged in
       $("#follow-button").show();
+      $('#unfollow-button').show();
     } else {
       // not logged in
       $("#follow-button").hide();
