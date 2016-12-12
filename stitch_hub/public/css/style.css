@@ -145,7 +145,7 @@ button {
   right:0;
   bottom:0;
   margin-bottom: 5px;
-  margin-right:5px;
+  margin-right:45px;
 }
 
 .like-box{
@@ -154,10 +154,10 @@ button {
   height:33px;
   color: white;
   position:absolute;
-  right:3px;
+  right:0px;
   bottom:0;
   margin-bottom: 5px;
-  margin-right:50px;
+  margin-right:5px;
   text-align: center;
   border:none;
   border-radius: 5px;
