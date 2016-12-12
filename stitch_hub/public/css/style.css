@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Homemade+Apple');
 @import url('https://fonts.googleapis.com/css?family=Dosis');
 @import url('https://fonts.googleapis.com/css?family=Aref+Ruqaa|Indie+Flower');
-
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Pattaya');
 html,body {
 margin:0;
 padding:0;
@@ -9,8 +10,7 @@ padding:0;
 
 body {
     background-color:#DCD6F7;
-    /*font-family: 'Dosis', sans-serif;*/
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Quicksand', sans-serif;
     padding-left:5px;
     color:black;   
 }
@@ -23,13 +23,13 @@ h1{
   padding:0;
   margin:0;
   padding-left: 5px;
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Pattaya', sans-serif;
 }
 
 h2{
   color:black;
   padding-left:5px;
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Quicksand', sans-serif;
 }
 
 button {
@@ -41,7 +41,7 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Quicksand', sans-serif;
     border-radius: 5px;
 }
 
@@ -99,7 +99,7 @@ button {
   bottom:5px;
   position:absolute;
   margin-left:5px;
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Quicksand', sans-serif;
 }
 
 #make-chart-button{
