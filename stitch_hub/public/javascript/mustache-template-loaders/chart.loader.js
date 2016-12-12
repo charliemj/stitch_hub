@@ -211,9 +211,11 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
   if (window.sessionStorage.getItem('sessionUserId') != 'null'){
     //should be logged in
     $("#like-button").show();
+    $('#comment-making-block').show();
   }else{
     //should be not logged in
     $("#like-button").hide();
+    $('#comment-making-block').hide();
   }
 
   console.log("REACHED THE CHART PAGE");
