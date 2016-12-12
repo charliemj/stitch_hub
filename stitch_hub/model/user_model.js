@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var crypto = require('crypto');
+var passwordSecurer = require('../routes/password_securer.js')();
 
 var validators = require('mongoose-validators');
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -7,6 +7,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var userSchema = mongoose.Schema({
   username: String,
   password: String,
+  salt: String,
   dob: {type: Date, validate: [validators.isDate()]},
   email: {type: String, validate: validators.isEmail()},
   following: [{type: ObjectId, ref: "User"}]
@@ -109,13 +110,13 @@ userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback
  * @param callback function to execute
  */
 userSchema.statics.createUser = function(username, password, dob, email, callback) {
-  var hash = crypto.createHash('sha256');
-  hash.update(password);
-  var hashedPassword = hash.digest('hex'); 
+  var salt = passwordSecurer.generateSalt();
+  var hashedPassword = passwordSecurer.createHash(salt, password);
   Users.create({
     username: username,
     password: hashedPassword,
     dob: dob,
+    salt: salt,
     email: email
   }, function(err, user) {
     callback(err,user)

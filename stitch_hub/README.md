@@ -2,7 +2,7 @@
 
 (Soon to be) A social network application for users to share knitting, crochetting, and cross-stitching patterns. 
 
-##We've deployed StitchHub on Heroku, it can be accessed [here]()!
+##We've deployed StitchHub on Heroku, it can be accessed [here](http://national-badger-stitchhub.herokuapp.com/)!
 
 We've included our TA meeting minutes as well as a doc titled "Assigments" where we would put TODO tasks that each member would claim whenever we reached a new milestone. 
 
