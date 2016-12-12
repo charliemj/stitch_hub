@@ -6,6 +6,8 @@
 
 We've included our TA meeting minutes as well as a doc titled "Assigments" where we would put TODO tasks that each member would claim whenever we reached a new milestone. 
 
+*We put the main authors next to the files but we all worked with most of the code...
+
 - Model
 -- chart_model.js Karleigh and Val
 -- comment_model.js Karleigh and Val and James
@@ -69,7 +71,7 @@ We've included our TA meeting minutes as well as a doc titled "Assigments" where
 -- logout_routes.js Karleigh and Val
 -- users_routes.js Karleigh and Val
 - tests
--- chart_model_test.js
--- comment_model_test.js
--- like_model_test.js
--- user_model_test.js
+-- chart_model_test.js Val and Denis
+-- comment_model_test.js Val and Denis
+-- like_model_test.js Val and Denis
+-- user_model_test.js Denis and Val
