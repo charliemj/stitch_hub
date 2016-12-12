@@ -77,10 +77,10 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
 /**
  * Searches for charts that meet parameters' specifications.
  *
- * @param searchFor TODO
- * @param filterSizeOn
- * @param filterTypeOn
- * @param tokens
+ * @param searchFor list of properties that we should search amongst (one of tags, title, author, and description)
+ * @param filterSizeOn the size of charts to filter on (SMALL, MEDIUM, LARGE)
+ * @param filterTypeOn chart types to filter on (CROSS_STITCH, KNIT_V, KNIT_H, CROCHET_V, CROCHET_H)
+ * @param tokens list of words to search amongst. They should be single words and all lowercase
  * @param userId {ObjectId} ID of current user
  * @param callback function to execute
  */
@@ -137,6 +137,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
       var author = null;
       if (user) {
         ageFilter = { $or: [{nsfw: false}, {author: user._id}] };
+        console.log(ageFilter);
       } else {
         ageFilter = { nsfw: false };
       }
