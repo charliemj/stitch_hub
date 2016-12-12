@@ -3,7 +3,12 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Likes = require('../model/like_model.js');
 
-
+/**
+ * Handles POST request for new Like. TODO check + redo these after LIKE overhaul
+ *
+ * If success, sends status 200.
+ * If error, sends response--> success:false, message:err, error:"error creating like"
+ */
 router.post('/', function (req, res) {
   var userId = req.session.userId;
   var chartId = req.body.chartID;
@@ -23,7 +28,12 @@ router.post('/', function (req, res) {
     });//end likeChart
 });//end router.post
 
-
+/**
+ * Handles GET request for a single Like.
+ *
+ * If success, sends message--> success:true, message:like
+ * If error, sends message--> success:false, message:err
+ */
 router.get('/chart/:chartId/user/:userId', function (req, res) {
   var chartId = req.params.chartId;
   var userId = req.params.userId;
@@ -44,6 +54,12 @@ router.get('/chart/:chartId/user/:userId', function (req, res) {
   });
 });
 
+/**
+ * Handles DELETE request for Like.
+ *
+ * If success, sends 200 message with message--> success:"like successfully removed"
+ * If error, sends message--> success:false, message:err, error:"problem unliking"
+ */
 router.delete('/', function (req, res) {
   var chartId = req.body.chartId;
   var userId = req.session.userId;
@@ -55,7 +71,7 @@ router.delete('/', function (req, res) {
         error: "problem unliking"
       }); //end if
     } else {
-      res.send(200, {sucess: "like sucessfully removed"});
+      res.send(200, {success: "like sucessfully removed"});
     }
   });
 });

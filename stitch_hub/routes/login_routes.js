@@ -5,8 +5,12 @@ var Users = require('../model/user_model.js');
 var session = require('express-session');
 var crypto = require('crypto');
 
-
-
+/**
+ * Handles POST request for login.
+ *
+ * If success, sends message--> loggedIn:true, userId:ObjectId, userDob:Date
+ * If error, sends message--> loggedIn:false, error:"not logged in"
+ */
 router.post('/', function (req, res) {
   console.log(req.body);
   var hash = crypto.createHash('sha256');
