@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Users = require('../model/user_model.js');
+var Charts = require('../model/chart_model.js');
 
 var assert = require("assert");
 
@@ -74,19 +75,21 @@ describe('Users', function() {
     it('should return list of charts of by users that a given user follows', function (done) {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         Users.createUser('username2', 'password', Date.now(), 'email@gmail2.com', function (err, user2) {
-          Users.followUser(user1, user2, function (err, userFollowing){
-            Charts.makeNewChart('user2', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function (err, chart) {
-              assert.deepEqual(getFollowersCharts(user1._id), [chart]);
-              done();
+          Users.followUser(user1._id, user2._id, function (err, userFollowing){
+            Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], false, function (err, chart) {
+              Charts.getFollowersCharts(user1._id, function(err,charts) {
+                assert.equal(charts.length, 1);
+                done();
+              })
             })
           });
         });
       });
     });
 
-    it('should return an empty list when given a non-existing user', function (done) {
-      Users.getFollowersCharts('userId', function (err, charts) {
-        assert.ok(charts.length == 0);
+    it('should return charts=false when given a non-existing user', function (done) {
+      Charts.getFollowersCharts('userId', function (err, charts) {
+        assert.equal(charts, false);
         done();
       });
     });

@@ -62,7 +62,8 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
         });//end findone
     } //end if
     else{
-      callback(err, isLoggedIn);
+      callback(err);
+      //callback(err, isLoggedIn);
     }//end else
   });//end isLoggedIn
 };
