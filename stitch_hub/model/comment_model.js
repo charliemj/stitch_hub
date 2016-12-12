@@ -42,8 +42,8 @@ commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
   Comment.canComment(userId,function(err,canComment){
     if (canComment){
       Comment.create(
-        {user: userId, chart: chartId, text: text}, function (err) {
-          callback(err); //TODO this is funky
+        {user: userId, chart: chartId, text: text}, function (err,comment) {
+          callback(err,comment);
         })
     }//end if
     else{

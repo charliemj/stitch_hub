@@ -42,128 +42,152 @@ describe('Charts', function() {
 
   describe('makeNewChart', function() {
     it('should store a new chart and return it (with the correct values--see specification)', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function (err, chart) {
-        Charts.getChartByUser('username',function(err,foundChart) {
-          assert.ok(foundChart != null);
-          assert.deepEqual(chart._id, foundChart._id);
-          assert.equal(chart.author, foundChart.author);
-          assert.equal(chart.title, foundChart.title);
-          assert.equal(chart.description, foundChart.description);
-          assert.equal(chart.type, foundChart.type);
-          assert.equal(chart.size, foundChart.size);
-          assert.equal(chart.rows, foundChart.rows);
-          assert.equal(chart.parent, foundChart.parent);
-          assert.equal(chart.is_deleted, foundChart.is_deleted);
-          assert.equal(chart.nsfw, foundChart.nsfw);
-          assert.equal(chart.tags, foundChart.tags);
-          assert.equal(chart.comments, foundChart.comments);
-          assert.equal(chart.author, foundChart.author);
-          done();
-        })
-      }
-      );
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000', '#000'], ['#000', '#000']], 'parentId', ['tag'], false, function (err, chart) {
+            Charts.getChartsByUser(user1._id, function (err, foundChart) {
+              assert.ok(foundChart != null);
+              assert.deepEqual(chart._id, foundChart._id);
+              assert.equal(chart.author, foundChart.author);
+              assert.equal(user1._id, foundChart.author);
+              assert.equal(chart.title, foundChart.title);
+              assert.equal(chart.description, foundChart.description);
+              assert.equal(chart.type, foundChart.type);
+              assert.equal(chart.size, foundChart.size);
+              assert.equal(chart.rows, foundChart.rows);
+              assert.equal(chart.parent, foundChart.parent);
+              assert.equal(chart.is_deleted, foundChart.is_deleted);
+              assert.equal(chart.nsfw, foundChart.nsfw);
+              assert.equal(chart.tags, foundChart.tags);
+              assert.equal(chart.comments, foundChart.comments);
+              assert.equal(chart.author, foundChart.author);
+              done();
+            })
+          }
+        );
+      })
     });
 
     it('should do nothing and return an error and null chart when type is not one of: CROSS_STITCH, KNIT_V, KNIT_H, CROCHET_V, or CROCHET_H', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'WEIRD_TYPE', 1, 1, [['#000']], 'parentId', ['tag'], function (err, chart) {
-        Charts.getChartByUser('username',function(err,foundChart) {
-          assert(err);
-          assert.isNull(chart);
-          done();
-        })
-      });
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        var parentId = mongoose.Types.ObjectId();
+        Charts.makeNewChart(user1._id, 'title', 'description', 'WEIRD_TYPE', 1, 1, [['#000']], parentId, ['tag'], false, function (err, chart) {
+          Charts.getChartsByUser(user1._id, function (err, foundCharts) {
+            //assert.equal(err,null);
+            assert.equal(chart,null);
+            done();
+          })
+        });
+      })
     });
     
     it('should do nothing and return an error and null chart when rowSize is not between 1 and 70, inclusive', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 0, 2, [], 'parentId', ['tag'], function(err,chart) {
-        assert(err);
-        assert.isNull(chart);
-        done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        var parentId = mongoose.Types.ObjectId();
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 0, 2, [], parentId, ['tag'], false, function (err, chart) {
+          assert(err);
+          assert.equal(chart, null);
+          done();
+        })
       });
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 70, 2, [
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
-        ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
-        assert(err);
-        assert.isNull(chart);
-        done();
+      Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+        Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 70, 2, [
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'],
+          ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000'], ['#000', '#000']], 'parentId', ['tag'], false, function (err, chart) {
+          assert(err);
+          assert.equal(chart, null);
+          done();
+        })
       })
     });
 
     it('should do nothing and return an error and null chart when colSize is not between 1 and 70, inclusive', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 70, [
-        ['#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000'],
-        ['#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000',
-         '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000']
-      ], 'parentId', ['tag'], function(err,chart) {
-        assert(err);
-        assert.isNull(chart);
-        done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 2, 70, [
+          ['#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000'],
+          ['#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000',
+            '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000']
+        ], 'parentId', ['tag'], false, function (err, chart) {
+          assert(err);
+          assert.equal(chart, null);
+          done();
+        });
       });
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 0, [], 'parentId', ['tag'], function(err,chart) {
-        assert(err);
-        assert.isNull(chart);
-        done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+        Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 2, 0, [], 'parentId', ['tag'], false, function (err, chart) {
+          assert(err);
+          assert.equal(chart, null);
+          done();
+        })
       })
     });
 
     it('should do nothing and return an error and null chart when rows does not match rowSize or colSize', function (done) {
       //testing for colSize
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 3, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+      Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 2, 3, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], false, function(err,chart) {
         assert(err);
-        assert.isNull(chart);
+        assert.equal(chart, null);
         done();
+      })
       });
       //testing for rowSize
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 3, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+      Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 3, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], false, function(err,chart) {
         assert(err);
-        assert.isNull(chart);
+        assert.equal(chart, null);
         done();
+      })
       });
     });
 
     it('should do nothing and return an error and null chart when tags is empty', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', [], function(err,chart) {
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+      Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', [], false, function(err,chart) {
         assert(err);
-        assert.isNull(chart);
+        assert.equal(chart, null);
         done();
+      })
       })
     });
 
     it('should do nothing and return an error and null chart when user does not exist', function (done) {
-      Charts.makeNewChart('yourmom', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
-        assert(err);
-        assert.isNull(chart);
-        done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart('yourmom', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000', '#000'], ['#000', '#000']], 'parentId', ['tag'], false, function (err, chart) {
+          assert(err);
+          assert.equal(chart, null);
+          done();
+        })
       })
     });
   });
 
   describe('getChartById', function() {
     it('should get the chart given by an ID', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+      Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, chart) {
         Charts.getChartById(chart._id, function (err, foundChart) {
           assert.ok(foundChart != null);
           assert.deepEqual(chart._id, foundChart._id);
@@ -182,14 +206,17 @@ describe('Charts', function() {
           done();
         });
       });
+      });
     });
 
     it('should return null chart when there is no chart with such an ID', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
-        Charts.getChartById('8675309', function (err, foundChart) {
-          assert(err);
-          assert.isNull(chart);
-          done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart) {
+          Charts.getChartById('8675309', function (err, foundChart) {
+            assert(err);
+            assert.isNull(chart);
+            done();
+          })
         })
       })
     });
@@ -197,21 +224,25 @@ describe('Charts', function() {
 
   describe('getChartsByUser', function() {
     it('should return a list of all charts that the given user has made (possibly empty)', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
-        Charts.getChartsByUser(madeChart.author, function(err,foundCharts) {
-          assert(err==null);
-          assert.equal(foundCharts.length, 1);
-          assert.equal(foundCharts[0].title, "title");
-          done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart) {
+          Charts.getChartsByUser(madeChart.author, function (err, foundCharts) {
+            assert(err == null);
+            assert.equal(foundCharts.length, 1);
+            assert.equal(foundCharts[0].title, "title");
+            done();
+          })
         })
       })
     });
 
     it('should return empty list when the user does not exist', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
-        Charts.getChartsByUser("8493280", function(err,foundCharts) {
-          assert.equal(foundCharts.length, 0);
-          done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart) {
+          Charts.getChartsByUser("8493280", function (err, foundCharts) {
+            assert.equal(foundCharts.length, 0);
+            done();
+          })
         })
       })
     });
@@ -220,11 +251,15 @@ describe('Charts', function() {
   describe('searchForChart', function() { // TODO: change this test accordingly when the search functionality changes
 
     it('should search amongst all charts if tokens is empty', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
-        Charts.makeNewChart('username2', 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart2) {
-          Charts.makeNewChart('username2', 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart3) {
-            Charts.searchForChart([], [], [], [], madeChart.author, function (err,charts) {
-              assert.equal(charts.length,3);
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+          Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart) {
+            Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart2) {
+              Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart3) {
+                Charts.searchForChart([], [], [], [], madeChart.author, function (err, charts) {
+                  assert.equal(charts.length, 3);
+                })
+              })
             })
           })
         })
@@ -232,11 +267,15 @@ describe('Charts', function() {
     });
 
     it('should correctly search for the properties in searchFor (without other options)', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
-        Charts.makeNewChart('username2', 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag2'], function (err, madeChart2) {
-          Charts.makeNewChart('username2', 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag3'], function (err, madeChart3) {
-            Charts.searchForChart(["tags"], [], [], [], madeChart.author, function (err,charts) {
-              assert.equal(charts.length,3);
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+          Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart) {
+            Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag2'], false, function (err, madeChart2) {
+              Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag3'], false, function (err, madeChart3) {
+                Charts.searchForChart(["tags"], [], [], [], madeChart.author, function (err, charts) {
+                  assert.equal(charts.length, 3);
+                })
+              })
             })
           })
         })
@@ -343,20 +382,24 @@ describe('Charts', function() {
 
   describe('editDescription', function() {
     it('should edit a description and return the new description', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
-        Charts.editDescription(madeChart._id, madeChart.author, "farts", function(err,chart) {
-          assert.equals(chart.description,"farts");
-          done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart) {
+          Charts.editDescription(madeChart._id, madeChart.author, "farts", function (err, chart) {
+            assert.equals(chart.description, "farts");
+            done();
+          })
         })
       })
     });
 
     it('should do nothing and return an error and null chart when chart does not exist', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
-        Charts.editDescription(madeChart.author, madeChart.author, "farts", function(err,chart) {
-          assert(err);
-          assert.isNull(chart);
-          done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], false, function (err, madeChart) {
+          Charts.editDescription(madeChart.author, madeChart.author, "farts", function (err, chart) {
+            assert(err);
+            assert.isNull(chart);
+            done();
+          })
         })
       })
     });
@@ -364,24 +407,28 @@ describe('Charts', function() {
 
   describe('editTags', function() {
     it('should edit the tags and return the new list of tags', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
-        Charts.editTags(madeChart._id, madeChart.author, ['nope'], function (err, chart) {
-          assert(!err);
-          assert.equal(chart.tags.length, 1);
-          assert.equal(madeChart.tags.length, 3);
-          done();
+      Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+        Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], false, function (err, madeChart) {
+          Charts.editTags(madeChart._id, madeChart.author, ['nope'], function (err, chart) {
+            assert(!err);
+            assert.equal(chart.tags.length, 1);
+            assert.equal(madeChart.tags.length, 3);
+            done();
+          })
         })
       })
     });
 
     it('should do nothing and return an error and null chart when the chart does not exist', function (done) {
       it('should edit the tags and return the new list of tags', function (done) {
-        Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
-          Charts.editTags(madeChart.author, madeChart.author, ['nope'], function (err, chart) {
-            assert(err);
-            assert.isNull(chart);
-            assert.equal(madeChart.tags.length,3);
-            done();
+        Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+          Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], false, function (err, madeChart) {
+            Charts.editTags(madeChart.author, madeChart.author, ['nope'], function (err, chart) {
+              assert(err);
+              assert.isNull(chart);
+              assert.equal(madeChart.tags.length, 3);
+              done();
+            })
           })
         })
       })
@@ -390,38 +437,48 @@ describe('Charts', function() {
 
   describe('deleteChart', function() {
     it('should remove a chart and return the deleted chart', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
-        Charts.deleteChart(madeChart._id, madeChart.author, function (err, chart) {
-          assert.equal(chart.is_deleted,true);
-          done();
-        });
+      Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+        Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], false, function (err, madeChart) {
+          Charts.deleteChart(madeChart._id, madeChart.author, function (err, chart) {
+            assert.equal(chart.is_deleted, true);
+            done();
+          });
+        })
       })
     });
 
     it('should do return err and null when chart does not exist', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
-        Charts.deleteChart(madeChart.author, madeChart.author, function (chart) {
-          assert(err);
-          assert.isNull(chart);
-          done();
-        });
+      Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+        Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], false, function (err, madeChart) {
+          Charts.deleteChart(madeChart.author, madeChart.author, function (chart) {
+            assert(err);
+            assert.isNull(chart);
+            done();
+          });
+        })
       })
     });
   });
 
   describe('checkIfCanEdit', function() {
     it('should be able to edit chart I authored', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
-        Charts.checkIfICanEdit(madeChart._id,madeChart.author,function(err,canEdit) {
-          assert.isTrue(canEdit);
+      Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
+        Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], false, function (err, madeChart) {
+          Charts.checkIfICanEdit(madeChart._id, madeChart.author, function (err, canEdit) {
+            assert.isTrue(canEdit);
+          })
         })
       })
     });
     it('should not be able to edit chart I havent authored', function (done) {
-      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
-        Charts.makeNewChart('username2', 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart2) {
-          Charts.checkIfICanEdit(madeChart2._id, madeChart.author, function (err, canEdit) {
-            assert.isFalse(canEdit);
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Users.createUser('username2', 'password', Date.now(), 'email2@email1.com', function (err, user2) {
+          Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], false, function (err, madeChart) {
+            Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], false, function (err, madeChart2) {
+              Charts.checkIfICanEdit(madeChart2._id, madeChart.author, function (err, canEdit) {
+                assert.isFalse(canEdit);
+              })
+            })
           })
         })
       })

@@ -50,7 +50,7 @@ chartSchema.statics.getChartById = function (chartId, userId, callback) {
 chartSchema.statics.getChartsByUser = function (userId, callback) {
   Charts.find({
     author: userId,
-    is_deleted: false,
+    is_deleted: false
   }, function (err, charts) {
     if (err) {
       callback(err) 
