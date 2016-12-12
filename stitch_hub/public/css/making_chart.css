@@ -2,11 +2,8 @@
 
 /*color picker*/
 input[type="color"] {
-  /*position:absolute;*/
   display: block;
   margin-left:25%;
   width: 50%;
   margin-top:10px;
-  /*top:50%;*/
-
 }
