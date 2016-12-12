@@ -210,10 +210,12 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
     //should be logged in
     $("#like-button").show();
     $('#comment-making-block').show();
+    $('#remix-button').show();
   }else{
     //should be not logged in
     $("#like-button").hide();
     $('#comment-making-block').hide();
+    $('#remix-button').hide();
   }
 
   console.log("REACHED THE CHART PAGE");

@@ -43,6 +43,13 @@ var loadChartFeedTemplate = function(charts, currentUser) {
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
+
+      if (currentUser){
+        jbutton.show();
+      }else{
+        jbutton.hide();
+      }
+
       jbutton.on('click', function() {
         if (currentUser == null){
           alert("You are not logged in");
