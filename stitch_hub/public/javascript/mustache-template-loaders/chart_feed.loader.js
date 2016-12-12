@@ -16,16 +16,27 @@ var loadChartFeedTemplate = function(charts) {
       renderChartToFeed(canvas, chartView);
 
       // add link to chart page
-      $(canvas).on('click', function() {
+      var card = $(canvas).parent();
+      $(card).on('click', function() {
         goToChartPage(chartJson);
+      })
+      $(card).on('mouseenter', function() {
+        $(card).css({opacity: 0.5});
+      })
+      $(card).on('mouseleave', function() {
+        $(card).css({opacity: 1});
       });
+      // moved to top
+      // $(canvas).on('click', function() {
+      //   goToChartPage(chartJson);
+      // });
 
-      $(canvas).on('mouseenter', function() {
-        handleMouseEnterGrid(chartView);
-      });
-      $(canvas).on('mouseleave', function() {
-        handleMouseLeaveGrid(chartView);
-      });
+      // $(canvas).on('mouseenter', function() {
+      //   handleMouseEnterGrid(chartView);
+      // });
+      // $(canvas).on('mouseleave', function() {
+      //   handleMouseLeaveGrid(chartView);
+      // });
     });
     // add remix button for each chart
     $('.remix-button').each(function(i, button) {
