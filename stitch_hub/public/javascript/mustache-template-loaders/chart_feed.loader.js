@@ -16,6 +16,17 @@ var loadChartFeedTemplate = function(charts) {
       renderChartToFeed(canvas, chartView);
 
       // add link to chart page
+      // var card = $(canvas).parent();
+      // $(card).on('click', function() {
+      //   goToChartPage(chartJson);
+      // })
+      // $(card).on('mouseenter', function() {
+      //   $(card).css({opacity: 0.5});
+      // })
+      // $(card).on('mouseleave', function() {
+      //   $(card).css({opacity: 1});
+      // });
+      // moved to top
       $(canvas).on('click', function() {
         goToChartPage(chartJson);
       });

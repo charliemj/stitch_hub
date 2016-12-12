@@ -11,7 +11,7 @@ $(document).ready(function() {
   var standardSize = getStandardSize(jsonChart.type);
   var xscale = standardSize.cellWidth;
   var yscale = standardSize.cellHeight;
-  var zoomset = 1;
+  var zoomset = document.getElementById("zoomer").value;
   document.getElementById("typeSelect").value = jsonChart.type;
 
   // color the canvas based on the given chart
@@ -53,6 +53,17 @@ $(document).ready(function() {
       alert('Must have at least one tag');
     }
   });
+
+  // bind so you cannot insert space in tags
+  $('.tag').bind({
+    keydown: function(e) {
+      var SPACEBAR_KEY_CODE = 32;
+      if (e.which == SPACEBAR_KEY_CODE) {
+        return false;
+      }
+      return true;
+    }
+  })
 
   // add event listener so that post-chart-button will post when clicked
   $('#post-chart-button').on('click', function() {
