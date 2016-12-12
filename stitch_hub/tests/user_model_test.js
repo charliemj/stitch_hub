@@ -76,7 +76,7 @@ describe('Users', function() {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         Users.createUser('username2', 'password', Date.now(), 'email@gmail2.com', function (err, user2) {
           Users.followUser(user1._id, user2._id, function (err, userFollowing){
-            Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], false, function (err, chart) {
+            Charts.makeNewChart(user2._id, 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], null, ['tag'], false, function (err, chart) {
               Charts.getFollowersCharts(user1._id, function(err,charts) {
                 assert.equal(charts.length, 1);
                 done();
