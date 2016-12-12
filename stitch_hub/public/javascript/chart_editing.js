@@ -11,7 +11,7 @@ $(document).ready(function() {
   var standardSize = getStandardSize(jsonChart.type);
   var xscale = standardSize.cellWidth;
   var yscale = standardSize.cellHeight;
-  var zoomset = 1;
+  var zoomset = document.getElementById("zoomer").value;
   document.getElementById("typeSelect").value = jsonChart.type;
 
   // color the canvas based on the given chart
