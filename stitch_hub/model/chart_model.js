@@ -77,10 +77,10 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
 /**
  * Searches for charts that meet parameters' specifications.
  *
- * @param searchFor list of properties that we should search amongst (one of tags, title, author, and description)
- * @param filterSizeOn the size of charts to filter on (SMALL, MEDIUM, LARGE)
- * @param filterTypeOn chart types to filter on (CROSS_STITCH, KNIT_V, KNIT_H, CROCHET_V, CROCHET_H)
- * @param tokens list of words to search amongst. They should be single words and all lowercase
+ * @param searchFor [{String}] list of properties that we should search amongst (one of tags, title, author, and description)
+ * @param filterSizeOn [{String}] the size of charts to filter on (SMALL, MEDIUM, LARGE)
+ * @param filterTypeOn [{String}] chart types to filter on (CROSS_STITCH, KNIT_V, KNIT_H, CROCHET_V, CROCHET_H)
+ * @param tokens [{String}] list of words to search amongst. They should be single words and all lowercase
  * @param userId {ObjectId} ID of current user
  * @param callback function to execute
  */
@@ -165,6 +165,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param rows [[{String}]] list of list of Hex values. Each list inside main list represents a row.
  * @param parent {ObjectId} ID of the parent {Chart}, null if it has no parent
  * @param tags [{String}] list of tags assigned to the chart
+ * @param nsfw {Boolean} whether chart is safe for work or not (18+). true=nsfw, false=sfw
  * @param callback function to execute
  */
 chartSchema.statics.makeNewChart = function (author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw, callback) {
