@@ -11,17 +11,18 @@ var Charts = require('../model/chart_model.js');
  */
 router.get('/author/:userId', function (req, res) {
   var userId = req.params.userId;
-  Charts.getChartsByUser(userId,
-    function (err, charts) {
-      if (err) {
-        res.send({
-          success: false,
-          message: err
-        }); //end if
-      } else {
-        res.send(charts); //TODO change to match pattern above?
-      } //end else
-    })
+    Charts.getChartsByUser(userId,
+      function (err, charts) {
+        if (err) {
+          res.send({
+            success: false,
+            message: err
+          }); //end if
+        } else {
+          res.send(charts); //TODO change to match pattern above?
+        } //end else
+      })
+
 });
 
 /**
@@ -31,21 +32,22 @@ router.get('/author/:userId', function (req, res) {
  * If error, responds with success message (==true) and error message.
  */
 router.get('/:chartId', function (req, res) {
+  var userId = req.params.userId;
   var chartId = req.params.chartId;
-  Charts.getChartById(chartId,
-    function (err, chart) {
-      if (err) {
-        res.send({
-          success: false,
-          message: err
-        }); //end if
-      } else {
-        res.send({
-          success: true,
-          message: JSON.stringify(chart)
-        }); 
-      } //end else
-    })
+    Charts.getChartById(chartId,
+      function (err, chart) {
+        if (err) {
+          res.send({
+            success: false,
+            message: err
+          }); //end if
+        } else {
+          res.send({
+            success: true,
+            message: JSON.stringify(chart)
+          });
+        } //end else
+      })
 });
 
 /**
@@ -62,16 +64,17 @@ router.get('/', function (req, res/*, next*/) {
   var filterSizeOn = req.query.filterSizeOn ? JSON.parse(req.query.filterSizeOn) : [];
   var filterTypeOn = req.query.filterTypeOn ? JSON.parse(req.query.filterTypeOn) : [];
   var tokens = req.query.tokens ? JSON.parse(req.query.tokens) : [];
-  Charts.searchForChart(searchFor,filterSizeOn,filterTypeOn, tokens, function (err, charts) {
-    if (err) {
-      res.send({
-        success: false,
-        message: err
-      }); //end if
-    } else {
-      res.send(charts)
-    } //end else
-  })
+  var userId = req.session.userId;
+    Charts.searchForChart(searchFor, filterSizeOn, filterTypeOn, tokens, userId, function (err, charts) {
+      if (err) {
+        res.send({
+          success: false,
+          message: err
+        }); //end if
+      } else {
+        res.send(charts)
+      } //end else
+    })
 });
 
 
@@ -98,9 +101,7 @@ router.post('/',
     var parent = req.body.parent;
     var tags = JSON.parse(req.body.tags);
     var nsfw = req.body.nsfw;
-
-
-    Charts.makeNewChart(author, title, description, type, rowSize, colSize, rows, parent, tags,
+    Charts.makeNewChart(author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw,
       function (err, chart) {
         if (err) {
           console.log("error creating chart! " + err);

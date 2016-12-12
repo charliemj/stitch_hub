@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var validators = require('mongoose-validators');
+var Users = require('../model/user_model.js');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -22,16 +23,21 @@ var chartSchema = mongoose.Schema({
     author: {type: ObjectId, ref:"User"}
 });
 
-
 /**
  * Fetches chart information for a chart, given that chart's ID
  *
  * @param chartId {ObjectId} the ID of the chart to fetch
+ * @param userId {ObjectId} the ID of the current user
  * @param callback function to execute
  */
-chartSchema.statics.getChartById = function (chartId, callback) {
-  var that = this;
-  Charts.findOne({_id: chartId,is_deleted: false}, function (err, chart) {
+chartSchema.statics.getChartById = function (chartId, userId, callback) {
+  var allowNSFW = false;
+  Users.isAdult(userId, function(err,isAdult) {
+    if (isAdult) {
+      allowNSFW = true
+    }
+  });
+  Charts.findOne({_id: chartId, is_deleted: false, nsfw: allowNSFW}, function (err, chart) {
     if (err) {
       callback(err)
     } else {
@@ -48,9 +54,16 @@ chartSchema.statics.getChartById = function (chartId, callback) {
  * @param callback function to execute
  */
 chartSchema.statics.getChartsByUser = function (userId, callback) {
+  var allowNSFW = false;
+  Users.isAdult(userId, function(err,isAdult) {
+    if (isAdult) {
+      allowNSFW = true
+    }
+  });
   Charts.find({
     author: userId,
-    is_deleted: false
+    is_deleted: false,
+    nsfw: allowNSFW
   }, function (err, charts) {
     if (err) {
       callback(err) 
@@ -68,52 +81,77 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
  * @param filterSizeOn
  * @param filterTypeOn
  * @param tokens
+ * @param userId {ObjectId} ID of current user
  * @param callback function to execute
  */
-chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTypeOn, tokens, callback) {
+chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTypeOn, tokens, userId, callback) {
   searchRegex = tokens.map(function (token) {
     return new RegExp('\\b' + token + '\\b', 'i'); // consider as substring
   });
-  // construct the query based on the request parameters
-  // overall structure of the query is
-  // { $or: [ {property1: {$in: tokens}}, ..., {propertyN: {$in: tokens}} ] }
-  var searchForFilter = {};
-  if (searchFor.length > 0) {
-    var propertyQueries = [];
-    searchForFilter = {$or: propertyQueries};
-    searchFor.forEach(function (property) {
-      var propertyQuery = {};
-      propertyQuery[property] = {$in: searchRegex};
-      propertyQueries.push(propertyQuery);
-    });
-  }
-  if (filterTypeOn.length > 0) {
-    searchForFilter.type = {$in: filterTypeOn}
-  }
-  var sizeFilter = {};
-  if (filterSizeOn.length > 0) {
-    var SMALL_SIZE = 400;
-    var MEDIUM_SIZE = 1600;
-    var sizeConditions = [];
-    sizeFilter = {$or: sizeConditions};
-    filterSizeOn.forEach(function (sizeType) {
-      if (sizeType == 'small') {
-        sizeConditions.push({size: {$lte: SMALL_SIZE}});
-      } else if (sizeType == 'medium') {
-        sizeConditions.push({size: {$gt: SMALL_SIZE, $lte: MEDIUM_SIZE}});
-      } else if (sizeType == 'large') {
-        sizeConditions.push({size: {$gt: MEDIUM_SIZE}});
+  var allowNSFW = false;
+  Users.getUserById(userId, function(err, user) { //TODO add NSFW to search filtering
+    if (user) {
+      var birthday = +new Date(user.dob);
+      var age = ~~((Date.now() - birthday) / (31557600000));
+      var isAdult = age >= 18;
+      if (isAdult) {
+        allowNSFW = true
       }
-    })
-  }
-  var matchQuery = {$and: [searchForFilter, {is_deleted: false}]};
-  // perform query
-  Charts.aggregate([
-    {$match: matchQuery},
-    {$match: sizeFilter},
-    {$sort: {'date': -1}}
-  ], function(err,charts) {
-    callback(err,charts);
+    }
+  
+    // construct the query based on the request parameters
+    // overall structure of the query is
+    // { $or: [ {property1: {$in: tokens}}, ..., {propertyN: {$in: tokens}} ] }
+    var searchForFilter = {};
+    if (searchFor.length > 0) {
+      var propertyQueries = [];
+      searchForFilter = {$or: propertyQueries};
+      searchFor.forEach(function (property) {
+        var propertyQuery = {};
+        propertyQuery[property] = {$in: searchRegex};
+        propertyQueries.push(propertyQuery);
+      });
+    }
+    if (filterTypeOn.length > 0) {
+      searchForFilter.type = {$in: filterTypeOn}
+    }
+    var sizeFilter = {};
+    if (filterSizeOn.length > 0) {
+      var SMALL_SIZE = 400;
+      var MEDIUM_SIZE = 1600;
+      var sizeConditions = [];
+      sizeFilter = {$or: sizeConditions};
+      filterSizeOn.forEach(function (sizeType) {
+        if (sizeType == 'small') {
+          sizeConditions.push({size: {$lte: SMALL_SIZE}});
+        } else if (sizeType == 'medium') {
+          sizeConditions.push({size: {$gt: SMALL_SIZE, $lte: MEDIUM_SIZE}});
+        } else if (sizeType == 'large') {
+          sizeConditions.push({size: {$gt: MEDIUM_SIZE}});
+        }
+      })
+    }
+    var matchQuery = {$and: [searchForFilter, {is_deleted: false}]};
+    var ageFilter = {};
+    if (!allowNSFW) {
+      var author = null;
+      if (user) {
+        ageFilter = { $or: [{nsfw: false}, {author: user._id}] };
+      } else {
+        ageFilter = { nsfw: false };
+      }
+      
+      console.log(ageFilter);
+    }
+    // perform query
+    Charts.aggregate([
+      {$match: matchQuery},
+      {$match: sizeFilter},
+      {$match: ageFilter},
+      {$sort: {'date': -1}}
+    ], function(err,charts) {
+      callback(err,charts);
+    });
   });
 };
 
@@ -132,10 +170,10 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param tags [{String}] list of tags assigned to the chart
  * @param callback function to execute
  */
-chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, callback) {
+chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw, callback) {
   console.log("attempting to make new chart");
   Charts.create({
-    author: author, title: title, description: description, tags: tags,
+    author: author, title: title, description: description, tags: tags, nsfw: nsfw,
     type: type, rowSize: rowSize, colSize: colSize, rows: rows, size: (rowSize * colSize), parent: parent, is_deleted: false
   }, function(err,chart) {
     callback(err,chart);

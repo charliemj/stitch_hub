@@ -155,6 +155,31 @@ userSchema.statics.createUser = function(username, password, dob, email, callbac
   })
 };
 
+/**
+ * Check if User is an adult (18+)
+ *
+ * @param userId {ObjectId} ID of User
+ * @param callback function to execute
+ */
+userSchema.statics.isAdult = function(userId,callback) {
+  Users.getUserById(userId, function(err,user) {
+    if (err) {
+      callback(err)
+    } else {
+      // Age calculation code from: http://stackoverflow.com/a/15555947
+      function calcAge(dateString) {
+        var birthday = +new Date(dateString);
+        return ~~((Date.now() - birthday) / (31557600000));
+      }
+      if (calcAge(user.dob) >= 18) {
+        callback(err,true)
+      } else {
+        callback(err,false)
+      }
+    }
+  })
+};
+
 
 var Users = mongoose.model("Users", userSchema);
 module.exports = Users; //keep at bottom of file
