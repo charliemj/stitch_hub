@@ -48,6 +48,29 @@ router.put('/user/:userId/following', function (req, res) {
 /**
  * TODO
  */
+router.put('/user/:userId/remove/following', function (req, res) {
+  var userIDToUnfollow = req.body.userIdToUnfollow;
+  var userId = req.params.userId;
+  Users.unfollowUser(userId, userIDToUnfollow,
+    function (err, user) {
+      if (err) {
+        res.send({
+          success: false,
+          message: err
+        }); //end if
+      } else {
+        if (user) {
+          res.send({updated: true});
+        } else {
+          res.send({updated: false});
+        }
+      }
+    });
+});
+
+/**
+ * TODO
+ */
 router.get('/user/:userId/following/charts', function (req, res) {
   var userId = req.params.userId; // TODO: denisli fix
   Users.getFollowersCharts(userId,

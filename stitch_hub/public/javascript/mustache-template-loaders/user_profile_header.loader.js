@@ -16,6 +16,7 @@ var loadUserProfileHeaderTemplate = function(user) {
         return;
       }
 
+
       $.ajax({
         url: '/users/user/' + userId + '/following',
         method: 'PUT',
@@ -36,6 +37,38 @@ var loadUserProfileHeaderTemplate = function(user) {
       });
     });
 
+    $('#unfollow-button').on('click', function() {
+      var userId = window.sessionStorage.getItem('sessionUserId');
+      if (userId == 'null') {
+        alert('You must be logged in to follow someone!');
+        return;
+      }
+      if (userId == userProfileId) {
+        alert('You cannot follow yourself!');
+        return;
+      }
+      
+
+      $.ajax({
+        url: '/users/user/' + userId + '/remove/following',
+        method: 'PUT',
+        data:{
+          userIdToUnfollow: userProfileId
+        },
+        success: function(data) {
+          if (data.updated) {
+            alert('successfully unfollowed ' + username);
+          } else {
+            alert('failed to unfollow ' + username);
+          }
+        },
+        error: function(err) {
+          console.log('error in unfollowing ' + username);
+          console.log(err);
+        }
+      });
+    });
+
 
     // SHOW/HIDE THINGS IF NOT LOGGED IN
     if (window.sessionStorage.getItem('sessionUserId') != 'null'){
@@ -44,11 +77,13 @@ var loadUserProfileHeaderTemplate = function(user) {
     }else{
       // not logged in
       $("#follow-button").hide();
+      $("#unfollow-button").hide();
     }
 
     if (window.sessionStorage.getItem('sessionUserId') == userProfileId){
       //should not show on user's own page
       $("#follow-button").hide();
+      $("#unfollow-button").hide();
     }
 
 

@@ -71,7 +71,7 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
 };
 
 userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback){
-  Users.isLoggedIn(userId, function(err,isLoggedIn){
+  Users.isLoggedIn(currentUser, function(err,isLoggedIn){
 
     if (isLoggedIn){
       //if they are following the user
@@ -83,7 +83,7 @@ userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback
           var following = currentUser.following;
           var indexOfUser = following.indexOf(userToUnfollow);
           if (indexOfUser != -1){
-            following.splice(i,1);
+            following.splice(indexOfUser,1);
             Users.findOneAndUpdate(
               {_id: currentUser},
               {following:following},
