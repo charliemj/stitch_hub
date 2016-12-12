@@ -17,7 +17,6 @@ $(document).ready(function () {
     success: function (data) {
       // load the user header template
       loadUserProfileHeaderTemplate(data.user);
-      loadFollowingTemplate(data.user);
 
     },
     error: function (err) {

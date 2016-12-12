@@ -98,7 +98,6 @@ $(document).ready(function() {
 
       },
       success: function() {
-        console.log("successfully posted chart");
         window.location.replace("/");
       },
       error: function(error) {
