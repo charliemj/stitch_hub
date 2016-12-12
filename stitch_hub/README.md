@@ -4,69 +4,70 @@
 
 ##We've deployed StitchHub on Heroku, it can be accessed [here]()!
 
-- Model
--- chart_model.js
--- comment_model.js
--- like_model.js
--- user_model.js
+We've included our TA meeting minutes as well as a doc titled "Assigments" where we would put TODO tasks that each member would claim whenever we reached a new milestone. 
 
+- Model
+-- chart_model.js Karleigh and Val
+-- comment_model.js Karleigh and Val and James
+-- like_model.js Karleigh and Val and James
+-- user_model.js Karleigh and Val
 - public
--- about.html
--- chart_editing.html
--- chart_form.html
--- contact.html
+-- about.html James
+-- chart_editing.html Denis
+-- chart_form.html Denis
+-- contact.html James
 -- css
---- chart_page.css
---- grid.css
---- making_chart.css
---- modal.css
---- style.css
-- index.html
+--- chart_page.css Karleigh
+--- grid.css Denis and James and Karleigh
+--- making_chart.css Karleigh
+--- modal.css James
+--- style.css Karleigh 
+- index.html Denis
 - javascript
--- about.js
--- chart_editing.js
--- chart_form.js
--- chart_page_linking.js
--- chart_page.js
+-- about.js Karleigh 
+-- chart_editing.js James and Denis
+-- chart_form.js James and Denis
+-- chart_page_linking.js James and Denis
+-- chart_page.js James and Denis
 -- chart_util
---- chart_controller.js
---- chart_model.js
---- chart_view.js
---- json_chart_conversion.js
---- ratio.js
---- comment_helper.js
---- contact.js
---- delete-chart-helper.js
---- index.js
---- like_helper.js
---- mustache-template-loaders
----- chart_feed.loader.js
----- chart.loader.js
----- login.loader.js
----- logout.loader.js
----- nav_bar.loader.js
----- signup.loader.js
+--- chart_controller.js James and Denis
+--- chart_model.js James and Denis
+--- chart_view.js James and Denis
+--- json_chart_conversion.js Denis and James
+--- ratio.js James and Denis
+--- comment_helper.js James
+--- contact.js Karleigh 
+--- delete-chart-helper.js James
+--- index.js Denis
+--- like_helper.js James
+--- mustache-template-loaders Denis
+---- chart_feed.loader.js Denis
+---- chart.loader.js Denis
+---- login.loader.js Denis
+---- logout.loader.js Denis
+---- nav_bar.loader.js Denis
+---- signup.loader.js Denis
 ---- user_profile_header.loader.js
---- mustache.js
---- name_helper.js
---- parent_helper.js
---- user_profile.js
+--- mustache.js (from mustache)
+--- name_helper.js James
+--- parent_helper.js James
+--- user_profile.js Denis
 -- mustache-templates
---- chart_feed.template.html
---- chart.template.html
---- login.template.html
---- logout.template.html
---- nav_bar.template.html
---- signup.template.html
---- user_profile_header.template.html
--- user_profile.html
+--- chart_feed.template.html Denis
+--- chart.template.html Denis
+--- login.template.html Denis
+--- logout.template.html Denis
+--- nav_bar.template.html Denis
+--- signup.template.html Denis
+--- user_profile_header.template.html Denis
+-- user_profile.html Denis
 - routes
--- charts_routes.js
--- comment_routes.js
--- likes_routes.js
--- login_routes.js
--- logout_routes.js
--- users_routes.js
+-- charts_routes.js Karleigh and Val
+-- comment_routes.js Karleigh and Val
+-- likes_routes.js Karleigh and Val
+-- login_routes.js Karleigh and Val
+-- logout_routes.js Karleigh and Val
+-- users_routes.js Karleigh and Val
 - tests
 -- chart_model_test.js
 -- comment_model_test.js
