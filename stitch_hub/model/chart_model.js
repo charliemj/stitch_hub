@@ -22,16 +22,21 @@ var chartSchema = mongoose.Schema({
     author: {type: ObjectId, ref:"User"}
 });
 
-
 /**
  * Fetches chart information for a chart, given that chart's ID
  *
  * @param chartId {ObjectId} the ID of the chart to fetch
+ * @param userId {ObjectId} the ID of the current user
  * @param callback function to execute
  */
-chartSchema.statics.getChartById = function (chartId, callback) {
-  var that = this;
-  Charts.findOne({_id: chartId,is_deleted: false}, function (err, chart) {
+chartSchema.statics.getChartById = function (chartId, userId, callback) {
+  var allowNSFW = false;
+  Users.isAdult(userId, function(err,isAdult) {
+    if (isAdult) {
+      allowNSFW = true
+    }
+  });
+  Charts.findOne({_id: chartId, is_deleted: false, nsfw: allowNSFW}, function (err, chart) {
     if (err) {
       callback(err)
     } else {
@@ -48,9 +53,16 @@ chartSchema.statics.getChartById = function (chartId, callback) {
  * @param callback function to execute
  */
 chartSchema.statics.getChartsByUser = function (userId, callback) {
+  var allowNSFW = false;
+  Users.isAdult(userId, function(err,isAdult) {
+    if (isAdult) {
+      allowNSFW = true
+    }
+  });
   Charts.find({
     author: userId,
-    is_deleted: false
+    is_deleted: false,
+    nsfw: allowNSFW
   }, function (err, charts) {
     if (err) {
       callback(err) 
@@ -68,11 +80,18 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
  * @param filterSizeOn
  * @param filterTypeOn
  * @param tokens
+ * @param userId {ObjectId} ID of current user
  * @param callback function to execute
  */
-chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTypeOn, tokens, callback) {
+chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTypeOn, tokens, userId, callback) {
   searchRegex = tokens.map(function (token) {
     return new RegExp('\\b' + token + '\\b', 'i'); // consider as substring
+  });
+  var allowNSFW = false;
+  Users.isAdult(userId, function(err,isAdult) { //TODO add NSFW to search filtering
+    if (isAdult) {
+      allowNSFW = true
+    }
   });
   // construct the query based on the request parameters
   // overall structure of the query is
