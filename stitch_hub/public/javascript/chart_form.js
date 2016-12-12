@@ -7,9 +7,14 @@
 */
 
 $(document).ready(function() {
-  // LOAD TEMPLATES
-  
-  loadNavBarTemplate();
+  getCurrentUser(function (currentUser) {
+    if (!currentUser) {
+      window.location.replace('/');
+      return;
+    }
+    // LOAD TEMPLATES
+    loadNavBarTemplate(currentUser);
+  });
 });
 
 var makeChart = function() {
