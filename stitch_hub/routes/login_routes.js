@@ -5,8 +5,12 @@ var Users = require('../model/user_model.js');
 var session = require('express-session');
 var crypto = require('crypto');
 
-
-
+/**
+ * Handles POST request for login.
+ *
+ * If success, sends message--> loggedIn:true, userId:ObjectId, userDob:Date
+ * If error, sends message--> loggedIn:false, error:"not logged in"
+ */
 router.post('/', function (req, res) {
   console.log(req.body);
   var hash = crypto.createHash('sha256');
@@ -15,9 +19,9 @@ router.post('/', function (req, res) {
   var hashedPassword = hash.digest('hex');
   Users.findOne({ username: req.body.username, password: hashedPassword}, function (err, user) {
     if (user) {
-      req.session.username = req.body.username;
-      req.session.userId = user._id;
-      res.send({loggedIn: true, userId: user._id, userDob: user.dob});
+      req.session.user = user;
+      delete req.session.user.password;
+      res.send({loggedIn: true, user: user});
     } else {
       res.send({loggedIn: false,
         error:"not logged in"

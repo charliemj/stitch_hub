@@ -1,4 +1,4 @@
-var loadChartFeedTemplate = function(charts) {
+var loadChartFeedTemplate = function(charts, currentUser) {
   $.get('mustache-templates/chart_feed.template.html', function (template) {
     $('.grid-pad').remove();
     $('.col-1-5').remove();
@@ -16,6 +16,17 @@ var loadChartFeedTemplate = function(charts) {
       renderChartToFeed(canvas, chartView);
 
       // add link to chart page
+      // var card = $(canvas).parent();
+      // $(card).on('click', function() {
+      //   goToChartPage(chartJson);
+      // })
+      // $(card).on('mouseenter', function() {
+      //   $(card).css({opacity: 0.5});
+      // })
+      // $(card).on('mouseleave', function() {
+      //   $(card).css({opacity: 1});
+      // });
+      // moved to top
       $(canvas).on('click', function() {
         goToChartPage(chartJson);
       });
@@ -32,9 +43,15 @@ var loadChartFeedTemplate = function(charts) {
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
-      jbutton.on('click', function() {
-        if (window.sessionStorage.getItem("sessionUserId") == null){
 
+      if (currentUser){
+        jbutton.show();
+      }else{
+        jbutton.hide();
+      }
+
+      jbutton.on('click', function() {
+        if (currentUser == null){
           alert("You are not logged in");
         }else{
         window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
@@ -62,7 +79,12 @@ var loadChartFeedTemplate = function(charts) {
       var jbutton = $(button);
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
-      getCurrentUserLike(id, window.sessionStorage.getItem('sessionUserId'), function(err, liked) {
+
+      if (currentUser == null){
+        jbutton.hide()
+      }
+
+      getCurrentUserLike(id, currentUser, function(err, liked) {
         // set the initial state of the button
         jbutton.text(liked ? 'Unlike' : 'Like');
         // set the onclick listener of the button

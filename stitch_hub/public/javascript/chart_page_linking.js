@@ -9,15 +9,9 @@ var getAge = function(dateString) {
     return age;
 };
 
-var goToChartPage = function(jsonChart) {
-  var userDobString = window.sessionStorage.getItem('userDob');
-  var userAge = 0;
-  if (userDobString == 'null') {
-    var userDob = Date.parse(userDobString);
-    userAge = getAge(userDob);
-  }
+var goToChartPage = function(jsonChart, currentUserIsAdult) {
   if (jsonChart.nsfw) {
-    if (userAge < 18) {
+    if (!currentUserIsAdult) {
       alert('This chart is not inappropriate for you to see!');
       return;
     }

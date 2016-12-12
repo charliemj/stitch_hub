@@ -1,4 +1,4 @@
-var loadLogoutTemplate = function() {
+var loadLogoutTemplate = function(currentUser) {
   $.get('mustache-templates/logout.template.html', function(template) {
     var html = $(template).html();
     $('#logout-container').append(html);
@@ -6,7 +6,7 @@ var loadLogoutTemplate = function() {
     $('#logout-button').on('click', function() {
       // prevent logging out if user has not logged in
       // TODO(denisli): How do we avoid using 'null' here? It's a string.
-      if (window.sessionStorage.getItem('sessionUserId') == 'null') { // true when null
+      if (currentUser == null) { // true when null
         alert('You have not yet logged in!');
         return;
       }
@@ -16,8 +16,6 @@ var loadLogoutTemplate = function() {
         method: 'POST',
         success: function(data) {
           if (data.loggedOut) {
-            window.sessionStorage.setItem('sessionUsername', null);
-            window.sessionStorage.setItem('sessionUserId', null);
             alert("successfully logged out");
           } else {
             alert("failed to log out");

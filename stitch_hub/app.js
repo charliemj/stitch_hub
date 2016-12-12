@@ -54,6 +54,10 @@ app.use('/charts', charts);
 var users = require('./routes/users_routes.js');
 app.use('/users', users);
 
+// route for current user
+var currentUserRouter = require('./routes/current_user_routes.js');
+app.use('/currentUser', currentUserRouter);
+
 // routes for login/logout
 var login = require('./routes/login_routes.js');
 app.use('/login', login);

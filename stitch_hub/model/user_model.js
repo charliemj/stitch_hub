@@ -53,11 +53,13 @@ userSchema.statics.isLoggedIn = function (userId,callback){
  * @param callback function to execute
  */
 userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
-  Users.isLoggedIn(userId, function(err,isLoggedIn){
+  Users.isLoggedIn(currentUser, function(err,isLoggedIn){
     if (isLoggedIn){
+
       Users.findOneAndUpdate(
         {_id: currentUser},
         {$addToSet: {following: userToFollow}},
+        {new:true},
         function (err, user) {
           callback(err, user)
         });//end findone
@@ -69,7 +71,7 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
 };
 
 userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback){
-  Users.isLoggedIn(userId, function(err,isLoggedIn){
+  Users.isLoggedIn(currentUser, function(err,isLoggedIn){
 
     if (isLoggedIn){
       //if they are following the user
@@ -81,7 +83,7 @@ userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback
           var following = currentUser.following;
           var indexOfUser = following.indexOf(userToUnfollow);
           if (indexOfUser != -1){
-            following.splice(i,1);
+            following.splice(indexOfUser,1);
             Users.findOneAndUpdate(
               {_id: currentUser},
               {following:following},
@@ -150,6 +152,31 @@ userSchema.statics.createUser = function(username, password, dob, email, callbac
     email: email
   }, function(err, user) {
     callback(err,user)
+  })
+};
+
+/**
+ * Check if User is an adult (18+)
+ *
+ * @param userId {ObjectId} ID of User
+ * @param callback function to execute
+ */
+userSchema.statics.isAdult = function(userId,callback) {
+  Users.getUserById(userId, function(err,user) {
+    if (err) {
+      callback(err)
+    } else {
+      // Age calculation code from: http://stackoverflow.com/a/15555947
+      function calcAge(dateString) {
+        var birthday = +new Date(dateString);
+        return ~~((Date.now() - birthday) / (31557600000));
+      }
+      if (calcAge(user.dob) >= 18) {
+        callback(err,true)
+      } else {
+        callback(err,false)
+      }
+    }
   })
 };
 

@@ -3,6 +3,12 @@ var router = express.Router();
 var Comments = require('../model/comment_model.js');
 
 
+/**
+ * Handles a POST request for a Comment.
+ *
+ * If success, sends status of 200 with message--> success:"comment created!"
+ * If error, sends response--> success:false, message:err
+ */
 router.post('/', function (req, res) {
   var userId = req.body.userId;
   var chartId = req.body.chartId;
@@ -14,35 +20,39 @@ router.post('/', function (req, res) {
       res.send(
         {
           success: false,
-          message: err,
-          error: "error creating like"
+          message: err
         }
       ); //end if
     } else {
-      res.sendStatus(200, {sucess: "comment created!"}); // send a response
+      res.sendStatus(200, {success: "comment created!"}); // send a response
     }
   });
 });
 
 
+/**
+ * Handles a GET request for a specific chart's comments.
+ *
+ * If success, sends a 200 message with message--> success:true, message:comments
+ * If error, sends a message--> success:false, message:err, error:"error getting comments"
+ */
 router.get('/chart/:chartId', function (req, res, next) {
-    var chartId = req.params.chartId;
-    console.log("chart " + chartId);
+  var chartId = req.params.chartId;
   Comments.getChartComments(chartId, function (err, comments) {
-      if (err) {
-        console.log(err);
-        res.send({
-          success: false,
-          message: err,
-          error: "error getting comments"
-        }); //end if
-      } else {
-        res.send(200, {
-          success: true,
-          message: comments
-        });
-      } //end else
-    })
+    if (err) {
+      console.log(err);
+      res.send({
+        success: false,
+        message: err,
+        error: "error getting comments"
+      }); //end if
+    } else {
+      res.send(200, {
+        success: true,
+        message: comments
+      });
+    } //end else
+  })
 });
 
 

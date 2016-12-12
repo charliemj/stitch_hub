@@ -1,21 +1,20 @@
-var doComment = function (chartID, text){
+var doComment = function (chartID, currentUser, text){
+  $.ajax({
+    url: '/comments',
+    method: 'POST',
+    data: {
+      chartId: chartID,
+      userId: currentUser._id,
+      text: text          
+    },
+    success: function() {
+    },
+    error: function(error) {
+      console.log('Error commenting');
+      console.log(error);
+    }
 
-$.ajax({
-        url: '/comments',
-        method: 'POST',
-        data: {
-          chartId: chartID,
-          userId: window.sessionStorage.getItem('sessionUserId'),
-          text: text          
-        },
-        success: function() {
-        },
-        error: function(error) {
-          console.log('Error commenting');
-          console.log(error);
-        }
-
-      });//end ajax
+  });//end ajax
 
 };
 

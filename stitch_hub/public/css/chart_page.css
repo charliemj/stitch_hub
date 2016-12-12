@@ -9,19 +9,16 @@
   width:80%;
 }
 
-
 #chart-tags:hover,#chart-description:hover{
   background-color:white;
-  
 } 
 
 .chartDesc{
-    margin-left: 10%;
-  
+  margin-left: 10%;
 }
 
 .chartDesc p{
-    font-size:14px;
+  font-size:14px;
 }
 
 #remixLikeReport{
@@ -51,6 +48,18 @@
     width:80%;
 }
 
+#like-button {
+  background-color: #000080;
+}
+
+#remix-button{
+  background-color:#FA567B;
+}
+
+#parent-button{
+  background-color:rebeccapurple;
+}
+
 #comment-block{
     margin-left: auto;
     margin-right: auto;
@@ -68,20 +77,18 @@
 
 #chartInfo li{
   display:inline-block;
-  
 }
 
-
 #numLikes{
- /* margin-top: 50px;*/
-  /*position:relative;*/
   display: inline-block;
   margin-right:10px;
   float:right;
 }
 
 #delete-button{
-  
+  background-color:#800000;
 }
 
-
+#author-profile-link{
+  border-bottom:1px dotted;
+}
