@@ -213,7 +213,7 @@ chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
   Charts.checkIfCanEdit(chartId,userId,function(err,canEdit){
     if (canEdit){
       Charts.findOneAndUpdate(
-        {_id: userId}, // NOTE LOWERCASE d
+        {_id: chartId}, // NOTE LOWERCASE d
         {tags: newTags},
         {new: true},
         function(err,chart) {

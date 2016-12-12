@@ -1,4 +1,4 @@
-var loadChartTemplate = function(jsonChart) {
+var loadChartTemplate = function(jsonChart, currentUser) {
 
 var number = getNumberOfLikes(jsonChart._id);
 jsonChart.number = number;
@@ -24,7 +24,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             window.location = "user_profile.html";
           });
 
-          if (window.sessionStorage.getItem('sessionUserId') != jsonChart.author){
+          if (currentUser == null || (currentUser._id != jsonChart.author)) {
               document.getElementById('chart-description').contentEditable='false';
               document.getElementById('chart-tags').contentEditable='false';
           }
@@ -131,7 +131,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           });
 
           $('#remix-button').on('click', function() {
-            if (window.sessionStorage.getItem("sessionUserId") == null){
+            if (currentUser == null){
 
                alert("You are not logged in");
             }else{
@@ -140,7 +140,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             }
           });
 
-          getCurrentUserLike(jsonChart._id, window.sessionStorage.getItem('sessionUserId'), function(err, liked) {
+          getCurrentUserLike(jsonChart._id, currentUser, function(err, liked) {
             // set the initial state of the button
             $('#like-button').text(liked ? 'Unlike' : 'Like');
             // set the onclick listener of the button
@@ -176,10 +176,8 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           
           var chart_id = jsonChart._id;
           var author = jsonChart.author;
-          var user = window.sessionStorage.getItem('sessionUserId'); //TODO get current user!
           
-          
-          if (user == author){
+          if (currentUser != null && (currentUser._id == author)){
             $('#delete-button').removeClass("hidden").addClass("shown").on('click', 
               function() {
                 deleteChart(jsonChart._id);
@@ -208,7 +206,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
   }
 
   // SHOW/HIDE THINGS IF NOT LOGGED IN
-  if (window.sessionStorage.getItem('sessionUserId') != 'null'){
+  if (currentUser){
     //should be logged in
     $("#like-button").show();
     $('#comment-making-block').show();
@@ -220,9 +218,13 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
 
   console.log("REACHED THE CHART PAGE");
   $('#saveComment-button').on('click', function() {
+    if (currentUser == null) {
+      alert('You must be logged in to comment!');
+      return;
+    }
     console.log("Is this really clicked?");
     var text = document.getElementById('newComment').value;
-    doComment(jsonChart._id, text);
+    doComment(jsonChart._id, currentUser, text);
     window.location.reload();
   });
   });

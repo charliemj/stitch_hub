@@ -1,17 +1,16 @@
-var loadUserProfileHeaderTemplate = function(user) {
+var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
   $.get('mustache-templates/user_profile_header.template.html', function (template) {
-    var userProfileId = user._id;
-    var username = user.username;
+    var userProfileId = profileUser._id;
+    var username = profileUser.username;
     var html = Mustache.render($(template).html(), {username: username});
     $('#user-profile-header-template-container').append(html);
 
     $('#follow-button').on('click', function() {
-      var userId = window.sessionStorage.getItem('sessionUserId');
-      if (userId == 'null') {
+      if (currentUser == null) {
         alert('You must be logged in to follow someone!');
         return;
       }
-      if (userId == userProfileId) {
+      if (currentUser._id == userProfileId) {
         alert('You cannot follow yourself!');
         return;
       }
@@ -71,16 +70,16 @@ var loadUserProfileHeaderTemplate = function(user) {
 
 
     // SHOW/HIDE THINGS IF NOT LOGGED IN
-    if (window.sessionStorage.getItem('sessionUserId') != 'null'){
+    if (currentUser){
       //should be logged in
       $("#follow-button").show();
-    }else{
+    } else {
       // not logged in
       $("#follow-button").hide();
       $("#unfollow-button").hide();
     }
 
-    if (window.sessionStorage.getItem('sessionUserId') == userProfileId){
+    if (currentUser == null || (currentUser._id == userProfileId)){
       //should not show on user's own page
       $("#follow-button").hide();
       $("#unfollow-button").hide();

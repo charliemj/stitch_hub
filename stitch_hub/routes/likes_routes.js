@@ -10,7 +10,7 @@ var Likes = require('../model/like_model.js');
  * If error, sends response--> success:false, message:err, error:"error creating like"
  */
 router.post('/', function (req, res) {
-  var userId = req.session.userId;
+  var userId = req.session.user._id;
   var chartId = req.body.chartID;
   Likes.likeChart(chartId, userId,
     function (err, like) {
@@ -62,7 +62,7 @@ router.get('/chart/:chartId/user/:userId', function (req, res) {
  */
 router.delete('/', function (req, res) {
   var chartId = req.body.chartId;
-  var userId = req.session.userId;
+  var userId = req.session.user._id;
   Likes.unLike(chartId, userId, function (err) {
     if (err) {
       res.send({

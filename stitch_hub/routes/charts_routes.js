@@ -84,10 +84,11 @@ router.get('/', function (req, res/*, next*/) {
  */
 router.post('/', 
   function (req, res, next) {
-    if (!req.session.username) { //checks to make sure user is logged in
+    if (!req.session.user) { //checks to make sure user is logged in
       res.send(400);
+      return;
     }
-    var author = req.session.userId;
+    var author = req.session.user._id;
     var title = req.body.title; 
     var description = req.body.description;
     var type = req.body.type;
@@ -123,7 +124,7 @@ router.post('/',
  */
 router.put('/:id/description', function (req, res) {
   var chartId = req.params.id;
-  var userId = req.session.username;
+  var userId = req.session.user._id;
   var newDescription = req.body.description;
   Charts.editDescription(chartId,userId,newDescription,
     function (err, msg) {
@@ -150,7 +151,7 @@ router.put('/:id/description', function (req, res) {
  */
 router.put('/:id/tags', function (req, res) {
   var chartId = req.params.id;
-  var userId = req.session.username;
+  var userId = req.session.user._id;
   var newTags = req.body.tags;
   Charts.editTags(chartId,userId,newTags,
     function (err, msg) {
@@ -180,7 +181,7 @@ router.put('/:id/tags', function (req, res) {
  */
 router.put('/:chartId/is_deleted', function (req, res, next) {
   var chartId = req.params.chartId;
-  var userId = req.session.userId;
+  var userId = req.session.user._id;
   Charts.deleteChart(chartId,userId,function (err, chart) {
     if (err) {
       res.send({

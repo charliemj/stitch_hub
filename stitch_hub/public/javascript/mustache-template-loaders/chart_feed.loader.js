@@ -1,4 +1,4 @@
-var loadChartFeedTemplate = function(charts) {
+var loadChartFeedTemplate = function(charts, currentUser) {
   $.get('mustache-templates/chart_feed.template.html', function (template) {
     $('.grid-pad').remove();
     $('.col-1-5').remove();
@@ -44,8 +44,7 @@ var loadChartFeedTemplate = function(charts) {
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
       jbutton.on('click', function() {
-        if (window.sessionStorage.getItem("sessionUserId") == null){
-
+        if (currentUser == null){
           alert("You are not logged in");
         }else{
         window.sessionStorage.setItem('chart', JSON.stringify(chartJson));
@@ -74,12 +73,11 @@ var loadChartFeedTemplate = function(charts) {
       var id = jbutton.attr('data-id');
       var chartJson = findChartWithId(charts, id);
 
-      if (window.sessionStorage.getItem('sessionUserId') == "null"){
-      jbutton.hide()
+      if (currentUser == null){
+        jbutton.hide()
       }
 
-
-      getCurrentUserLike(id, window.sessionStorage.getItem('sessionUserId'), function(err, liked) {
+      getCurrentUserLike(id, currentUser, function(err, liked) {
         // set the initial state of the button
         jbutton.text(liked ? 'Unlike' : 'Like');
         // set the onclick listener of the button

@@ -10,8 +10,7 @@ var session = require('express-session');
  * Responds with message--> loggedOut:true, success:"logged out!"
  */
 router.post('/', function (req, res) {
-  req.session.username = null;
-  req.session.userId = null;
+  req.session.user = null;
   res.send({loggedOut: true, success:"logged out!"});
 });
 

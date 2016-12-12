@@ -28,9 +28,6 @@ var loadLoginTemplate = function() {
         },
         success: function(data) {
           if (data.loggedIn) {
-            window.sessionStorage.setItem('sessionUsername', username);
-            window.sessionStorage.setItem('sessionUserId', data.userId);
-            window.sessionStorage.setItem('userDob', data.userDob);
             alert("successfully logged in");
           } else {
             alert("failed to log in");

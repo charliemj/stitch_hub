@@ -19,9 +19,9 @@ router.post('/', function (req, res) {
   var hashedPassword = hash.digest('hex');
   Users.findOne({ username: req.body.username, password: hashedPassword}, function (err, user) {
     if (user) {
-      req.session.username = req.body.username;
-      req.session.userId = user._id;
-      res.send({loggedIn: true, userId: user._id, userDob: user.dob});
+      req.session.user = user;
+      delete req.session.user.password;
+      res.send({loggedIn: true, user: user});
     } else {
       res.send({loggedIn: false,
         error:"not logged in"

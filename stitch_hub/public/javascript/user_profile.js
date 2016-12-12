@@ -1,13 +1,12 @@
 $(document).ready(function () {
-  loadNavBarTemplate();
-  var userProfileId = window.sessionStorage.getItem('userProfileId');
-  var currentUser = window.sessionStorage.getItem('sessionUserId');
+  getCurrentUser(function(currentUser) {
+    loadNavBarTemplate(currentUser);
+    var userProfileId = window.sessionStorage.getItem('userProfileId');
 
-  if (userProfileId != currentUser){
-    $('#button-holder').hide();
-    $('#following-template-container').hide()
-  }
-
+    if (currentUser == null || (userProfileId != currentUser._id)){
+      $('#button-holder').hide();
+      $('#following-template-container').hide()
+    }
 
 
 
@@ -17,71 +16,70 @@ $(document).ready(function () {
     success: function (data) {
       // load the user header template
       loadUserProfileHeaderTemplate(data.user);
-
-    },
+    }
     error: function (err) {
       console.log(err);
     }
   });
 
-  
+    
 
 
 
-  // load chart feed template
-  $.ajax({
-    url: '/charts/author/' + userProfileId,
-    method: 'GET',
-    success: function(charts) {
-      // loads the chart feed into #charts-container div and sets all controllers
-      // for the chart feed
-      loadChartFeedTemplate(charts);
-    },
-    error: function(error) {
-      console.log('Error fetching charts');
-      console.log(error);
-    }
-  });
-
-  $('#following-charts-button').on('click', function () {
-    var sessionUserId = window.sessionStorage.getItem('sessionUserId');
+    // load chart feed template
     $.ajax({
-      url: '/users/user/' + sessionUserId + '/following/charts',
+      url: '/charts/author/' + userProfileId,
       method: 'GET',
       success: function(charts) {
+        // loads the chart feed into #charts-container div and sets all controllers
+        // for the chart feed
         loadChartFeedTemplate(charts);
-        document.getElementById('listTitle').innerHTML = "Charts of Followed Users";
       },
-      error: function(err) {
-        console.log('Error fetching charts of those you follow');
-        console.log(err);
+      error: function(error) {
+        console.log('Error fetching charts');
+        console.log(error);
       }
     });
-  })
 
-    $('#liked-charts-button').on('click', function () {
-    charts = getLikedCharts();
-    loadChartFeedTemplate(charts);
-    document.getElementById('listTitle').innerHTML = "My Liked Charts";
-    
-  })
+    $('#following-charts-button').on('click', function () {
+      $.ajax({
+        url: '/users/user/' + currentUser._id + '/following/charts',
+        method: 'GET',
+        success: function(charts) {
+          loadChartFeedTemplate(charts);
+          document.getElementById('listTitle').innerHTML = "Charts of Followed Users";
+        },
+        error: function(err) {
+          console.log('Error fetching charts of those you follow');
+          console.log(err);
+        }
+      });
+    })
 
-      $('#made-charts-button').on('click', function () {
-    $.ajax({
-    url: '/charts/author/' + userProfileId,
-    method: 'GET',
-    success: function(charts) {
-      // loads the chart feed into #charts-container div and sets all controllers
-      // for the chart feed
+      $('#liked-charts-button').on('click', function () {
+      charts = getLikedCharts(currentUser);
       loadChartFeedTemplate(charts);
-      document.getElementById('listTitle').innerHTML = "My Charts";
-    },
-    error: function(error) {
-      console.log('Error fetching charts');
-      console.log(error);
-    }
+      document.getElementById('listTitle').innerHTML = "My Liked Charts";
+      
+    })
+
+    $('#made-charts-button').on('click', function () {
+      $.ajax({
+        url: '/charts/author/' + userProfileId,
+        method: 'GET',
+        success: function(charts) {
+          // loads the chart feed into #charts-container div and sets all controllers
+          // for the chart feed
+          loadChartFeedTemplate(charts);
+          document.getElementById('listTitle').innerHTML = "My Charts";
+        },
+        error: function(error) {
+          console.log('Error fetching charts');
+          console.log(error);
+        }
+      });
+    });
   });
-  })
 
 
 
