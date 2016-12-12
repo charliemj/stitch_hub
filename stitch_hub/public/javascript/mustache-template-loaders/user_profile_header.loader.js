@@ -32,5 +32,27 @@ var loadUserProfileHeaderTemplate = function(user) {
         }
       });
     });
+
+
+    // SHOW/HIDE THINGS IF NOT LOGGED IN
+    if (window.sessionStorage.getItem('sessionUserId') != 'null'){
+      //should be logged in
+      $("#follow-button").show();
+    }else{
+      // not logged in
+      $("#follow-button").hide();
+    }
+
+    if (window.sessionStorage.getItem('sessionUserId') == userProfileId){
+      //should not show on user's own page
+
+      console.log(window.sessionStorage.getItem('sessionUserId'));
+      console.log(userProfileId)
+
+      $("#follow-button").hide();
+    }
+
+
+
   });
 };

@@ -207,6 +207,15 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
 
   }
 
+  // SHOW/HIDE THINGS IF NOT LOGGED IN
+  if (window.sessionStorage.getItem('sessionUserId') != 'null'){
+    //should be logged in
+    $("#like-button").show();
+  }else{
+    //should be not logged in
+    $("#like-button").hide();
+  }
+
   console.log("REACHED THE CHART PAGE");
   $('#saveComment-button').on('click', function() {
     console.log("Is this really clicked?");
