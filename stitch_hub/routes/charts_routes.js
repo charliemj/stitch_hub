@@ -127,6 +127,13 @@ router.put('/:id/description', function (req, res) {
   var chartId = req.params.id;
   var userId = req.session.user._id;
   var newDescription = req.body.description;
+
+  console.log(chartId);
+  console.log(userId);
+  console.log(newDescription);
+
+
+
   Charts.editDescription(chartId,userId,newDescription,
     function (err, msg) {
       if (err) {
@@ -136,7 +143,10 @@ router.put('/:id/description', function (req, res) {
         }); //end if
       } else {
         var updated = (msg != null);
-        res.send({updated: updated});
+        res.send({
+          success: true,
+          updated: updated
+        });
       }
     }
   );

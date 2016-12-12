@@ -37,6 +37,7 @@ chartSchema.statics.getChartById = function (chartId, userId, callback) {
       allowNSFW = true
     }
   });
+
   Charts.findOne({_id: chartId}, function (err, chart) {
     if (err) {
       callback(err)
@@ -191,7 +192,7 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
  * @param callback function to execute
  */
 chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
-  Charts.getChartById(chartId,function (err, chart) {
+  Charts.getChartById(chartId,userId,function (err, chart) {
     var chartAuthor = null;
     var canEdit = false;
     if (err) {
