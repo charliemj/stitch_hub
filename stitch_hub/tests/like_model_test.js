@@ -7,6 +7,16 @@ var assert = require("assert");
 
 var db = mongoose.connect('mongodb://localhost/testdb');
 
+var containsChartWithId = function (charts, chartId) {
+  for (var i = 0; i < charts.length; i++) {
+    var chart = charts[i];
+    if (String(chart._id) == String(chartId)) {
+      return true;
+    }
+  }
+  return false;
+};
+
 describe('Likes', function() {
 
   after(function() {
@@ -120,7 +130,23 @@ describe('Likes', function() {
 
   describe('getLikedCharts', function() {
     it('should return a list of charts liked by a given user (possibly empty)', function (done) {
-      done();
+      var userId1 = mongoose.Types.ObjectId();
+      var userId2 = mongoose.Types.ObjectId();
+      Charts.makeNewChart(userId1, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], null, ['tag'], false, function (err, chart1) {
+        Charts.makeNewChart(userId2, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], null, ['tag'], false, function (err, chart2) {
+          Users.createUser('ser', 'pass', Date.now(), 'date@email.com', function (err, user) {
+            Like.likeChart(chart1._id, user._id, function (err, like1) {
+              Like.likeChart(chart2._id, user._id, function (err, like2) {
+                Like.getLikedCharts(user._id, function (err, charts) {
+                  assert.ok(containsChartWithId(charts, chart1._id));
+                  assert.ok(containsChartWithId(charts, chart2._id));
+                  done();
+                });
+              });
+            });
+          });
+        });
+      });
     });
 
     it('should return an empty list when the user does not exist', function (done) {
