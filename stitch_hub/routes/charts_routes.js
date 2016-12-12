@@ -64,7 +64,7 @@ router.get('/', function (req, res/*, next*/) {
   var filterSizeOn = req.query.filterSizeOn ? JSON.parse(req.query.filterSizeOn) : [];
   var filterTypeOn = req.query.filterTypeOn ? JSON.parse(req.query.filterTypeOn) : [];
   var tokens = req.query.tokens ? JSON.parse(req.query.tokens) : [];
-  var userId = req.session.userId;
+  var userId = req.session.user ? req.session.user._id : null;
     Charts.searchForChart(searchFor, filterSizeOn, filterTypeOn, tokens, userId, function (err, charts) {
       if (err) {
         res.send({
