@@ -156,7 +156,6 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
       var author = null;
       if (user) {
         ageFilter = { $or: [{nsfw: false}, {author: user._id}] };
-        console.log(ageFilter);
       } else {
         ageFilter = { nsfw: false };
       }
