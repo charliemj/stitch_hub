@@ -108,7 +108,11 @@ describe('Likes', function() {
     });
 
     it('should return 0 (and no error) if the chart does not exist', function (done) {
-      done();
+      var chartId = mongoose.Types.ObjectId();
+      Like.getNumLikes(chartId, function (err, numLikes) {
+        assert.equal(numLikes, 0);
+        done();
+      });
     });
 
 
