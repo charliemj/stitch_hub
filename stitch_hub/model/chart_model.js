@@ -7,20 +7,20 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var validTypes = ["CROSS_STITCH", "KNIT_V", "KNIT_H", "CROCHET_V", "CROCHET_H"];
 
 var chartSchema = mongoose.Schema({
-  title: {type: String, validate: [validators.isLength(0, 16)]},
-  description: {type: String, validate: [validators.isLength(0, 100)]},
-  date: {type: Date, default: Date.now, validate: [validators.isDate()]},
-  type: {type: String, enum: validTypes},
-  rowSize: {type: Number, min: 1, max: 70},
-  colSize: {type: Number, min: 1, max: 70},
-  size: Number,
-  rows: [[{type: String, validate: validators.isHexColor()}]],
-  parent: {type: ObjectId, ref: "Chart"},
-  is_deleted: Boolean,
-  nsfw: Boolean,
-  tags: [String],
-  comments: [{type: ObjectId, ref: "Comment"}],
-  author: {type: ObjectId, ref: "User"}
+    title: {type:String, validate: [validators.isLength(0,16)]},
+    description: {type:String, validate: [validators.isLength(0,100)]},
+    date: { type: Date, default: Date.now,validate: [validators.isDate()] },
+    type: {type:String, enum: validTypes},
+    rowSize: {type:Number, min:1, max:70},
+    colSize: {type:Number, min:1, max:70},
+    size: Number,
+    rows:[[{type:String, validate: validators.isHexColor()}]],
+    parent: {type:ObjectId, ref:"Chart"},
+    is_deleted: Boolean,
+    nsfw: Boolean,
+    tags: [String],
+    comments: [{type:ObjectId, ref:"Comment"}],
+    author: {type: ObjectId, ref:"User"}
 });
 
 /**
@@ -32,7 +32,7 @@ var chartSchema = mongoose.Schema({
  */
 chartSchema.statics.getChartById = function (chartId, userId, callback) {
   var allowNSFW = false;
-  Users.isAdult(userId, function (err, isAdult) {
+  Users.isAdult(userId, function(err,isAdult) {
     if (isAdult) {
       allowNSFW = true
     }
@@ -49,13 +49,13 @@ chartSchema.statics.getChartById = function (chartId, userId, callback) {
 
 /**
  * Fetches all charts authored by a user.
- *
+ * 
  * @param userId ID of the user
  * @param callback function to execute
  */
 chartSchema.statics.getChartsByUser = function (userId, callback) {
   var allowNSFW = false;
-  Users.isAdult(userId, function (err, isAdult) {
+  Users.isAdult(userId, function(err,isAdult) {
     if (isAdult) {
       allowNSFW = true
     }
@@ -66,7 +66,7 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
     nsfw: allowNSFW
   }, function (err, charts) {
     if (err) {
-      callback(err)
+      callback(err) 
     } else {
       callback(null, charts)
     }
@@ -89,65 +89,70 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
     return new RegExp('\\b' + token + '\\b', 'i'); // consider as substring
   });
   var allowNSFW = false;
-  Users.isAdult(userId, function (err, isAdult) {
-    if (isAdult) {
-      allowNSFW = true
-    }
-  });
-  
-  // construct the query based on the request parameters
-  // overall structure of the query is
-  // { $or: [ {property1: {$in: tokens}}, ..., {propertyN: {$in: tokens}} ] }
-  var searchForFilter = {};
-  if (searchFor.length > 0) {
-    var propertyQueries = [];
-    searchForFilter = {$or: propertyQueries};
-    searchFor.forEach(function (property) {
-      var propertyQuery = {};
-      propertyQuery[property] = {$in: searchRegex};
-      propertyQueries.push(propertyQuery);
-    });
-  }
-  if (filterTypeOn.length > 0) {
-    searchForFilter.type = {$in: filterTypeOn}
-  }
-  var sizeFilter = {};
-  if (filterSizeOn.length > 0) {
-    var SMALL_SIZE = 400;
-    var MEDIUM_SIZE = 1600;
-    var sizeConditions = [];
-    sizeFilter = {$or: sizeConditions};
-    filterSizeOn.forEach(function (sizeType) {
-      if (sizeType == 'small') {
-        sizeConditions.push({size: {$lte: SMALL_SIZE}});
-      } else if (sizeType == 'medium') {
-        sizeConditions.push({size: {$gt: SMALL_SIZE, $lte: MEDIUM_SIZE}});
-      } else if (sizeType == 'large') {
-        sizeConditions.push({size: {$gt: MEDIUM_SIZE}});
-      }
-    })
-  }
-  var matchQuery = {$and: [searchForFilter, {is_deleted: false}]};
-  var ageFilter = {};
-  if (!allowNSFW) {
-    var author = null;
+  Users.getUserById(userId, function(err, user) { //TODO add NSFW to search filtering
     if (user) {
-      ageFilter = {$or: [{nsfw: false}, {author: user._id}]};
-      console.log(ageFilter);
-    } else {
-      ageFilter = {nsfw: false};
+      var birthday = +new Date(user.dob);
+      var age = ~~((Date.now() - birthday) / (31557600000));
+      var isAdult = age >= 18;
+      if (isAdult) {
+        allowNSFW = true
+      }
     }
-
-    console.log(ageFilter);
-  }
-  // perform query
-  Charts.aggregate([
-    {$match: matchQuery},
-    {$match: sizeFilter},
-    {$match: ageFilter},
-    {$sort: {'date': -1}}
-  ], function (err, charts) {
-    callback(err, charts);
+  
+    // construct the query based on the request parameters
+    // overall structure of the query is
+    // { $or: [ {property1: {$in: tokens}}, ..., {propertyN: {$in: tokens}} ] }
+    var searchForFilter = {};
+    if (searchFor.length > 0) {
+      var propertyQueries = [];
+      searchForFilter = {$or: propertyQueries};
+      searchFor.forEach(function (property) {
+        var propertyQuery = {};
+        propertyQuery[property] = {$in: searchRegex};
+        propertyQueries.push(propertyQuery);
+      });
+    }
+    if (filterTypeOn.length > 0) {
+      searchForFilter.type = {$in: filterTypeOn}
+    }
+    var sizeFilter = {};
+    if (filterSizeOn.length > 0) {
+      var SMALL_SIZE = 400;
+      var MEDIUM_SIZE = 1600;
+      var sizeConditions = [];
+      sizeFilter = {$or: sizeConditions};
+      filterSizeOn.forEach(function (sizeType) {
+        if (sizeType == 'small') {
+          sizeConditions.push({size: {$lte: SMALL_SIZE}});
+        } else if (sizeType == 'medium') {
+          sizeConditions.push({size: {$gt: SMALL_SIZE, $lte: MEDIUM_SIZE}});
+        } else if (sizeType == 'large') {
+          sizeConditions.push({size: {$gt: MEDIUM_SIZE}});
+        }
+      })
+    }
+    var matchQuery = {$and: [searchForFilter, {is_deleted: false}]};
+    var ageFilter = {};
+    if (!allowNSFW) {
+      var author = null;
+      if (user) {
+        ageFilter = { $or: [{nsfw: false}, {author: user._id}] };
+        console.log(ageFilter);
+      } else {
+        ageFilter = { nsfw: false };
+      }
+      
+      console.log(ageFilter);
+    }
+    // perform query
+    Charts.aggregate([
+      {$match: matchQuery},
+      {$match: sizeFilter},
+      {$match: ageFilter},
+      {$sort: {'date': -1}}
+    ], function(err,charts) {
+      callback(err,charts);
+    });
   });
 };
 
@@ -158,8 +163,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param author {ObjectId} ID of the author {User}
  * @param title {String} title of the chart
  * @param description {String} description of the chart
- * @param type {String} type of chart, must be one of the following: ["CROSS_STITCH", "KNIT_V", "KNIT_H", "CROCHET_V",
- *   "CROCHET_H"]
+ * @param type {String} type of chart, must be one of the following: ["CROSS_STITCH", "KNIT_V", "KNIT_H", "CROCHET_V", "CROCHET_H"]
  * @param rowSize {Number} number of rows in the chart
  * @param colSize {Number} number of columns in the chart
  * @param rows [[{String}]] list of list of Hex values. Each list inside main list represents a row.
@@ -168,23 +172,13 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param nsfw {Boolean} whether chart is safe for work or not (18+). true=nsfw, false=sfw
  * @param callback function to execute
  */
-chartSchema.statics.makeNewChart = function (author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw, callback) {
+chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw, callback) {
   console.log("attempting to make new chart");
   Charts.create({
-    author: author,
-    title: title,
-    description: description,
-    tags: tags,
-    nsfw: nsfw,
-    type: type,
-    rowSize: rowSize,
-    colSize: colSize,
-    rows: rows,
-    size: (rowSize * colSize),
-    parent: parent,
-    is_deleted: false
-  }, function (err, chart) {
-    callback(err, chart);
+    author: author, title: title, description: description, tags: tags, nsfw: nsfw,
+    type: type, rowSize: rowSize, colSize: colSize, rows: rows, size: (rowSize * colSize), parent: parent, is_deleted: false
+  }, function(err,chart) {
+    callback(err,chart);
   })
 };
 
@@ -196,21 +190,21 @@ chartSchema.statics.makeNewChart = function (author, title, description, type, r
  * @param userId {ObjectId} ID of the user in question
  * @param callback function to execute
  */
-chartSchema.statics.checkIfCanEdit = function (chartId, userId, callback) {
-  Charts.getChartById(chartId, function (err, chart) {
+chartSchema.statics.checkIfCanEdit = function(chartId,userId,callback){
+  Charts.getChartById(chartId,function (err, chart) {
     var chartAuthor = null;
     var canEdit = false;
     if (err) {
-      callback(err, canEdit);
+      callback(err,canEdit);
     } //end if
     else {
       chartAuthor = chart.author;
     } //end else
 
-    if (userId == chartAuthor) {
+    if (userId == chartAuthor){
       canEdit = true;
     }
-    callback(err, canEdit);
+    callback(err,canEdit);
   });//end of Charts.getChartById
 };//end of checkIfCanEdit
 
@@ -225,21 +219,21 @@ chartSchema.statics.checkIfCanEdit = function (chartId, userId, callback) {
  * @param newDescription {String} revised description of the chart
  * @param callback function to execute
  */
-chartSchema.statics.editDescription = function (chartId, userId, newDescription, callback) {
-  Charts.checkIfCanEdit(chartId, userId, function (err, canEdit) {
-    if (canEdit) {
+chartSchema.statics.editDescription = function(chartId,userId,newDescription,callback) {
+  Charts.checkIfCanEdit(chartId,userId,function(err,canEdit){
+    if (canEdit){
       Charts.findOneAndUpdate(
         {_id: chartId}, // NOTE LOWERCASE d
         {description: newDescription},
         {new: true},
-        function (err, chart) {
-          callback(err, chart); //this err is database prob
+        function(err,chart){
+          callback(err,chart); //this err is database prob
         }//end function
       ) //end findoneandupdate
     }//end if
-    else {
+    else{
       //the person doesn't have authorization to edit
-      callback(err, canEdit); //this err is auth prob
+        callback(err,canEdit); //this err is auth prob
     }//end else
   });//end checkIfCanEdit
 };//end of editDescription
@@ -255,21 +249,21 @@ chartSchema.statics.editDescription = function (chartId, userId, newDescription,
  * @param newTags [{String}] list of set of tags with which to replace old set of tags
  * @param callback function to execute
  */
-chartSchema.statics.editTags = function (chartId, userId, newTags, callback) {
-  Charts.checkIfCanEdit(chartId, userId, function (err, canEdit) {
-    if (canEdit) {
+chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
+  Charts.checkIfCanEdit(chartId,userId,function(err,canEdit){
+    if (canEdit){
       Charts.findOneAndUpdate(
         {_id: chartId}, // NOTE LOWERCASE d
         {tags: newTags},
         {new: true},
-        function (err, chart) {
-          callback(err, chart);
+        function(err,chart) {
+          callback(err,chart);
         }
       )
     }//end if
-    else {
+    else{
       //the person doesn't have authorization to edit
-      callback(err, canEdit); //this err is auth prob
+      callback(err,canEdit); //this err is auth prob
     }
   });//end checkIfCanEdit
 };
@@ -283,13 +277,13 @@ chartSchema.statics.editTags = function (chartId, userId, newTags, callback) {
  * @param userId {ObjectId} ID of logged-in user
  * @param callback function to execute
  */
-chartSchema.statics.deleteChart = function (chartId, userId, callback) {
+chartSchema.statics.deleteChart = function(chartId,userId,callback) {
   Charts.findOneAndUpdate(
     {_id: chartId, author: userId},
     {is_deleted: true},
     {new: true},
-    function (err, chart) {
-      callback(err, chart);
+    function(err,chart) {
+      callback(err,chart);
     }
   );
 };
