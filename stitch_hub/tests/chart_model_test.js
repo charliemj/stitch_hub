@@ -6,6 +6,28 @@ var assert = require("assert");
 
 var db = mongoose.connect('mongodb://localhost/testdb');
 
+var createRowsWithSize = function(rowSize, colSize) {
+  var rows = [];
+  for (var i = 0; i < rowSize; i++) {
+    var row = [];
+    for (var j = 0; j < colSize; j++) {
+      row.push('#000');
+    }
+    rows.push(row);
+  }
+  return rows;
+};
+
+var containsChartWithId = function(charts, chartId) {
+  for (var i = 0; i < charts.length; i++) {
+    var chart = charts[i];
+    if (String(chart._id) == String(chartId)) {
+      return true;
+    }
+  }
+  return false;
+};
+
 describe('Charts', function() {
 
   after(function() {
@@ -221,16 +243,101 @@ describe('Charts', function() {
       })
     });
 
-    it('should correctly filter on size', function (done) {
-      //TODO DENIS
+    describe('should correctly filter', function () {
+      var chartRowSize1 = 4;
+      var chartColSize1 = 4;
+      var chartRowSize2 = 25;
+      var chartColSize2 = 25;
+      var chartRowSize3 = 50;
+      var chartColSize3 = 50;
+      var chartRowSize4 = 1;
+      var chartColSize4 = 2;
+
+      it('should work correctly on small size', function (done) {
+        Users.createUser('author', 'password', Date.now(), 'email@email.com', function (err, user) {
+          Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize1, chartColSize1, createRowsWithSize(chartRowSize1, chartColSize1), null, ['tag'], false, function (err, chart1) {
+            Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize2, chartColSize2, createRowsWithSize(chartRowSize2, chartColSize2), null, ['tag'], false, function (err, chart2) {
+              Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize3, chartColSize3, createRowsWithSize(chartRowSize3, chartColSize3), null, ['tag'], false, function (err, chart3) {
+                Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize4, chartColSize4, createRowsWithSize(chartRowSize4, chartColSize4), null, ['tag'], false, function (err, chart4) {
+                  Charts.searchForChart([], ['small'], [], [], user._id, function (err, charts) {
+                    console.log(JSON.stringify(charts));
+                    console.log(chart1._id);
+                    assert.ok(containsChartWithId(charts, chart1._id));
+                    assert.ok(!containsChartWithId(charts, chart2._id));
+                    assert.ok(!containsChartWithId(charts, chart3._id));
+                    assert.ok(containsChartWithId(charts, chart4._id));
+                    done();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+
+      it('should work correctly on medium size', function (done) {
+        Users.createUser('author', 'password', Date.now(), 'email@email.com', function (err, user) {
+          Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize1, chartColSize1, createRowsWithSize(chartRowSize1, chartColSize1), null, ['tag'], false, function (err, chart1) {
+            Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize2, chartColSize2, createRowsWithSize(chartRowSize2, chartColSize2), null, ['tag'], false, function (err, chart2) {
+              Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize3, chartColSize3, createRowsWithSize(chartRowSize3, chartColSize3), null, ['tag'], false, function (err, chart3) {
+                Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize4, chartColSize4, createRowsWithSize(chartRowSize4, chartColSize4), null, ['tag'], false, function (err, chart4) {
+                  Charts.searchForChart([], ['medium'], [], [], user._id, function (err, charts) {
+                    assert.ok(!containsChartWithId(charts, chart1._id));
+                    assert.ok(containsChartWithId(charts, chart2._id));
+                    assert.ok(!containsChartWithId(charts, chart3._id));
+                    assert.ok(!containsChartWithId(charts, chart4._id));
+                    done();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+
+      it('should work correctly on large size', function (done) {
+        Users.createUser('author', 'password', Date.now(), 'email@email.com', function (err, user) {
+          Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize1, chartColSize1, createRowsWithSize(chartRowSize1, chartColSize1), null, ['tag'], false, function (err, chart1) {
+            Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize2, chartColSize2, createRowsWithSize(chartRowSize2, chartColSize2), null, ['tag'], false, function (err, chart2) {
+              Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize3, chartColSize3, createRowsWithSize(chartRowSize3, chartColSize3), null, ['tag'], false, function (err, chart3) {
+                Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize4, chartColSize4, createRowsWithSize(chartRowSize4, chartColSize4), null, ['tag'], false, function (err, chart4) {
+                  Charts.searchForChart([], ['large'], [], [], user._id, function (err, charts) {
+                    assert.ok(!containsChartWithId(charts, chart1._id));
+                    assert.ok(!containsChartWithId(charts, chart2._id));
+                    assert.ok(containsChartWithId(charts, chart3._id));
+                    assert.ok(!containsChartWithId(charts, chart4._id));
+                    done();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+
+      it('should work correctly on a combination', function (done) {
+        Users.createUser('author', 'password', Date.now(), 'email@email.com', function (err, user) {
+          Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize1, chartColSize1, createRowsWithSize(chartRowSize1, chartColSize1), null, ['tag'], false, function (err, chart1) {
+            Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize2, chartColSize2, createRowsWithSize(chartRowSize2, chartColSize2), null, ['tag'], false, function (err, chart2) {
+              Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize3, chartColSize3, createRowsWithSize(chartRowSize3, chartColSize3), null, ['tag'], false, function (err, chart3) {
+                Charts.makeNewChart(user._id, 'title', 'description', 'CROSS_STITCH', chartRowSize4, chartColSize4, createRowsWithSize(chartRowSize4, chartColSize4), null, ['tag'], false, function (err, chart4) {
+                  Charts.searchForChart([], ['small', 'medium'], [], [], user._id, function (err, charts) {
+                    assert.ok(containsChartWithId(charts, chart1._id));
+                    assert.ok(containsChartWithId(charts, chart2._id));
+                    assert.ok(!containsChartWithId(charts, chart3._id));
+                    assert.ok(containsChartWithId(charts, chart4._id));
+                    done();
+                  });
+                });
+              });
+            });
+          });
+        });
+      }); 
     });
 
     it('should correctly filter on type', function (done) {
-      //TODO DENIS
-    });
 
-    it('should return empty list when searchFor is empty', function (done) {
-      //TODO DENIS
     });
   });
 

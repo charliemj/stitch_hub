@@ -79,7 +79,7 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
  * Searches for charts that meet parameters' specifications.
  *
  * @param searchFor [{String}] list of properties that we should search amongst (one of tags, title, author, and description)
- * @param filterSizeOn [{String}] the size of charts to filter on (SMALL, MEDIUM, LARGE)
+ * @param filterSizeOn [{String}] the size of charts to filter on ('small', 'medium', 'large')
  * @param filterTypeOn [{String}] chart types to filter on (CROSS_STITCH, KNIT_V, KNIT_H, CROCHET_V, CROCHET_H)
  * @param tokens [{String}] list of words to search amongst. They should be single words and all lowercase
  * @param userId {ObjectId} ID of current user
@@ -142,8 +142,6 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
       } else {
         ageFilter = { nsfw: false };
       }
-      
-      console.log(ageFilter);
     }
     // perform query
     Charts.aggregate([
@@ -174,7 +172,6 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param callback function to execute
  */
 chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw, callback) {
-  console.log("attempting to make new chart");
   Charts.create({
     author: author, title: title, description: description, tags: tags, nsfw: nsfw,
     type: type, rowSize: rowSize, colSize: colSize, rows: rows, size: (rowSize * colSize), parent: parent, is_deleted: false
