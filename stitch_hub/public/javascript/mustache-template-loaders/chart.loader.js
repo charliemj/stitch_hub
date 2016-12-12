@@ -163,7 +163,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           });
 
           $('#parent-button').on("click", function () {
-            goToParent(jsonChart);
+            goToParent(jsonChart,currentUser);
           });
 
           $('#report-button').on("click",function() {
@@ -186,7 +186,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
         }//end if not deleted
         else{
           $('#parent-button').on("click", function () {
-            goToParent();
+            goToParent(jsonChart,currentUser);
           });
         }
 

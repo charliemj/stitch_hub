@@ -9,15 +9,15 @@
     {{^is_deleted}}
     <div id="renderIfNotDeleted">
         <div id="chartInfo">
+
             <li><h2>{{title}}</h2></li>
             <li>by</li>
             <li><h3><a id="author-profile-link">{{authorname}}</a></h3></li>
-            {{^is_deleted}}
+            
             <li><button id="delete-button" class="hidden">Delete</button></li>
 
         </div> <!-- end chartInfo -->
-        
-        <div id="chart">
+            <div id="chart">
             <canvas id="canvas"></canvas>
         </div>
         <div id="remixLikeReport">
@@ -25,7 +25,8 @@
                 <button id="like-button">Like</button>
                 <button id="remix-button">Remix</button>
                 {{/is_deleted}}
-            <button id="parent-button">Parent</button>
+                <button id="parent-button">Parent</button>
+                {{^is_deleted}}
             </div> <!-- end of remixLike -->
             <div id="report">
                 <button id="report-button" style="background-color:cadetblue;">Report this chart</button>
