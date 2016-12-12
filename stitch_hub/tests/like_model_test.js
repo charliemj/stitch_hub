@@ -87,7 +87,24 @@ describe('Likes', function() {
 
   describe('getNumLikes', function() {
     it('should get the number of likes for an existent chart (possibly 0)', function (done) {
-      done();
+      Users.createUser('username', 'pass', Date.now(), 'email@email.com', function(err, user1) {
+        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], null, ['tag'], false, function (err, chart) {
+          Users.createUser('username2', 'pass', Date.now(), 'email@gmail.com', function(err, user2) {
+            Users.createUser('username3', 'pass', Date.now(), 'da@gmail.com', function(err, user3) {
+              Like.likeChart(chart._id, user1._id, function (err, madeLike1) {
+                Like.likeChart(chart._id, user2._id, function (err, madeLike2) {
+                  Like.likeChart(chart._id, user3._id, function (err, madeLike3) {
+                    Like.getNumLikes(chart._id, function (err, numLikes) {
+                      assert.equal(numLikes, 3);
+                      done();
+                    })
+                  });
+                })
+              });
+            });
+          });
+        });
+      });
     });
 
     it('should return 0 (and no error) if the chart does not exist', function (done) {
