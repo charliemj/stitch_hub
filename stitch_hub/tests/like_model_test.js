@@ -150,13 +150,11 @@ describe('Likes', function() {
     });
 
     it('should return an empty list when the user does not exist', function (done) {
-      done();
-    });
-  });
-
-  describe('canLike', function() {
-    it('should ???', function (done) {
-      done();
+      Like.getLikedCharts(mongoose.Types.ObjectId(), function (err, charts) {
+        assert.ok(charts != null);
+        assert.ok(charts.length == 0);
+        done();
+      });
     });
   });
 
