@@ -19,7 +19,7 @@ describe('Charts', function() {
   });
 
   describe('makeNewChart', function() {
-    it('should store a new chart and return it (with the correct values--see specification // TODO: write this specification)', function (done) {
+    it('should store a new chart and return it (with the correct values--see specification)', function (done) {
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000']['#000','#000']], 'parentId', ['tag'], function (err, chart) {
         // TODO: verify that the chart has the correct properties
       });

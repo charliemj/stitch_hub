@@ -89,14 +89,12 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
     return new RegExp('\\b' + token + '\\b', 'i'); // consider as substring
   });
   var allowNSFW = false;
-
   Users.isAdult(userId, function (err, isAdult) {
     if (isAdult) {
       allowNSFW = true
     }
   });
-
-
+  
   // construct the query based on the request parameters
   // overall structure of the query is
   // { $or: [ {property1: {$in: tokens}}, ..., {propertyN: {$in: tokens}} ] }
