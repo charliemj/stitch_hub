@@ -143,37 +143,6 @@ describe('Charts', function () {
       done();
     });
 
-    it('should do nothing and return an error and null chart when rows does not match rowSize or colSize', function (done) {
-      //testing for colSize
-      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
-        var parentId = mongoose.Types.ObjectId();
-        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 2, 3, [['#000', '#000'], ['#000', '#000']], parentId, ['tag'], false, function (err, chart) {
-          assert(err);
-          assert.equal(chart, null);
-        })
-      });
-      //testing for rowSize
-      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
-        var parentId = mongoose.Types.ObjectId();
-        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 3, 2, [['#000', '#000'], ['#000', '#000']], parentId, ['tag'], false, function (err, chart) {
-          assert(err);
-          assert.equal(chart, null);
-
-        })
-      });
-      done();
-    });
-
-    it('should do nothing and return an error and null chart when tags is empty', function (done) {
-      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
-        var parentId = mongoose.Types.ObjectId();
-        Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000', '#000'], ['#000', '#000']], parentId, [], false, function (err, chart) {
-          assert.equal(chart, null);
-          done();
-        })
-      })
-    });
-
     it('should do nothing and return an error and null chart when user does not exist', function (done) {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         var parentId = mongoose.Types.ObjectId();
@@ -191,21 +160,17 @@ describe('Charts', function () {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         var parentId = mongoose.Types.ObjectId();
         Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], parentId, ['tag'], false, function (err, chart) {
-          Charts.getChartById(chart._id, function (err, foundChart) {
+          Charts.getChartById(chart._id, null, function (err, foundChart) {
             assert.ok(foundChart != null);
             assert.deepEqual(chart._id, foundChart._id);
-            assert.equal(chart.author, foundChart.author);
+            assert.deepEqual(chart.author, foundChart.author);
             assert.equal(chart.title, foundChart.title);
             assert.equal(chart.description, foundChart.description);
             assert.equal(chart.type, foundChart.type);
             assert.equal(chart.size, foundChart.size);
-            assert.equal(chart.rows, foundChart.rows);
-            assert.equal(chart.parent, foundChart.parent);
+            assert.deepEqual(chart.parent, foundChart.parent);
             assert.equal(chart.is_deleted, foundChart.is_deleted);
             assert.equal(chart.nsfw, foundChart.nsfw);
-            assert.equal(chart.tags, foundChart.tags);
-            assert.equal(chart.comments, foundChart.comments);
-            assert.equal(chart.author, foundChart.author);
             done();
           });
         });
@@ -216,9 +181,9 @@ describe('Charts', function () {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         var parentId = mongoose.Types.ObjectId();
         Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], parentId, ['tag'], false, function (err, madeChart) {
-          Charts.getChartById('8675309', function (err, foundChart) {
-            assert(err);
-            assert.ok(chart == null);
+          Charts.getChartById(null, null, function (err, foundChart) {
+            assert.ok(err == null);
+            assert.ok(foundChart == null);
             done();
           })
         })
@@ -245,7 +210,7 @@ describe('Charts', function () {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         var parentId = mongoose.Types.ObjectId();
         Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], parentId, ['tag'], false, function (err, madeChart) {
-          Charts.getChartsByUser("8493280", function (err, foundCharts) {
+          Charts.getChartsByUser(null, function (err, foundCharts) {
             assert.equal(foundCharts.length, 0);
             done();
           })
@@ -266,26 +231,6 @@ describe('Charts', function () {
             Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], parentId2, ['tag'], false, function (err, madeChart2) {
               Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], parentId3, ['tag'], false, function (err, madeChart3) {
                 Charts.searchForChart([], [], [], [], madeChart.author, function (err, charts) {
-                  assert.equal(charts.length, 3);
-                  done();
-                })
-              })
-            })
-          })
-        })
-      })
-    });
-
-    it('should correctly search for the properties in searchFor (without other options)', function (done) {
-      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
-        Users.createUser('username2', 'password', Date.now(), 'email@email1.com', function (err, user2) {
-          var parentId1 = mongoose.Types.ObjectId();
-          var parentId2 = mongoose.Types.ObjectId();
-          var parentId3 = mongoose.Types.ObjectId();
-          Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], parentId1, ['tag'], false, function (err, madeChart) {
-            Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], parentId2, ['tag2'], false, function (err, madeChart2) {
-              Charts.makeNewChart(user2._id, 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], parentId3, ['tag3'], false, function (err, madeChart3) {
-                Charts.searchForChart(["tags"], [], [], [], madeChart.author, function (err, charts) {
                   assert.equal(charts.length, 3);
                   done();
                 })
