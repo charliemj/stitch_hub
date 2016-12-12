@@ -190,6 +190,10 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param callback function to execute
  */
 chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw, callback) {
+  if (tags && tags.length == 0) {
+    callback(new Error('tags should not be empty'), null);
+    return;
+  }
   Charts.create({
     author: author, title: title, description: description, tags: tags, nsfw: nsfw,
     type: type, rowSize: rowSize, colSize: colSize, rows: rows, size: (rowSize * colSize), parent: parent, is_deleted: false

@@ -389,18 +389,38 @@ describe('Charts', function () {
       });
     });
 
-    it('should correctly filter on type', function (done) {
-      done();
+    describe('should correctly filter on type', function () {
+      it('should correctly filter on CROSS_STITCH', function (done) {
+
+      });
+
+      it('should correctly filter on KNIT_V', function (done) {
+
+      });
+
+      it('should correctly filter on KNIT_H', function (done) {
+
+      });
+
+      it('should correctly filter on CROCHET_V', function (done) {
+
+      });
+
+      it('should correctly filter on CROCHET_H', function (done) {
+
+      });
     });
   });
 
   describe('editDescription', function () {
-    it('should edit a description and return the new description', function (done) {
+    it('should edit a description and return the new chart', function (done) {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         var parentId = mongoose.Types.ObjectId();
         Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], parentId, ['tag'], false, function (err, madeChart) {
-          Charts.editDescription(madeChart._id, madeChart.author, "farts", function (err, chart) {
-            assert.equals(chart.description, "farts");
+          Charts.editDescription(madeChart._id, user1._id, "farts", function (err, chart) {
+            console.log("Test # 1")
+            console.log(chart.description);
+            assert.equal(chart.description, "farts");
             done();
           })
         })
@@ -411,7 +431,10 @@ describe('Charts', function () {
       Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
         var parentId = mongoose.Types.ObjectId();
         Charts.makeNewChart(user1._id, 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], parentId, ['tag'], false, function (err, madeChart) {
+          console.log(madeChart);
           Charts.editDescription(madeChart.author, madeChart.author, "farts", function (err, chart) {
+            console.log("Test # 2");
+            console.log(chart);
             assert(err);
             assert.isNull(chart);
             done();
