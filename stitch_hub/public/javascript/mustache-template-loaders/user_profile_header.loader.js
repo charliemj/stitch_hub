@@ -67,18 +67,9 @@ var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
       });
     });
 
-    console.log(currentUser);
     // SHOW/HIDE THINGS IF NOT LOGGED IN
-    if (currentUser){
-      //should be logged in
-      $("#follow-button").show();
-      $('#unfollow-button').show();
-    } else {
-      // not logged in
-      $("#follow-button").hide();
-      $("#unfollow-button").hide();
-    }
 
+   
     if (currentUser == null || (currentUser._id == userProfileId)){
       //should not show on user's own page
       $("#follow-button").hide();
