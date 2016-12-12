@@ -72,8 +72,18 @@ describe('Users', function() {
 
   describe('getFollowersCharts', function() {
     it('should return list of charts of by users that a given user follows', function (done) {
-      done();
+      Users.createUser('username1', 'password', Date.now(), 'email@email1.com', function (err, user1) {
+        Users.createUser('username2', 'password', Date.now(), 'email@gmail2.com', function (err, user2) {
+          Users.followUser(user1, user2, function (err, userFollowing){
+            Charts.makeNewChart('user2', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function (err, chart) {
+              assert.deepEqual(getFollowersCharts(user1._id), [chart]);
+              done();
+            })
+          });
+        });
+      });
     });
+  });
 
     it('should return an empty list when given a non-existing user', function (done) {
       Users.getFollowersCharts('userId', function (err, charts) {
