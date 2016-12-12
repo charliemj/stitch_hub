@@ -46,7 +46,7 @@ describe('Charts', function() {
       Charts.makeNewChart('username', 'title', 'description', 'WEIRD_TYPE', 1, 1, [['#000']], 'parentId', ['tag'], function (err, chart) {
         Charts.getChartByUser('username',function(err,foundChart) {
           assert(err);
-          assert.equal(foundChart, null);
+          assert.isNull(chart);
           done();
         })
       });
@@ -55,7 +55,7 @@ describe('Charts', function() {
     it('should do nothing and return an error and null chart when rowSize is not between 1 and 70, inclusive', function (done) {
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 0, 2, [], 'parentId', ['tag'], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       });
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 70, 2, [
@@ -74,7 +74,7 @@ describe('Charts', function() {
         ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],
         ['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       })
     });
@@ -97,12 +97,12 @@ describe('Charts', function() {
          '#000','#000','#000','#000','#000','#000','#000','#000','#000','#000']
       ], 'parentId', ['tag'], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       });
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 0, [], 'parentId', ['tag'], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       })
     });
@@ -111,13 +111,13 @@ describe('Charts', function() {
       //testing for colSize
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 3, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       });
       //testing for rowSize
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 3, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       });
     });
@@ -125,7 +125,7 @@ describe('Charts', function() {
     it('should do nothing and return an error and null chart when tags is empty', function (done) {
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', [], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       })
     });
@@ -133,7 +133,7 @@ describe('Charts', function() {
     it('should do nothing and return an error and null chart when user does not exist', function (done) {
       Charts.makeNewChart('yourmom', 'title', 'description', 'CROSS_STITCH', 2, 2, [['#000','#000'],['#000','#000']], 'parentId', ['tag'], function(err,chart) {
         assert(err);
-        assert.equal(chart, null);
+        assert.isNull(chart);
         done();
       })
     });
@@ -166,7 +166,7 @@ describe('Charts', function() {
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
         Charts.getChartById('8675309', function (err, foundChart) {
           assert(err);
-          assert.equal(madeChart, null);
+          assert.isNull(chart);
           done();
         })
       })
@@ -195,7 +195,8 @@ describe('Charts', function() {
     });
   });
 
-  describe('searchForChart', function() {
+  describe('searchForChart', function() { // TODO: change this test accordingly when the search functionality changes
+
     it('should search amongst all charts if tokens is empty', function (done) {
       Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
         Charts.makeNewChart('username2', 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart2) {
@@ -221,60 +222,102 @@ describe('Charts', function() {
     });
 
     it('should correctly filter on size', function (done) {
-
+      //TODO DENIS
     });
 
     it('should correctly filter on type', function (done) {
-
+      //TODO DENIS
     });
 
     it('should return empty list when searchFor is empty', function (done) {
-
+      //TODO DENIS
     });
-
-    // TODO: change this test accordingly when the search functionality changes
   });
 
   describe('editDescription', function() {
     it('should edit a description and return the new description', function (done) {
-
+      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
+        Charts.editDescription(madeChart._id, madeChart.author, "farts", function(err,chart) {
+          assert.equals(chart.description,"farts");
+          done();
+        })
+      })
     });
 
     it('should do nothing and return an error and null chart when chart does not exist', function (done) {
-
+      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag'], function (err, madeChart) {
+        Charts.editDescription(madeChart.author, madeChart.author, "farts", function(err,chart) {
+          assert(err);
+          assert.isNull(chart);
+          done();
+        })
+      })
     });
-
-    // TODO: can we test for when session user does not match with the chart author
   });
 
   describe('editTags', function() {
     it('should edit the tags and return the new list of tags', function (done) {
-
+      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
+        Charts.editTags(madeChart._id, madeChart.author, ['nope'], function (err, chart) {
+          assert(!err);
+          assert.equal(chart.tags.length, 1);
+          assert.equal(madeChart.tags.length, 3);
+          done();
+        })
+      })
     });
 
     it('should do nothing and return an error and null chart when the chart does not exist', function (done) {
-
+      it('should edit the tags and return the new list of tags', function (done) {
+        Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
+          Charts.editTags(madeChart.author, madeChart.author, ['nope'], function (err, chart) {
+            assert(err);
+            assert.isNull(chart);
+            assert.equal(madeChart.tags.length,3);
+            done();
+          })
+        })
+      })
     });
-
-    // TODO: can we test for when the session user does not match with the chart author
   });
 
   describe('deleteChart', function() {
     it('should remove a chart and return the deleted chart', function (done) {
-
+      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
+        Charts.deleteChart(madeChart._id, madeChart.author, function (err, chart) {
+          assert.equal(chart.is_deleted,true);
+          done();
+        });
+      })
     });
 
-    it('should do nothing when no such chart exists, and return null chart (no error)', function (done) {
-
-    });
-
-    it('should remove all likes associated with the deleted chart', function (done) {
-
-    });
-
-    it('should remove all comments associated with the deleted chart', function (done) {
-
+    it('should do return err and null when chart does not exist', function (done) {
+      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
+        Charts.deleteChart(madeChart.author, madeChart.author, function (chart) {
+          assert(err);
+          assert.isNull(chart);
+          done();
+        });
+      })
     });
   });
 
+  describe('checkIfCanEdit', function() {
+    it('should be able to edit chart I authored', function (done) {
+      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
+        Charts.checkIfICanEdit(madeChart._id,madeChart.author,function(err,canEdit) {
+          assert.isTrue(canEdit);
+        })
+      })
+    });
+    it('should not be able to edit chart I havent authored', function (done) {
+      Charts.makeNewChart('username', 'title', 'description', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart) {
+        Charts.makeNewChart('username2', 'title2', 'description2', 'CROSS_STITCH', 1, 1, [['#000']], 'parentId', ['tag', 'tagoo', 'tagapalooza'], function (err, madeChart2) {
+          Charts.checkIfICanEdit(madeChart2._id, madeChart.author, function (err, canEdit) {
+            assert.isFalse(canEdit);
+          })
+        })
+      })
+    });
+  });
 });

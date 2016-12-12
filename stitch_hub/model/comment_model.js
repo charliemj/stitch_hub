@@ -7,15 +7,16 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var commentSchema = mongoose.Schema({
   user: [{type: ObjectId, ref: "User"}],
   chart: {type: ObjectId, ref: "Chart"},
-  text: String //do we want to impose a length on this? if so, we can add a validator
+  text: String 
 });
 
 
 
 /**
- * TODO
- * @param userId
- * @param callback
+ * Sees if user can comment on chart.
+ *
+ * @param userId {ObjectId} ID of user
+ * @param callback function to execute
  */
 commentSchema.statics.canComment = function (userId,callback){
   var canComment = false;
@@ -42,7 +43,7 @@ commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
     if (canComment){
       Comment.create(
         {user: userId, chart: chartId, text: text}, function (err) {
-          callback(err);
+          callback(err); //TODO this is funky
         })
     }//end if
     else{

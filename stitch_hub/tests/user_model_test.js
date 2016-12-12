@@ -83,7 +83,6 @@ describe('Users', function() {
         });
       });
     });
-  });
 
     it('should return an empty list when given a non-existing user', function (done) {
       Users.getFollowersCharts('userId', function (err, charts) {
