@@ -11,7 +11,7 @@ var session = require('express-session');
 
 // connect with mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_database8');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/my_database8');
 
 
 var db = mongoose.connection;
@@ -77,7 +77,7 @@ app.use(function(req, res){
   res.status(404).end('404 Error: Page not found');
 });
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Server listening on http://localhost:" + port);
 });
