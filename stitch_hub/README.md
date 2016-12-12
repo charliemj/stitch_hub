@@ -1,12 +1,12 @@
 # StitchHub
 
-(Soon to be) A social network application for users to share knitting, crochetting, and cross-stitching patterns. 
+A social network application for users to share knitting, crochetting, and cross-stitching patterns.
 
 ##We've deployed StitchHub on Heroku, it can be accessed [here](http://national-badger-stitchhub.herokuapp.com/)!
 
-We've included our TA meeting minutes as well as a doc titled "Assigments" where we would put TODO tasks that each member would claim whenever we reached a new milestone. 
+We've included our TA meeting minutes.
 
-*We put the main authors next to the files but we all worked with most of the code...
+*We put the main authors next to the files but we all worked with most of the code:
 
 - Model
 -- chart_model.js Karleigh and Val
@@ -14,7 +14,7 @@ We've included our TA meeting minutes as well as a doc titled "Assigments" where
 -- like_model.js Karleigh and Val and James
 -- user_model.js Karleigh and Val
 - public
--- about.html James
+-- about.html James + Val
 -- chart_editing.html Denis
 -- chart_form.html Denis
 -- contact.html James
@@ -23,7 +23,7 @@ We've included our TA meeting minutes as well as a doc titled "Assigments" where
 --- grid.css Denis and James and Karleigh
 --- making_chart.css Karleigh
 --- modal.css James
---- style.css Karleigh 
+--- style.css Karleigh + Val
 - index.html Denis
 - javascript
 -- about.js Karleigh 
@@ -41,7 +41,7 @@ We've included our TA meeting minutes as well as a doc titled "Assigments" where
 --- contact.js Karleigh 
 --- delete-chart-helper.js James
 --- index.js Denis
---- like_helper.js James
+--- like_helper.js James + Val
 --- mustache-template-loaders Denis
 ---- chart_feed.loader.js Denis
 ---- chart.loader.js Denis
@@ -49,10 +49,10 @@ We've included our TA meeting minutes as well as a doc titled "Assigments" where
 ---- logout.loader.js Denis
 ---- nav_bar.loader.js Denis
 ---- signup.loader.js Denis
----- user_profile_header.loader.js
+---- user_profile_header.loader.js Denis
 --- mustache.js (from mustache)
 --- name_helper.js James
---- parent_helper.js James
+--- parent_helper.js Val
 --- user_profile.js Denis
 -- mustache-templates
 --- chart_feed.template.html Denis
