@@ -11,10 +11,6 @@ $(document).ready(function() {
 
   loadNavBarTemplate();
 
-  console.log(window.sessionStorage.getItem('sessionUserId'));
-
-
-
 
   
   $.ajax({
@@ -74,7 +70,6 @@ $(document).ready(function() {
       data: data,
       method: 'GET',
       success: function(charts) {
-        console.log("sort-select " + document.getElementById('sort-select').value);
       if (document.getElementById('sort-select').value == "likes"){
         var sortedLikes = charts.sort(
           function(obj1,obj2){
