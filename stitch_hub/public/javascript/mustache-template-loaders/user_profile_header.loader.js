@@ -17,8 +17,11 @@ var loadUserProfileHeaderTemplate = function(user) {
       }
 
       $.ajax({
-        url: '/users/user/' + userProfileId + '/following',
+        url: '/users/user/' + userId + '/following',
         method: 'PUT',
+        data:{
+          userIdToFollow: userProfileId
+        },
         success: function(data) {
           if (data.updated) {
             alert('successfully followed ' + username);
@@ -45,10 +48,6 @@ var loadUserProfileHeaderTemplate = function(user) {
 
     if (window.sessionStorage.getItem('sessionUserId') == userProfileId){
       //should not show on user's own page
-
-      console.log(window.sessionStorage.getItem('sessionUserId'));
-      console.log(userProfileId)
-
       $("#follow-button").hide();
     }
 

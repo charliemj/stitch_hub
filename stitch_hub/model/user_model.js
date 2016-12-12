@@ -53,11 +53,13 @@ userSchema.statics.isLoggedIn = function (userId,callback){
  * @param callback function to execute
  */
 userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
-  Users.isLoggedIn(userId, function(err,isLoggedIn){
+  Users.isLoggedIn(currentUser, function(err,isLoggedIn){
     if (isLoggedIn){
+
       Users.findOneAndUpdate(
         {_id: currentUser},
         {$addToSet: {following: userToFollow}},
+        {new:true},
         function (err, user) {
           callback(err, user)
         });//end findone
