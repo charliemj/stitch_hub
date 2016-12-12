@@ -72,6 +72,7 @@ describe('Users', function() {
 
   describe('getFollowersCharts', function() {
     it('should return list of charts of by users that a given user follows', function (done) {
+      /// TODO
       done();
     });
 
