@@ -3,13 +3,16 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Likes = require('../model/like_model.js');
 
+var csrf = require('csurf');
+var csrfProtection = csrf({ cookie: true });
+
 /**
  * Handles POST request for new Like. TODO check + redo these after LIKE overhaul
  *
  * If success, sends status 200.
  * If error, sends response--> success:false, message:err, error:"error creating like"
  */
-router.post('/', function (req, res) {
+router.post('/', csrfProtection, function (req, res) {
   var userId = req.session.user._id;
   var chartId = req.body.chartID;
   Likes.likeChart(chartId, userId,
@@ -60,7 +63,7 @@ router.get('/chart/:chartId/user/:userId', function (req, res) {
  * If success, sends 200 message with message--> success:"like successfully removed"
  * If error, sends message--> success:false, message:err, error:"problem unliking"
  */
-router.delete('/', function (req, res) {
+router.delete('/', csrfProtection, function (req, res) {
   var chartId = req.body.chartId;
   var userId = req.session.user._id;
   Likes.unLike(chartId, userId, function (err) {

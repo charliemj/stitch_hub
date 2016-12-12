@@ -1,4 +1,4 @@
-var loadChartTemplate = function(jsonChart, currentUser) {
+var loadChartTemplate = function(jsonChart, currentUser, csrfToken) {
 
 var number = getNumberOfLikes(jsonChart._id);
 jsonChart.number = number;
@@ -55,6 +55,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
               url: '/charts/' + jsonChart._id + '/description',
               data: {
                 description: newDescription,
+                _csrf: csrfToken,
               },
               method: 'PUT',
               success: function(data) {
@@ -105,11 +106,11 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
               alert('Must have at least one tag');
               return;
             }
-            console.log(newTags);
             $.ajax({
               url: '/charts/' + jsonChart._id + '/tags',
               data: {
                 tags: JSON.stringify(newTags),
+                _csrf: csrfToken,
               },
               method: 'PUT',
               success: function(data) {
@@ -147,19 +148,15 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
             $('#like-button').on('click', function() {
               if (liked) {
                 $('#like-button').text('Like');
-                unlikeChart(jsonChart._id);
+                unlikeChart(jsonChart._id, csrfToken);
                 liked = false;
               } else {
                 $('#like-button').text('Unike');
-                likeChart(jsonChart._id);
+                likeChart(jsonChart._id, csrfToken);
                 liked = true;
               }
               window.location.reload();
             });
-          });
-
-          $('#like-button').on('click', function() {
-            likeChart(jsonChart._id);
           });
 
           $('#parent-button').on("click", function () {
@@ -180,7 +177,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
           if (currentUser != null && (currentUser._id == author)){
             $('#delete-button').removeClass("hidden").addClass("shown").on('click', 
               function() {
-                deleteChart(jsonChart._id);
+                deleteChart(jsonChart._id, csrfToken);
             });
           }//end if
         }//end if not deleted
@@ -226,7 +223,7 @@ jsonChart.tagsConcatenated = jsonChart.tags.join(' ');
     }
     console.log("Is this really clicked?");
     var text = document.getElementById('newComment').value;
-    doComment(jsonChart._id, currentUser, text);
+    doComment(jsonChart._id, currentUser, text, csrfToken);
     window.location.reload();
   });
   });

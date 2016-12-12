@@ -46,6 +46,10 @@ app.get('/', function(req, res) {
     });
 });
 
+// routes for csrf
+var csrfRouter = require('./routes/csrf_routes.js');
+app.use('/csrf', csrfRouter);
+
 // routes for charts
 var charts = require('./routes/charts_routes.js');
 app.use('/charts', charts);

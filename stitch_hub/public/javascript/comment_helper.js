@@ -1,11 +1,12 @@
-var doComment = function (chartID, currentUser, text){
+var doComment = function (chartID, currentUser, text, csrfToken){
   $.ajax({
     url: '/comments',
     method: 'POST',
     data: {
       chartId: chartID,
       userId: currentUser._id,
-      text: text          
+      text: text,
+      _csrf: csrfToken,       
     },
     success: function() {
     },

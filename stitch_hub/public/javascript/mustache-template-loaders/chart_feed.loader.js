@@ -1,4 +1,4 @@
-var loadChartFeedTemplate = function(charts, currentUser) {
+var loadChartFeedTemplate = function(charts, currentUser, csrfToken) {
   $.get('mustache-templates/chart_feed.template.html', function (template) {
     $('.grid-pad').remove();
     $('.col-1-5').remove();
@@ -92,11 +92,11 @@ var loadChartFeedTemplate = function(charts, currentUser) {
           if (liked) {
             jbutton.text('Like');
             liked = false;
-            unlikeChart(id);
+            unlikeChart(id, csrfToken);
           } else {
             jbutton.text('Unlike');
             liked = true;
-            likeChart(id);
+            likeChart(id, csrfToken);
           }
         });
       });

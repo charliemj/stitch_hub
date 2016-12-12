@@ -44,12 +44,13 @@ var getCurrentUserLike = function (chartId, currentUser, callback) {
   }
 };
 
-var likeChart = function (chartId) {
+var likeChart = function (chartId, csrfToken) {
   $.ajax({
     url: '/like',
     method: 'POST',
     data: {
-      chartID: chartId
+      chartID: chartId,
+      _csrf: csrfToken,
     },
     success: function () {
       window.location.reload();
@@ -61,11 +62,12 @@ var likeChart = function (chartId) {
   });//end ajax
 };
 
-var unlikeChart = function (chartId) {
+var unlikeChart = function (chartId, csrfToken) {
   $.ajax({
     url: '/like',
     data: {
-      chartId: chartId
+      chartId: chartId,
+      _csrf: csrfToken,
     },
     method: 'DELETE',
     success: function () {

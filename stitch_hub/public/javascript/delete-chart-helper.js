@@ -1,11 +1,12 @@
-var deleteChart = function (chartID){
+var deleteChart = function (chartID, csrfToken){
 var newChart;
 $.ajax({
         url: '/charts/' + chartID + '/is_deleted',
         method: 'PUT',
         async: false,
         data: {
-          chartID: chartID
+          chartID: chartID,
+          _csrf: csrfToken,
         },
         success: function(result) {
           newChart = result.message;

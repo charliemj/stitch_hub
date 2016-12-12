@@ -4,12 +4,14 @@
 */
 $(document).ready(function() {
   getCurrentUser(function (currentUser) {
-    loadNavBarTemplate(currentUser);
-    var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
-    var chartID = jsonChart._id;
-      
-    // load template into #chart-container
-    loadChartTemplate(jsonChart, currentUser);
+    getCsrfToken(function (csrfToken) {
+      loadNavBarTemplate(currentUser);
+      var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
+      var chartID = jsonChart._id;
+      console.log(jsonChart);        
+      // load template into #chart-container
+      loadChartTemplate(jsonChart, currentUser, csrfToken);
+    });
   });
   
 });
