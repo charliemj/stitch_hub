@@ -12,6 +12,7 @@ var chartSchema = mongoose.Schema({
     type: {type:String, enum: validTypes},
     rowSize: {type:Number, min:1, max:70},
     colSize: {type:Number, min:1, max:70},
+    size: Number,
     rows:[[{type:String, validate: validators.isHexColor()}]],
     parent: {type:ObjectId, ref:"Chart"},
     is_deleted: Boolean,
@@ -109,24 +110,6 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
   // perform query
   Charts.aggregate([
     {$match: matchQuery},
-    //instead of projecting, we could also just store the size in the chart when handling post
-    {
-      $project: {
-        _id: "$_id",
-        author: "$author",
-        date: "$date",
-        title: "$title",
-        description: "$description",
-        type: "$type",
-        rowSize: "$rowSize",
-        colSize: "$colSize",
-        size: {$multiply: ["$rowSize", "$colSize"]},
-        rows: "$rows",
-        parent: "$parent",
-        tags: "$tags",
-        is_deleted: "$is_deleted"
-      }
-    },
     {$match: sizeFilter},
     {$sort: {'date': -1}}
   ], function(err,charts) {
@@ -153,7 +136,7 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
   console.log("attempting to make new chart");
   Charts.create({
     author: author, title: title, description: description, tags: tags,
-    type: type, rowSize: rowSize, colSize: colSize, rows: rows, parent: parent, is_deleted: false
+    type: type, rowSize: rowSize, colSize: colSize, rows: rows, size: (rowSize * colSize), parent: parent, is_deleted: false
   }, function(err,chart) {
     callback(err,chart);
   })
