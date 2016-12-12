@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var Users = require('../model/user_model.js');
 var Charts = require('../model/chart_model.js');
 
+var csrf = require('csurf');
+var csrfProtection = csrf({ cookie: true });
 
 /**
  * Handles GET request for User by User's ID.
@@ -33,7 +35,7 @@ router.get('/:id', function (req, res) {
  * If User is already following User, sends message--> updated:false
  * If error, sends message--> success:false, message:err
  */
-router.put('/user/:userId/following', function (req, res) {
+router.put('/user/:userId/following', csrfProtection, function (req, res) {
   var userIDToFollow = req.body.userIdToFollow;
   var userId = req.params.userId;
   Users.followUser(userId, userIDToFollow,
@@ -59,7 +61,7 @@ router.put('/user/:userId/following', function (req, res) {
  * If success, sends list of charts.
  * If error, sends message--> success:false, message:err
  */
-router.put('/user/:userId/remove/following', function (req, res) {
+router.put('/user/:userId/remove/following', csrfProtection, function (req, res) {
   var userIDToUnfollow = req.body.userIdToUnfollow;
   var userId = req.params.userId;
   Users.unfollowUser(userId, userIDToUnfollow,

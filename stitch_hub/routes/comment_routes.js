@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Comments = require('../model/comment_model.js');
 
+var csrf = require('csurf');
+var csrfProtection = csrf({ cookie: true });
 
 /**
  * Handles a POST request for a Comment.
@@ -9,7 +11,7 @@ var Comments = require('../model/comment_model.js');
  * If success, sends status of 200 with message--> success:"comment created!"
  * If error, sends response--> success:false, message:err
  */
-router.post('/', function (req, res) {
+router.post('/', csrfProtection, function (req, res) {
   var userId = req.body.userId;
   var chartId = req.body.chartId;
   var text = req.body.text;

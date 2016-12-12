@@ -3,6 +3,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Charts = require('../model/chart_model.js');
 
+var csrf = require('csurf');
+var csrfProtection = csrf({ cookie: true });
+
 /**
  * Handles a GET request for all charts by a user.
  *
@@ -85,7 +88,7 @@ router.get('/', function (req, res/*, next*/) {
  * If an error occurs, the response is a JSON with keys 'success' and 'message'. The 'success' key
  * has a value of false and 'message' key have the error as the value
  */
-router.post('/', 
+router.post('/', csrfProtection,
   function (req, res, next) {
     if (!req.session.user) { //checks to make sure user is logged in
       res.send(400);
@@ -123,7 +126,7 @@ router.post('/',
  * After successfully editing description, sends a response--> updated:true
  * If unsuccessful, sends a response--> success:false,message:err
  */
-router.put('/:id/description', function (req, res) {
+router.put('/:id/description', csrfProtection, function (req, res) {
   var chartId = req.params.id;
   var userId = req.session.user._id;
   var newDescription = req.body.description;
@@ -160,10 +163,10 @@ router.put('/:id/description', function (req, res) {
  * After successfully deleting, sends a response--> updated:true
  * If unsuccessful, sends a response--> success:false,message:err
  */
-router.put('/:id/tags', function (req, res) {
+router.put('/:id/tags', csrfProtection, function (req, res) {
   var chartId = req.params.id;
   var userId = req.session.user._id;
-  var newTags = req.body.tags;
+  var newTags = JSON.parse(req.body.tags);
   Charts.editTags(chartId,userId,newTags,
     function (err, msg) {
       if (err) {
@@ -190,7 +193,7 @@ router.put('/:id/tags', function (req, res) {
  * has a value of false and 'message' will tell the user that they can't delete a chart
  * that isn't theirs
  */
-router.put('/:chartId/is_deleted', function (req, res, next) {
+router.put('/:chartId/is_deleted', csrfProtection, function (req, res, next) {
   var chartId = req.params.chartId;
   var userId = req.session.user._id;
   Charts.deleteChart(chartId,userId,function (err, chart) {

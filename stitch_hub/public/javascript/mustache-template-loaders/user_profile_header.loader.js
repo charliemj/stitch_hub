@@ -1,4 +1,4 @@
-var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
+var loadUserProfileHeaderTemplate = function(profileUser, currentUser, csrfToken) {
   $.get('mustache-templates/user_profile_header.template.html', function (template) {
     var userProfileId = profileUser._id;
     var username = profileUser.username;
@@ -20,7 +20,8 @@ var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
         url: '/users/user/' + currentUser._id + '/following',
         method: 'PUT',
         data:{
-          userIdToFollow: userProfileId
+          userIdToFollow: userProfileId,
+          _csrf: csrfToken,
         },
         success: function(data) {
           if (data.updated) {
@@ -51,7 +52,8 @@ var loadUserProfileHeaderTemplate = function(profileUser, currentUser) {
         url: '/users/user/' + currentUser._id + '/remove/following',
         method: 'PUT',
         data:{
-          userIdToUnfollow: userProfileId
+          userIdToUnfollow: userProfileId,
+          _csrf: csrfToken,
         },
         success: function(data) {
           if (data.updated) {
