@@ -54,8 +54,9 @@ router.get('/chart/:chartId', function (req, res, next) {
         message: comments
       });
     } //end else
-  })
+  });
 });
 
 
 module.exports = router;
+

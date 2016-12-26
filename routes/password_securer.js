@@ -12,7 +12,7 @@ var PasswordSecurer = function() {
 
   var md5 = function(string) {
     return crypto.createHash('md5').update(string).digest('hex');
-  }
+  };
 
   that.generateSalt = function(len) {
     var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ',
@@ -23,7 +23,7 @@ var PasswordSecurer = function() {
       salt += set[p];
     }
     return salt;
-  }
+  };
 
   that.createHash = function(salt, password) {
     return md5(password + salt);
@@ -31,7 +31,7 @@ var PasswordSecurer = function() {
 
   that.validateHash = function(hash, salt, password) {
     return md5(password + salt) === hash;
-  }
+  };
 
   Object.freeze(that);
 

@@ -5,6 +5,6 @@ var csrfProtection = csrf({ cookie: true });
 
 router.get('/', csrfProtection, function(req, res) {
   res.send({ csrfToken: req.csrfToken() });
-})
+});
 
 module.exports = router;

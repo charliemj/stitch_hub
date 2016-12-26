@@ -24,7 +24,7 @@ router.get('/author/:userId', function (req, res) {
         } else {
           res.send(charts); //TODO change to match pattern above?
         } //end else
-      })
+      });
 
 });
 
@@ -50,7 +50,7 @@ router.get('/:chartId', function (req, res) {
             message: JSON.stringify(chart)
           });
         } //end else
-      })
+      });
 });
 
 /**
@@ -75,9 +75,9 @@ router.get('/', function (req, res/*, next*/) {
           message: err
         }); //end if
       } else {
-        res.send(charts)
+        res.send(charts);
       } //end else
-    })
+    });
 });
 
 
@@ -95,7 +95,7 @@ router.post('/', csrfProtection,
       return;
     }
     var author = req.session.user._id;
-    var title = req.body.title; 
+    var title = req.body.title;
     var description = req.body.description;
     var type = req.body.type;
     var rowSize = req.body.rowSize;
@@ -145,7 +145,7 @@ router.put('/:id/description', csrfProtection, function (req, res) {
           message: err
         }); //end if
       } else {
-        var updated = (msg != null);
+        var updated = (msg !== null);
         res.send({
           success: true,
           updated: updated
@@ -175,7 +175,7 @@ router.put('/:id/tags', csrfProtection, function (req, res) {
           message: err
         }); //end if
       } else {
-        var updated = (msg != null);
+        var updated = (msg !== null);
         res.send({updated: updated});
       }
     }
@@ -213,7 +213,8 @@ router.put('/:chartId/is_deleted', csrfProtection, function (req, res, next) {
         });
       }//end if
     }
-  })
+  });
 });
 
 module.exports = router;
+

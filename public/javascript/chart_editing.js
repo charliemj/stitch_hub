@@ -70,7 +70,7 @@ $(document).ready(function() {
           }
           return true;
         }
-      })
+      });
 
       // add event listener so that post-chart-button will post when clicked
       $('#post-chart-button').on('click', function() {
@@ -79,11 +79,11 @@ $(document).ready(function() {
         var tags = $('.tag').toArray().map(function (tag) {
           return $(tag).val(); // map javascript object to text
         }).filter(function (tag) {
-          return tag != ''; // keep only if non-empty
+          return tag !== ''; // keep only if non-empty
         }).filter(function(item, pos, self) {
           return self.indexOf(item) == pos; // remove duplicates
         });
-        if (tags.length == 0) {
+        if (tags.length === 0) {
           alert('Must have at least one tag');
           return;
         }
@@ -121,7 +121,8 @@ $(document).ready(function() {
 var areAllTagsWritten = function() {
   var allTagsWritten = true;
   $('.tag').each(function (i, tag) {
-    allTagsWritten = allTagsWritten && ($(tag).val() != '');
+    allTagsWritten = allTagsWritten && ($(tag).val() !== '');
   });
   return allTagsWritten;
-}
+};
+

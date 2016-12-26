@@ -29,7 +29,7 @@ var getCurrentUserLike = function (chartId, currentUser, callback) {
       method: 'GET',
       success: function (data) {
         var result = false;
-        if (data.message != null){
+        if (data.message !== null){
           result = true;
         }
         

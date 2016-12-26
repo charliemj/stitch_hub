@@ -8,7 +8,7 @@ $(document).ready(function() {
       loadNavBarTemplate(currentUser);
       var jsonChart = JSON.parse(window.sessionStorage.getItem('chart'));
       var chartID = jsonChart._id;
-      console.log(jsonChart);        
+      console.log(jsonChart);   
       // load template into #chart-container
       loadChartTemplate(jsonChart, currentUser, csrfToken);
     });

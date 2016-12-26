@@ -65,7 +65,7 @@ describe('Users', function() {
             assert.deepEqual(userFollowing._id, user1._id); // user1 is the user following
             assert.ok(userFollowing.following.indexOf(user2._id) != -1); // check 
             done();
-          })
+          });
         });
       });
     });
@@ -80,8 +80,8 @@ describe('Users', function() {
               Charts.getFollowersCharts(user1._id, function(err,charts) {
                 assert.equal(charts.length, 1);
                 done();
-              })
-            })
+              });
+            });
           });
         });
       });

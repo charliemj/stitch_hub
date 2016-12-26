@@ -23,8 +23,8 @@ userSchema.statics.getUserById = function (userId, callback) {
   Users.findOne({
     _id: userId
   }, function (err, user) {
-    callback(err, user)
-  })
+    callback(err, user);
+  });
 };
 
 /**
@@ -59,7 +59,7 @@ userSchema.statics.followUser = function (currentUser, userToFollow, callback) {
         {$addToSet: {following: userToFollow}},
         {new:true},
         function (err, user) {
-          callback(err, user)
+          callback(err, user);
         });//end findone
     } //end if
     else{
@@ -87,7 +87,7 @@ userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback
               {_id: currentUser},
               {following:following},
               function (err, user) {
-                callback(err, user)
+                callback(err, user);
             });//end findone
           }
         }//end else
@@ -96,9 +96,9 @@ userSchema.statics.unfollowUser = function(currentUser, userToUnfollow, callback
 
     else{
       callback(err, isLoggedIn);
-    }//end else
-  });//end isLoggedIn
-}//end unfollowUser
+    } //end else
+  }); //end isLoggedIn
+};  //end unfollowUser
 
 /**
  * Create a new User.
@@ -119,8 +119,8 @@ userSchema.statics.createUser = function(username, password, dob, email, callbac
     salt: salt,
     email: email
   }, function(err, user) {
-    callback(err,user)
-  })
+    callback(err,user);
+  });
 };
 
 /**
@@ -132,7 +132,7 @@ userSchema.statics.createUser = function(username, password, dob, email, callbac
 userSchema.statics.isAdult = function(userId,callback) {
   Users.getUserById(userId, function(err,user) {
     if (err) {
-      callback(err)
+      callback(err);
     } else {
       // Age calculation code from: http://stackoverflow.com/a/15555947
       function calcAge(dateString) {
@@ -140,12 +140,12 @@ userSchema.statics.isAdult = function(userId,callback) {
         return ~~((Date.now() - birthday) / (31557600000));
       }
       if (calcAge(user.dob) >= 18) {
-        callback(err,true)
+        callback(err,true);
       } else {
-        callback(err,false)
+        callback(err,false);
       }
     }
-  })
+  });
 };
 
 

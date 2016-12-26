@@ -33,11 +33,11 @@ var chartSchema = mongoose.Schema({
 chartSchema.statics.getChartById = function (chartId, userId, callback) {
   Charts.findOne({_id: chartId}, function (err, chart) {
     if (err) {
-      callback(err)
+      callback(err);
     } else {
-      callback(null, chart)
+      callback(null, chart);
     }
-  })
+  });
 };
 
 
@@ -53,9 +53,9 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
     is_deleted: false
   }, function (err, charts) {
     if (err) {
-      callback(err) 
+      callback(err);
     } else {
-      callback(null, charts)
+      callback(null, charts);
     }
   })
 };
@@ -80,10 +80,10 @@ chartSchema.statics.getFollowersCharts = function (userId, callback) {
           console.log('Get following in ' + user);
           Charts.find({author: {$in: user.following}},
             function (err, charts) {
-              callback(err, charts)
-            })
+              callback(err, charts);
+            });
         }
-      })
+      });
     }//end if
     else{
       callback(err,isLoggedIn);
@@ -114,7 +114,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
       var age = ~~((Date.now() - birthday) / (31557600000));
       var isAdult = age >= 18;
       if (isAdult) {
-        allowNSFW = true
+        allowNSFW = true;
       }
     }
   
@@ -132,7 +132,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
       });
     }
     if (filterTypeOn.length > 0) {
-      searchForFilter.type = {$in: filterTypeOn}
+      searchForFilter.type = {$in: filterTypeOn};
     }
     var sizeFilter = {};
     if (filterSizeOn.length > 0) {
@@ -148,7 +148,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
         } else if (sizeType == 'large') {
           sizeConditions.push({size: {$gt: MEDIUM_SIZE}});
         }
-      })
+      });
     }
     var matchQuery = {$and: [searchForFilter, {is_deleted: false}]};
     var ageFilter = {};
@@ -189,7 +189,7 @@ chartSchema.statics.searchForChart = function (searchFor, filterSizeOn, filterTy
  * @param callback function to execute
  */
 chartSchema.statics.makeNewChart = function(author, title, description, type, rowSize, colSize, rows, parent, tags, nsfw, callback) {
-  if (tags && tags.length == 0) {
+  if (tags && tags.length === 0) {
     callback(new Error('tags should not be empty'), null);
     return;
   }
@@ -198,7 +198,7 @@ chartSchema.statics.makeNewChart = function(author, title, description, type, ro
     type: type, rowSize: rowSize, colSize: colSize, rows: rows, size: (rowSize * colSize), parent: parent, is_deleted: false
   }, function(err,chart) {
     callback(err,chart);
-  })
+  });
 };
 
 
@@ -248,7 +248,7 @@ chartSchema.statics.editDescription = function(chartId,userId,newDescription,cal
         function(err,chart){
           callback(err,chart); //this err is database prob
         }//end function
-      ) //end findoneandupdate
+      ); //end findoneandupdate
     }//end if
     else{
       //the person doesn't have authorization to edit
@@ -278,7 +278,7 @@ chartSchema.statics.editTags = function(chartId,userId,newTags,callback) {
         function(err,chart) {
           callback(err,chart);
         }
-      )
+      );
     }//end if
     else{
       //the person doesn't have authorization to edit

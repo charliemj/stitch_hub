@@ -29,7 +29,7 @@ var makeChart = function() {
     }
     rows.push(row);
   }
-  var chartJson = 
+  var chartJson =
   {
     rowSize: rowSize,
     colSize: colSize,

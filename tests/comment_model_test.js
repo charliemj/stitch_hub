@@ -25,8 +25,8 @@ describe('Comments', function () {
         Comments.canComment(user._id, function (err, canComment) {
           assert.equal(canComment, true);
           done();
-        })
-      })
+        });
+      });
     });
     it('should return err if user does not exist', function (done) {
       Users.createUser('username', 'password', Date.now(), 'email@email.com', function (err, user) {
@@ -35,9 +35,9 @@ describe('Comments', function () {
           Comments.canComment(madeChart._id, function (err, canComment) {
             assert.equal(canComment, false);
             done();
-          })
-        })
-      })
+          });
+        });
+      });
     });
   });
 
@@ -49,9 +49,9 @@ describe('Comments', function () {
           Comments.makeComment(user._id, madeChart._id, "hi mom!", function (err, canComment) {
             assert.ok(canComment);
             done();
-          })
-        })
-      })
+          });
+        });
+      });
     });
 
     it('should store a comment into database and return the new comment', function (done) {
@@ -61,9 +61,9 @@ describe('Comments', function () {
           Comments.makeComment(user._id, madeChart._id, "hi mom", function (err, comment) {
             assert.equal(comment.text, "hi mom");
             done();
-          })
-        })
-      })
+          });
+        });
+      });
     });
 
     it('should return an error and canComment if the chart does not exist; does not store anything', function (done) {

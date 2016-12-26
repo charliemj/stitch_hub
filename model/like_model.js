@@ -51,12 +51,12 @@ likesSchema.statics.likeChart = function (chartId, userId, callback) {
           if (history === 0) { //they can like the chart
             Likes.create(
               {user: userId, chart: chartId}, function (err, like) {
-                callback(err, like)
+                callback(err, like);
               }
-            )
+            );
           }
         }
-      })//end likes.count
+      });//end likes.count
     } //end if canLike
     else{
       callback(err,canLike); //this err is auth prob
@@ -74,7 +74,7 @@ likesSchema.statics.likeChart = function (chartId, userId, callback) {
 likesSchema.statics.getLike = function(chartId, userId, callback) {
   Likes.findOne({chart: chartId, user: userId}, function(err,like) {
     callback(err,like);
-  })
+  });
 };
 
 
@@ -91,7 +91,7 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
     if (err){
       callback(err,like);
     }//end if
-    else if (like != null){
+    else if (like !== null){
       Likes.remove({chart: chartId, user: userId}, function(err,like) {
         callback(err,like);
       });//end remove
@@ -111,7 +111,7 @@ likesSchema.statics.unLike = function(chartId, userId, callback) {
 likesSchema.statics.getNumLikes = function(chartId,callback) {
   Likes.count({chart: chartId},function(err,number) {
     callback(err,number);
-  })
+  });
 };
 
 /**
@@ -135,10 +135,10 @@ likesSchema.statics.getLikedCharts = function(userId,callback) {
         likedChartIDs.push(likes[i].chart);
       }
       Charts.find({_id: {$in: likedChartIDs}}, function (err, charts) {
-        callback(err, charts)
-      })
+        callback(err, charts);
+      });
     }
-  })
+  });
 };
 
 var Likes = mongoose.model("Likes", likesSchema);
