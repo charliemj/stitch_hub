@@ -6,4 +6,3 @@ A social network application for users to share knitting, crochetting, and cross
 
 
 ![StitchHub Screenshot](stitchhub.png)
-{: .image-right}
