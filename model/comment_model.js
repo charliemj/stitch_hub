@@ -44,7 +44,7 @@ commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
       Comment.create(
         {user: userId, chart: chartId, text: text}, function (err,comment) {
           callback(err,comment);
-        })
+        });
     }//end if
     else{
       callback(err, canComment);
@@ -61,10 +61,8 @@ commentSchema.statics.makeComment = function (userId, chartId, text, callback) {
 commentSchema.statics.getChartComments = function(chartId, callback) {
   Comment.find({chart: chartId}, function(err, comments) {
     callback(err,comments);
-  })
+  });
 };
 
 var Comment = mongoose.model("Comment", commentSchema);
 module.exports = Comment; //keep at bottom of file
-
-

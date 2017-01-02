@@ -57,7 +57,7 @@ chartSchema.statics.getChartsByUser = function (userId, callback) {
     } else {
       callback(null, charts);
     }
-  })
+  });
 };
 
 /**
